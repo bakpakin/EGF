@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Apr 19, 2014 8:24:58 AM                                                        
+
+     Entity Game Framework    
+     This ant build file generates both a runnable jar and a distribution jar.
+                   
+     Calvin                                                                
+     ====================================================================== -->
+<project name="EGF" default="default" basedir=".">
+
+	<description>
+            This ant build file generates both a runnable jar and a distribution jar.
+    </description>
+
+	<!-- Set the 'main-class' property to the main class of your application.
+	This build file uses JarSplice, so setting your main class as the 'Main-Class'
+	In the manifest will NOT work. -->
+	<property name="main-class" value="bakpakin.egf.util.test.Tester" />
+	
+	<!-- Set the VM args of the main class. -->
+	<property name="main-args" value="" />
+
+	<property name="lib" value="lib" />
+	<property name="src" value="src" />
+	<property name="dist" value="dist" />
+	<property name="build" value="classes" />
+	<property name="jar.name" value="egf" />
+	<property name="natives" value="lib${file.separator}natives" />
+	<path id="lib-path">
+		<pathelement location="${build}" />
+		<pathelement location="lib${file.separator}ibxm.jar" />
+		<pathelement location="lib${file.separator}jinput.jar" />
+		<pathelement location="lib${file.separator}jnlp.jar" />
+		<pathelement location="lib${file.separator}jogg-0.0.7.jar" />
+		<pathelement location="lib${file.separator}jorbis-0.0.15.jar" />
+		<pathelement location="lib${file.separator}lwjgl_util_applet.jar" />
+		<pathelement location="lib${file.separator}lwjgl_util.jar" />
+		<pathelement location="lib${file.separator}lwjgl.jar" />
+		<pathelement location="lib${file.separator}slick.jar" />
+		<pathelement location="lib${file.separator}tinylinepp.jar" />
+		<pathelement location="lib${file.separator}commons-io-2.4.jar" />
+		<pathelement location="lib${file.separator}gson-2.2.4.jar" />
+	</path>
+
+
+	<target name="default" depends="standalone-jar" description="This build file generates both a test jar and a distribution jar." />
+
+
+	<target name="clean" description="cleans up the build directory.">
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+	</target>
+
+
+	<target name="init" depends="clean">
+		<tstamp />
+		<mkdir dir="${build}" />
+		<copy includeemptydirs="false" todir="${build}">
+			<fileset dir="${src}">
+				<exclude name="**/*.launch" />
+				<exclude name="**/*.java" />
+			</fileset>
+			<fileset dir="${natives}" />
+		</copy>
+	</target>
+
+
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${build}" includeantruntime="false">
+			<classpath refid="lib-path" />
+		</javac>
+	</target>
+
+
+	<target name="jar" depends="compile">
+		<jar destfile="${dist}${file.separator}${jar.name}-tmp.jar" basedir="${build}">
+			<zipgroupfileset dir="${lib}">
+				<include name="**/*.jar" />
+			</zipgroupfileset>
+		</jar>
+		<delete file="${dist}${file.separator}${jar.name}.jar" />
+		<zip file="${dist}${file.separator}${jar.name}.jar">
+			<zipfileset src="${dist}${file.separator}${jar.name}-tmp.jar">
+				<exclude name="META-INF${file.separator}LWJGL.RSA" />
+				<exclude name="META-INF${file.separator}LWJGL.SF" />
+			</zipfileset>
+		</zip>
+		<delete file="${dist}${file.separator}${jar.name}-tmp.jar" />
+	</target>
+
+
+	<target name="standalone-jar" depends="jar">
+		<copy file="${dist}${file.separator}${jar.name}.jar" tofile="${dist}${file.separator}${jar.name}-standalone.jar" />
+		<jar destfile="${dist}${file.separator}${jar.name}-standalone.jar" update="true">
+			<manifest>
+				<attribute name="Launcher-Main-Class" value="${main-class}" />
+				<attribute name="Launcher-VM-Args" value="${main-args}" />
+				<attribute name="Main-Class" value="org.ninjacave.jarsplice.JarSpliceLauncher" />
+			</manifest>
+		</jar>
+	</target>
+
+
+</project>
