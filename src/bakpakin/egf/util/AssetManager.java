@@ -6,6 +6,7 @@ import static org.lwjgl.opengl.ARBShaderObjects.*;
 import static org.lwjgl.openal.AL10.alDeleteBuffers;
 
 import java.awt.Font;
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,6 +22,7 @@ import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
+
 import bakpakin.egf.util.protocols.CustomURLScheme;
 
 /**
@@ -138,7 +140,7 @@ public class AssetManager {
 			String[] parts = key.split(EXTENSION_REGEX);
 			String extension = parts[parts.length - 1].toUpperCase();
 			try {
-				InputStream inputStream = url.openStream();
+				InputStream inputStream = new BufferedInputStream(url.openStream());
 				tex = TextureLoader.getTexture(extension, inputStream);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -218,7 +220,7 @@ public class AssetManager {
 
 		if ((fnt = fonts.get(key)) == null) {
 			try {
-				InputStream inputStream	= url.openStream();
+				InputStream inputStream	= new BufferedInputStream(url.openStream());
 				Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
 				awtFont = awtFont.deriveFont(size); // set font size
 				fnt = new TrueTypeFont(awtFont, false);
@@ -358,7 +360,7 @@ public class AssetManager {
 				StringBuilder fragmentShaderSource = new StringBuilder();
 
 				//Read in vertex shader
-				BufferedReader reader = new BufferedReader(new InputStreamReader(vertexShaderUrl.openStream()));
+				BufferedReader reader = new BufferedReader(new InputStreamReader(new BufferedInputStream(vertexShaderUrl.openStream())));
 				String line;
 				while((line = reader.readLine()) != null) {
 					vertexShaderSource.append(line).append('\n');
@@ -366,7 +368,7 @@ public class AssetManager {
 				reader.close();
 
 				//Read in fragment shader
-				reader = new BufferedReader(new InputStreamReader(fragmentShaderUrl.openStream()));
+				reader = new BufferedReader(new InputStreamReader(new BufferedInputStream(fragmentShaderUrl.openStream())));
 				while((line = reader.readLine()) != null) {
 					fragmentShaderSource.append(line).append('\n');
 				}
@@ -484,7 +486,7 @@ public class AssetManager {
 			String[] parts = key.split(EXTENSION_REGEX);
 			String extension = parts[parts.length - 1].toUpperCase();
 			try {
-				InputStream inputStream = url.openStream();
+				InputStream inputStream = new BufferedInputStream(url.openStream());
 				audio = AudioLoader.getAudio(extension, inputStream);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
