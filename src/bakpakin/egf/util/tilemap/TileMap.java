@@ -13,6 +13,7 @@ import java.util.TreeMap;
 
 import bakpakin.egf.util.AssetManager;
 import bakpakin.egf.util.tilemap.TileMapBean.LayerBean;
+import bakpakin.egf.util.tilemap.TileMapBean.ObjectBean;
 import bakpakin.egf.util.tilemap.TileMapBean.TileSetBean;
 
 /**
@@ -131,6 +132,10 @@ public class TileMap extends TileMapComponent {
 			}
 		} else if (t.getType().equals("objectgroup")) {
 			ret = new ObjectLayer(depth, tm);
+			ObjectLayer ol = (ObjectLayer)ret;
+			for (Object o : t.getObjects()) {
+				ol.addMapObject((ObjectBean) o);
+			}
 			initLayer(ret, t);
 		} else if (t.getType().equals("imagelayer")) {
 			ret = new ImageLayer(depth, tm);
@@ -169,6 +174,7 @@ public class TileMap extends TileMapComponent {
 		tileSet.setMargin(t.getMargin());
 		tileSet.setxSeperation(t.getSpacing());
 		tileSet.setySeperation(t.getSpacing());
+		tileSet.setTileProperties(t.getTileProperties());
 		if (t.getTransparentcolor() != null) {
 			tileSet.setTransparentColor(Integer.parseInt(t
 					.getTransparentcolor().substring(1), 16));

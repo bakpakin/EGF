@@ -452,6 +452,7 @@ public class TileMapBean implements Serializable{
 		private int margin;
 		private String name;
 		private Map<String, String> properties;
+		private Map<String, Map<String, String>> tileProperties;
 		private int spacing;
 		private int tilewidth;
 		private int tileheight;
@@ -657,6 +658,12 @@ public class TileMapBean implements Serializable{
 			}
 			builder.append("]");
 			return builder.toString();
+		}
+		public Map<String, Map<String, String>> getTileProperties() {
+			return tileProperties;
+		}
+		public void setTileProperties(Map<String, Map<String, String>> tileProperties) {
+			this.tileProperties = tileProperties;
 		}
 
 	}

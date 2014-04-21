@@ -83,6 +83,8 @@ public class TileSet extends TileMapComponent {
 	 */
 	private int transparentColor = -1;
 	
+	private Map<String, Map<String, String>> tileProperties;
+	
 	/**
 	 * Creates a new TileSet
 	 * @param key - String with a path to the image
@@ -135,6 +137,10 @@ public class TileSet extends TileMapComponent {
 		Tile ret;
 		if ((ret = tiles[index]) == null) {
 			tiles[index] = new Tile(index, this);
+			if (tileProperties != null && tileProperties.containsKey(Integer.toString(index))) {
+				tiles[index].getProperties().putAll(tileProperties.get(Integer.toString(index)));
+				System.out.println(tiles[index].getProperties());
+			}
 			return tiles[index];
 		}
 		return ret;
@@ -332,9 +338,22 @@ public class TileSet extends TileMapComponent {
 		tsb.setImagewidth(texture.getImageWidth());
 		tsb.setMargin(margin);
 		tsb.setName(name);
+		
 		Map<String, String> properties = new HashMap<String, String>();
 		properties.putAll(getProperties());
 		tsb.setProperties(properties);
+		
+		Map<String, Map<String, String>> tileProperties = new HashMap<String, Map<String, String>>();
+		for (int i = 0; i < tiles.length; i++) {
+			Tile t = tiles[i];
+			if (t.getProperties() != null && !t.getProperties().isEmpty()) {
+				Map<String, String> map = new HashMap<String, String>();
+				map.putAll(t.getProperties());
+				tileProperties.put(Integer.toString(i), map);
+			}
+		}
+		tsb.setTileProperties(tileProperties);
+		
 		tsb.setTilewidth(tileWidth);
 		tsb.setTileheight(tileHeight);
 		tsb.setSpacing(xSeperation);
@@ -357,6 +376,14 @@ public class TileSet extends TileMapComponent {
 		ret[1] = color.getGreen() / 255f;
 		ret[2] = color.getBlue() / 255f;
 		return ret;
+	}
+
+	public Map<String, Map<String, String>> getTileProperties() {
+		return tileProperties;
+	}
+
+	public void setTileProperties(Map<String, Map<String, String>> tileProperties) {
+		this.tileProperties = tileProperties;
 	}
 
 }

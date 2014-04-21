@@ -14,7 +14,7 @@ public final class RenderComponent implements Component {
 	 * 
 	 */
 	private static final long serialVersionUID = 5090075250248093829L;
-	private final Drawable drawable;
+	private Drawable drawable;
 	private float depth;
 	private int blendModeSrc;
 	private int blendModeDest;
@@ -24,23 +24,24 @@ public final class RenderComponent implements Component {
 	public RenderComponent(Drawable drawable) {
 		this(drawable, 0f, Color.white);
 	}
-	
+
 	public RenderComponent(Drawable drawable, float depth) {
 		this(drawable, depth, Color.white);
 	}
-	
+
 	public RenderComponent(Drawable drawable, Color color) {
 		this(drawable, 0f, color);
 	}
-	
+
 	public RenderComponent(Drawable drawable, float depth, Color color) {
 		this.drawable = drawable;
 		this.depth = depth;
 		this.setColor(color);
 		setBlendMode(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 	}
-	
+
 	public void draw(RenderSystem renderSystem, Transform t) {
+		if (drawable != null) {
 			if (GLContext.getCapabilities().OpenGL20) {
 				if (shader > 0) {
 					GL20.glUseProgram(shader);
@@ -51,7 +52,8 @@ public final class RenderComponent implements Component {
 			} else {
 				GL11.glBlendFunc(blendModeSrc, blendModeDest);
 			}
-		drawable.draw(renderSystem, depth, color, t);
+			drawable.draw(renderSystem, depth, color, t);
+		}
 	}
 
 	public float getDepth() {
@@ -69,15 +71,19 @@ public final class RenderComponent implements Component {
 	public void setColor(Color color) {
 		this.color = color;
 	}
-	
+
 	public Drawable getDrawable() {
 		return drawable;
+	}
+
+	public void setDrawable(Drawable drawable) {
+		this.drawable = drawable;
 	}
 
 	public int getBlendModeSrc() {
 		return blendModeSrc;
 	}
-	
+
 	public int getBlendModeDest() {
 		return blendModeDest;
 	}
@@ -94,5 +100,5 @@ public final class RenderComponent implements Component {
 	public void setShader(int shader) {
 		this.shader = shader;
 	}
-	
+
 }
