@@ -42,15 +42,16 @@ public class TileMapRenderer implements Drawable {
 			if (!layer.isVisible()) continue;
 			realColor = new Color(color.r, color.g, color.b, layer.getOpacity()*color.a);
 			realColor.bind();
+			GL11.glPushMatrix();
 			GL11.glTranslatef(layer.getX(), layer.getY(), layer.depth);
 			if (layer instanceof TileLayer) {
 					drawTileLayer((TileLayer)layer, rs);
 			} else if (layer instanceof ImageLayer) {
-				drawImageLayer((ImageLayer)layer, rs);
+				drawImageLayer((ImageLayer)layer, rs, depth + layer.depth, color, t);
 			} else if (layer instanceof ObjectLayer) {
 				drawObjectLayer((ObjectLayer)layer, rs);
 			}
-			GL11.glTranslatef(-layer.getX(), -layer.getY(), -layer.depth);
+			GL11.glPopMatrix();
 		} 
 		GL11.glTranslatef(0f, 0f, -depth);
 		t.applyInverse();
@@ -59,8 +60,8 @@ public class TileMapRenderer implements Drawable {
 	/*
 	 * Image layer handling code
 	 */
-	private void drawImageLayer(ImageLayer imageLayer, RenderSystem rs) {
-		
+	private void drawImageLayer(ImageLayer imageLayer, RenderSystem rs, float depth, Color color, Transform t) {
+		imageLayer.getImage().draw(rs, depth, color, t);
 	}
 	
 	/*

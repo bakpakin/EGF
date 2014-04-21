@@ -13,6 +13,8 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glTexCoord2d;
 import static org.lwjgl.opengl.GL11.glVertex3d;
 
+import java.net.URL;
+
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 
@@ -30,6 +32,10 @@ public class SimpleBackground extends Background {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public SimpleBackground(URL url) {
+		super(url);
+	}
+
 	@Override
 	public void draw(RenderSystem renderSystem, float depth, Color color, Transform t) {
 		glPopMatrix();

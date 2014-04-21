@@ -24,7 +24,7 @@
 	<property name="lib" value="lib" />
 	<property name="src" value="src" />
 	<property name="dist" value="dist" />
-	<property name="build" value="classes" />
+	<property name="build" value="bin" />
 	<property name="jar.name" value="egf" />
 	<property name="natives" value="lib${file.separator}natives" />
 	<path id="lib-path">

@@ -2,10 +2,10 @@ package bakpakin.egf.util.render;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.net.URL;
+
 import org.lwjgl.opengl.Display;
-
 import org.lwjgl.util.vector.Vector2f;
-
 import org.newdawn.slick.Color;
 
 import bakpakin.egf.util.geom.Transform;
@@ -19,6 +19,10 @@ public class Background extends Sprite {
 
 	public Background(String key) {
 		super(key);
+	}
+	
+	public Background(URL url) {
+		super(url);
 	}
 	
 	@Override

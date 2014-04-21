@@ -1,5 +1,7 @@
 package bakpakin.egf.util.tilemap;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,6 +11,30 @@ import java.util.Map;
  * @see TileMap
  */
 public abstract class TileMapComponent {
+	
+	/**
+	 * This method handles the format in which Tiled stores references to its resources.
+	 * @param resourcePath a String to a resource
+	 * @param basedir - the URL of the file in which the resource path comes from.
+	 * @return a URL to the resource in the Tiled Map file.
+	 */
+	public static URL getResource(String resourcePath, URL basedir) {
+		URL url = null;
+		if (resourcePath.matches(".+:{1}.+")) {// if resourcePath is a url with protocol
+			try {
+				url = new URL(resourcePath);
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+		} else {//assume it is relative file path
+			try {
+				url = new URL(basedir, resourcePath);
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+		}
+		return url;
+	}
 
 	private Map<String , String> properties;
 

@@ -2,7 +2,6 @@ package bakpakin.egf.util.tilemap;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
@@ -11,8 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
-
-import org.apache.commons.io.FilenameUtils;
 
 import bakpakin.egf.util.AssetManager;
 import bakpakin.egf.util.tilemap.TileMapBean.LayerBean;
@@ -61,8 +58,7 @@ public class TileMap extends TileMapComponent {
 	 * @throws IOException
 	 */
 	public static TileMap load(String url, TileMapLoader loader) throws IOException {
-		AssetManager.initProtocols();
-		return load(new URL(url), loader);
+		return load(AssetManager.stringToURL(url), loader);
 	}
 
 	/**
@@ -75,7 +71,7 @@ public class TileMap extends TileMapComponent {
 	 */
 	public static TileMap load(URL url, TileMapLoader loader) throws IOException {
 		TileMapBean template = loader.load(url);
-		return readTemplate(template);
+		return readTemplate(template, url);
 	}
 
 	/**
@@ -83,7 +79,7 @@ public class TileMap extends TileMapComponent {
 	 * @param t - template
 	 * @return the new <code>TileMap</code>.
 	 */
-	public static TileMap readTemplate(TileMapBean t) {
+	public static TileMap readTemplate(TileMapBean t, URL mapFileUrl) {
 		TileMap tileMap = new TileMap(t.getTilewidth(), t.getTileheight());
 		tileMap.getProperties().putAll(t.getProperties());
 
@@ -101,7 +97,7 @@ public class TileMap extends TileMapComponent {
 				//increment the depth to the next free depth
 				while (tileMap.layers.containsKey(++depth));
 			}
-			Layer l = readTemplate(lt, tileMap, depth);
+			Layer l = readTemplate(lt, tileMap, depth, mapFileUrl);
 			tileMap.addLayer(l);
 		}
 		return tileMap;
@@ -114,7 +110,7 @@ public class TileMap extends TileMapComponent {
 	 * @param depth - depth to give new {@link Layer}
 	 * @return a new {@link Layer}
 	 */
-	private static Layer readTemplate(LayerBean t, TileMap tm, float depth) {
+	private static Layer readTemplate(LayerBean t, TileMap tm, float depth, URL mapFileUrl) {
 		Layer ret = null;
 		if (t.getType().equals("tilelayer")) {
 			if (t.getProperties() != null && t.getProperties().containsKey("chunksize")) {
@@ -139,6 +135,8 @@ public class TileMap extends TileMapComponent {
 		} else if (t.getType().equals("imagelayer")) {
 			ret = new ImageLayer(depth, tm);
 			initLayer(ret, t);
+			ImageLayer il = (ImageLayer) ret;
+			il.setImage(t.getImage(), mapFileUrl);
 		}
 		return ret;
 	}
@@ -166,24 +164,7 @@ public class TileMap extends TileMapComponent {
 	 * @return new {@link TileSet}.
 	 */
 	private static TileSet readTemplate(TileSetBean t, URL mapUrl) {
-		URL url = null;
-		if (t.getImage().matches(".+:{1}.+")) {// if rawImagePath is a url with protocol
-			try {
-				url = new URL(t.getImage());
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			}
-		} else {//assume it is relative file path
-			String mapFileName = mapUrl.getPath();
-			String mapDirectoryName = new File(mapFileName).getParentFile().getAbsolutePath();
-			String imagePath = FilenameUtils.concat(mapDirectoryName, t.getImage());
-			try {
-				File imageFile = new File(imagePath);
-				url = imageFile.toURI().toURL();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		URL url = TileMapComponent.getResource(t.getImage(), mapUrl);
 		TileSet tileSet = new TileSet(url, t.getName(), t.getTilewidth(), t.getTileheight());
 		tileSet.setMargin(t.getMargin());
 		tileSet.setxSeperation(t.getSpacing());

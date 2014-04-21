@@ -3,6 +3,7 @@ package bakpakin.egf.util.render;
 import static org.lwjgl.opengl.GL11.*;
 
 import java.io.Serializable;
+import java.net.URL;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
@@ -38,6 +39,14 @@ public class Sprite implements Drawable, Serializable{
 	 * @param ox - origin x
 	 * @param oy - origin y
 	 */
+	public Sprite(URL key, double ox, double oy) {
+		this.ox = ox;
+		this.oy = oy;
+		texture = AssetManager.getTexture(key);
+		width = texture.getImageWidth();
+		height = texture.getImageHeight();
+	}
+	
 	public Sprite(String key, double ox, double oy) {
 		this.ox = ox;
 		this.oy = oy;
@@ -54,6 +63,10 @@ public class Sprite implements Drawable, Serializable{
 	 */
 	public Sprite(String key) {
 		this(key, 0, 0);
+	}
+	
+	public Sprite(URL url) {
+		this(url, 0, 0);
 	}
 
 	/**

@@ -1,15 +1,23 @@
 package bakpakin.egf.util.tilemap;
 
+import java.net.URL;
+
+import bakpakin.egf.util.render.Drawable;
+import bakpakin.egf.util.render.Sprite;
 import bakpakin.egf.util.tilemap.TileMapBean.LayerBean;
 
 /**
- * A subclass of {@link Layer} that displays arbitrarily sized and placed images.
+ * A subclass of {@link Layer} that displays a background image.
  * For placing tiles in a grid, use {@link TileMap}
  * 
  * @author Calvin
  *
  */
 public class ImageLayer extends Layer {
+	
+	private Drawable image;
+	
+	private String imagePath;
 
 	/**
 	 * Creates a new {@link ImageLayer}.
@@ -47,8 +55,24 @@ public class ImageLayer extends Layer {
 	@Override
 	public LayerBean writeTemplate() {
 		LayerBean lb = super.writeTemplate();
+		lb.setImage(imagePath);
 		lb.setType("imagelayer");
 		return lb;
+	}
+
+	/**
+	 * @return the image
+	 */
+	public Drawable getImage() {
+		return image;
+	}
+
+	/**
+	 * @param image the image to set
+	 */
+	public void setImage(String imagePath, URL mapUrl) {
+		this.imagePath = imagePath;
+		this.image = new Sprite(TileMapComponent.getResource(imagePath, mapUrl));
 	}
 
 }
