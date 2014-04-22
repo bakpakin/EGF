@@ -44,7 +44,6 @@ public class RigTest {
 				new RenderComponent(new RigDrawer(chain[0])));
 		
 		Runner.mainLoop(world);
-		Runner.cleanUp();
 	}
 
 }

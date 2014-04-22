@@ -78,6 +78,8 @@ public class RenderSystem extends bakpakin.egf.framework.EntitySystem {
 	private int fps = 60;
 
 	private int shader;
+	
+	private boolean escToExit = true;
 
 	int colorTextureID;
 	int framebufferID;
@@ -202,7 +204,7 @@ public class RenderSystem extends bakpakin.egf.framework.EntitySystem {
 
 	@Override
 	public void update() {
-		if (Display.isCloseRequested() || Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+		if (this.escToExit && (Display.isCloseRequested() || Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)))
 			Runner.endGame();
 		if (shader > 0 && GLContext.getCapabilities().OpenGL20) {
 			updateWithFbo();
@@ -351,6 +353,14 @@ public class RenderSystem extends bakpakin.egf.framework.EntitySystem {
 				initFbo();
 			}
 		} throw new Exception("Shaders not supported.");
+	}
+
+	public boolean isEscToExit() {
+		return escToExit;
+	}
+
+	public void setEscToExit(boolean escToExit) {
+		this.escToExit = escToExit;
 	}
 
 }

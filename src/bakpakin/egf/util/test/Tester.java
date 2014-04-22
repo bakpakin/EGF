@@ -1,13 +1,18 @@
 package bakpakin.egf.util.test;
 
+import bakpakin.egf.util.Runner;
+
 public class Tester {
 
-	public static void main(String[] args) throws Exception {
-		TileMapTest.test();
+	public static void main(String[] args) throws Exception {		
+		NineBoxTest.test();
+		//TileMapTest.test();
 		//ShaderTest.test();
 		//GeometryTest.test();
 		//ParticleTest.test();
 		//RigTest.test();
+		
+		Runner.cleanUp();
 	}
 
 }

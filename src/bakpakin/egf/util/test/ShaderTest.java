@@ -57,7 +57,6 @@ public class ShaderTest {
 				);
 		
 		Runner.mainLoop(world);
-		Runner.cleanUp();
 	}
 
 }

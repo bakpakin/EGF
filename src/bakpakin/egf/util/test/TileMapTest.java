@@ -28,7 +28,6 @@ public class TileMapTest {
 		world.createEntity(new RenderComponent(new TileMapRenderer(tm)));
 		
 		Runner.mainLoop(world);
-		Runner.cleanUp();
 	}
 
 }

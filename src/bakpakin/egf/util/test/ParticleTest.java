@@ -28,7 +28,7 @@ import bakpakin.egf.util.render.Text;
 
 public class ParticleTest {
 
-	public static World test() {
+	public static void test() {
 		final World world = new World();
 		final RenderSystem renderSystem = new RenderSystem();
 		final ParticleSystem particleSystem = new ParticleSystem();
@@ -92,8 +92,6 @@ public class ParticleTest {
 		emitter.get(ParticleEmitter.class).stream(def, 100);
 		
 		Runner.mainLoop(world);
-		Runner.cleanUp();
-		return world;
 	}
 
 }

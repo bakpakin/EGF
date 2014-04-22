@@ -49,7 +49,6 @@ public class GeometryTest {
 		addShape(world, new Ellipse(0, 0, 320, 185, 45));//.transformLocal(Transform.rotation(20)));
 		
 		Runner.mainLoop(world);
-		Runner.cleanUp();
 	}
 	
 	private static void addShape(World world, Shape shape) {
