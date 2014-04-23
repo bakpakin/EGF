@@ -2,6 +2,10 @@ package bakpakin.egf.util.gui;
 
 public class UIPanel extends UIContainer {
 
+	public UIPanel() {
+		super();
+	}
+	
 	public UIPanel(UILayout layout) {
 		super(layout);
 	}
@@ -9,18 +13,31 @@ public class UIPanel extends UIContainer {
 	@Override
 	public void paintSelf() {
 		NineBox nb = getTheme().getContainer();
-		nb.draw(getX(), getY(), getX() + getWidth(), getY() + getHeight());
+		nb.draw(0, 0, getWidth(), getHeight());
 	}
 
 	@Override
-	void setContentWidth(int width) {
-		
+	public void setContentWidth(int width) {
+		NineBox nb = getTheme().getContainer();
+		setWidth(nb.getWidth(width));
 	}
 
 	@Override
-	void setContentHeight(int height) {
-		// TODO Auto-generated method stub
-		
+	public void setContentHeight(int height) {
+		NineBox nb = getTheme().getContainer();
+		setHeight(nb.getHeight(height));
+	}
+
+	@Override
+	public int getContentXOffset() {
+		NineBox nb = getTheme().getContainer();
+		return nb.getContentX1();
+	}
+
+	@Override
+	public int getContentYOffset() {
+		NineBox nb = getTheme().getContainer();
+		return nb.getContentY1();
 	}
 	
 }

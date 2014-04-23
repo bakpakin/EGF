@@ -17,6 +17,7 @@ public abstract class UILayout {
 			if (e instanceof UIContainer)
 				((UIContainer)e).update();
 		}
+		myLayout();
 	}
 
 	public abstract void myLayout();
@@ -33,7 +34,21 @@ public abstract class UILayout {
 		return root;
 	}
 	
+	public void setRoot(UIContainer root) {
+		if (this.root != null && this.root != root) {
+			reset();
+		}
+ 		this.root = root;
+		root.setLayout(this);
+	}
+	
+	public abstract void reset();
+	
 	public abstract void add(UIElement e, Object... args);
+	
+	public void add(UIElement e) {
+		add(e, new Object[0]);
+	}
 
 	public abstract Collection<UIElement> getElements();
 

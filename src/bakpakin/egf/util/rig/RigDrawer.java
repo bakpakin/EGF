@@ -62,13 +62,13 @@ public class RigDrawer implements Drawable {
 	}
 
 	@Override
-	public void draw(RenderSystem renderSystem, float depth, Color color, Transform t) {
+	public void draw(RenderSystem rs, float depth, Color color, Transform t) {
 		depthSortedBones.clear();
 		calcBone(rootBone, t);
 		for (Map.Entry<Bone, Transform> entry : depthSortedBones.entrySet()) {
 			Bone b = entry.getKey();
 			Transform txm = entry.getValue();
-			b.getDrawable().draw(renderSystem, depth, color, txm);
+			b.getDrawable().draw(rs, depth, color, txm);
 		}
 	}
 

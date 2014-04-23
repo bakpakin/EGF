@@ -25,7 +25,7 @@ public class ParticleSystemDrawer implements Drawable, Serializable {
 	}
 
 	@Override
-	public void draw(RenderSystem renderSystem, float depth, Color color,
+	public void draw(RenderSystem rs, float depth, Color color,
 			Transform t) {
 		
 		//clone t as it is mutated in place for efficiency
@@ -41,7 +41,7 @@ public class ParticleSystemDrawer implements Drawable, Serializable {
 				t.setAngle(p.orientation);
 				t.setXScale(p.size);
 				t.setYScale(p.size);
-				def.sprite.draw(renderSystem, depth, p.color, t);
+				def.sprite.draw(rs, depth, p.color, t);
 			}
 		}
 		

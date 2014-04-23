@@ -7,7 +7,7 @@ import bakpakin.egf.util.geom.Transform;
 import bakpakin.egf.util.render.Drawable;
 import bakpakin.egf.util.render.RenderSystem;
 
-public class UIDrawer implements Drawable {
+class UIDrawer implements Drawable {
 	
 	private UI ui;
 	
@@ -24,7 +24,7 @@ public class UIDrawer implements Drawable {
 	}
 
 	@Override
-	public void draw(RenderSystem renderSystem, float depth, Color color, Transform t) {
+	public void draw(RenderSystem rs, float depth, Color color, Transform t) {
 		t.apply();
 		color.bind();
 		GL11.glTranslatef(0f, 0f, depth);

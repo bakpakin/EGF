@@ -10,6 +10,10 @@ public abstract class UIContainer extends UIElement {
 	
 	int width, height;
 	
+	public UIContainer() {
+		this(new UILinearLayout(UILinearLayout.LAYOUT_VERTICAL));
+	}
+	
 	public UIContainer(UILayout layout) {
 		setLayout(layout);
 	}
@@ -18,9 +22,9 @@ public abstract class UIContainer extends UIElement {
 	public void paint() {
 		paintSelf();
 		for (UIElement e : layout.getElements()) {
-			GL11.glTranslatef(e.getX(), e.getY(), 0);
+			GL11.glTranslatef(e.getX()-getX(), e.getY()-getY(), 0);
 			e.paint();			
-			GL11.glTranslatef(-e.getX(), -e.getY(), 0);
+			GL11.glTranslatef(-e.getX()+getX(), -e.getY()+getY(), 0);
 		}
 	}
 	
@@ -34,6 +38,10 @@ public abstract class UIContainer extends UIElement {
 		layout.layout();
 	}
 	
+	public void add(UIElement e) {
+		layout.add(e);
+	}
+	
 	@Override
 	public void setUi(UI ui) {
 		super.setUi(ui);
@@ -43,9 +51,13 @@ public abstract class UIContainer extends UIElement {
 		}
 	}
 	
-	abstract void setContentWidth(int width);
+	public abstract int getContentXOffset();
 	
-	abstract void setContentHeight(int height);
+	public abstract int getContentYOffset();
+	
+	public abstract void setContentWidth(int width);
+	
+	public abstract void setContentHeight(int height);
 	
 	@Override
 	public int getWidth() {
@@ -79,6 +91,8 @@ public abstract class UIContainer extends UIElement {
 	 */
 	public void setLayout(UILayout layout) {
 		this.layout = layout;
+		if (layout.getRoot() != this)
+			layout.setRoot(this);
 	}
 
 }

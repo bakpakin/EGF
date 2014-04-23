@@ -19,10 +19,10 @@ public class MultiDraw implements Drawable {
 	}
 
 	@Override
-	public void draw(RenderSystem renderSystem, float depth, Color color,
+	public void draw(RenderSystem rs, float depth, Color color,
 			Transform t) {
 		for (Drawable d : drawables)
-			d.draw(renderSystem, depth, color, t);
+			d.draw(rs, depth, color, t);
 	}
 
 }

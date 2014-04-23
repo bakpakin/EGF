@@ -42,7 +42,7 @@ public final class RenderComponent implements Component {
 		setBlendMode(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 	}
 
-	public void draw(RenderSystem renderSystem, Transform t) {
+	public void draw(RenderSystem rs, Transform t) {
 		if (drawable != null) {
 			if (GLContext.getCapabilities().OpenGL20) {
 				if (shader > 0) {
@@ -54,7 +54,7 @@ public final class RenderComponent implements Component {
 			} else {
 				GL11.glBlendFunc(blendModeSrc, blendModeDest);
 			}
-			drawable.draw(renderSystem, depth, color, t);
+			drawable.draw(rs, depth, color, t);
 		}
 	}
 

@@ -22,8 +22,8 @@ public class UILinearLayout extends UILayout {
 
 	@Override
 	public void myLayout() {
-		int x1 = root.getX();
-		int y1 = root.getY();
+		int x1 = root.getX() + root.getContentXOffset();
+		int y1 = root.getY() + root.getContentYOffset();
 		int xpos = x1 + xSeperation;
 		int ypos = y1 + ySeperation;
 		int max = 0;
@@ -79,6 +79,11 @@ public class UILinearLayout extends UILayout {
 	@Override
 	public List<UIElement> getElements() {
 		return Collections.unmodifiableList(elements);
+	}
+
+	@Override
+	public void reset() {
+		elements.clear();
 	}
 
 }
