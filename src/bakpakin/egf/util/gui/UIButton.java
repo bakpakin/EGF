@@ -18,6 +18,7 @@ public class UIButton extends UIElement {
 	public UIButton(String text) {
 		setText(text);
 		setAction(text);
+		state = State.RELEASED;
 	}
 	
 	private State state;
@@ -26,13 +27,17 @@ public class UIButton extends UIElement {
 	public void paint() {
 		UITheme t = getTheme();
 		TrueTypeFont font = t.getBodyFont();
-		int fw = font.getWidth(text);
-		int fh = font.getHeight(text);
 		NineBox nb = getNineBox();
-		int fx = 0; 
-		int fy = 0;
+		int fw = max(font.getWidth(text), nb.getMinimumContentWidth());
+		int fh = max(font.getHeight(), nb.getMinimumContentHeight());
+		int fx = nb.getContentX1();
+		int fy = nb.getContentY1();
 		nb.drawAroundContents(fx, fy, fx + fw, fy + fh);
 		font.drawString(fx, fy, text);
+	}
+	
+	private int max(int i1, int i2) {
+		return i1 > i2 ? i1 : i2;
 	}
 
 	@Override
@@ -80,7 +85,7 @@ public class UIButton extends UIElement {
 		UITheme t = getTheme();
 		TrueTypeFont f = t.getBodyFont();
 		NineBox nb = getNineBox();
-		return f.getHeight(text) + nb.getContentY1() - nb.getContentY2() + nb.getHeight();	
+		return f.getHeight() + nb.getContentY1() - nb.getContentY2() + nb.getHeight();	
 	}
 
 	public String getText() {

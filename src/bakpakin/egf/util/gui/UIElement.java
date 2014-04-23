@@ -5,9 +5,7 @@ import bakpakin.egf.util.geom.AxisAlignedBox;
 public abstract class UIElement {
 
 	float x, y;
-	
-	float width, height;
-	
+		
 	float localX, localY;
 	
 	private boolean inheritTheme;
@@ -17,7 +15,6 @@ public abstract class UIElement {
 	UI ui;
 	
 	public UIElement() {
-		this(null);
 	}
 	
 	public UIElement(UIContainer parent) {
@@ -29,13 +26,9 @@ public abstract class UIElement {
 		return parent;
 	}
 	
-	public float getWidth() {
-		return width;
-	}
+	public abstract float getWidth();
 	
-	public float getHeight() {
-		return height;
-	}
+	public abstract float getHeight();
 	
 	public UI getUi() {
 		return ui;

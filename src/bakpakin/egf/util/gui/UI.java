@@ -27,6 +27,7 @@ public class UI {
 	public UI(UITheme theme, UIElement root, Camera camera) {
 		this.theme = theme;
 		this.root = root;
+		root.setUi(this);
 		this.setCamera(camera);
 		if (!Mouse.isCreated()) {
 			try {

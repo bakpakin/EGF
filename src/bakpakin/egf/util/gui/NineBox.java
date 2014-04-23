@@ -53,7 +53,7 @@ public class NineBox {
 	}
 
 	/**
-	 * Creates a new {@link NineBox} the specified boundaries.
+	 * Creates a new {@link NineBox} with the specified boundaries.
 	 * @param texture
 	 * @param x1
 	 * @param y1
@@ -65,7 +65,7 @@ public class NineBox {
 	}
 	
 	/**
-	 * Creates a new {@link NineBox} the specified boundaries.
+	 * Creates a new {@link NineBox} with the specified boundaries.
 	 * @param texture
 	 * @param x1
 	 * @param y1
@@ -130,10 +130,10 @@ public class NineBox {
 	 */
 	public void drawAroundContents(float xMin, float yMin, float xMax, float yMax) {
 		draw(
-				xMin + x1 - contentX1,
-				yMin + y1 - contentY1,
-				xMax + x2 - contentX2,
-				yMax + y2 - contentY2
+				xMin - contentX1,
+				yMin - contentY1,
+				xMax - contentX2 + getWidth(),
+				yMax - contentY2 + getHeight()
 				);
 	}
 	
@@ -162,35 +162,41 @@ public class NineBox {
 	}
 
 	/**
-	 * Draws the scaled image.
+	 * Draws the scaled image. If the image given is to small, the
+	 * smallest possible image will be drawn centered around the location of the
+	 * desired image location.
 	 * @param xMin
 	 * @param yMin
 	 * @param xMax
 	 * @param yMax
 	 */
 	public void draw(float xMin, float yMin, float xMax, float yMax) {
-		if (dirty)
-			recalc();
-		texture.bind();
-		final float x2 = xMin + x1;
-		final float y2 = yMin + y1;
-		final float x3 = xMax - getWidth() + this.x2;
-		final float y3 = yMax - getHeight() + this.y2;
-		GL11.glBegin(GL11.GL_QUADS);
-
-		glbox(xMin, yMin, x2, y2, 0, 0, tx1, ty1);
-		glbox(x2, yMin, x3, y2, tx1, 0, tx2, ty1);
-		glbox(x3, yMin, xMax, y2, tx2, 0, tx3, ty1);
-
-		glbox(xMin, y2, x2, y3, 0, ty1, tx1, ty2);
-		glbox(x2, y2, x3, y3, tx1, ty1, tx2, ty2);
-		glbox(x3, y2, xMax, y3, tx2, ty1, tx3, ty2);
-
-		glbox(xMin, y3, x2, yMax, 0, ty2, tx1, ty3);
-		glbox(x2, y3, x3, yMax, tx1, ty2, tx2, ty3);
-		glbox(x3, y3, xMax, yMax, tx2, ty2, tx3, ty3);
-
-		GL11.glEnd();
+		if (xMax - xMin < getMinimumWidth() || yMax - yMin < getMinimumHeight()) {
+			final float cx = (xMax + xMin) * 0.5f;
+			final float cy = (yMax + yMin) * 0.5f;
+			final float hw = getWidth() * 0.5f;
+			final float hh = getHeight() * 0.5f;
+			draw(cx - hw, cy - hh, cx + hw, cy + hh);
+		} else {
+			if (dirty)
+				recalc();
+			texture.bind();
+			final float x2 = xMin + x1;
+			final float y2 = yMin + y1;
+			final float x3 = xMax - getWidth() + this.x2;
+			final float y3 = yMax - getHeight() + this.y2;
+			GL11.glBegin(GL11.GL_QUADS);
+			glbox(xMin, yMin, x2, y2, 0, 0, tx1, ty1);
+			glbox(x2, yMin, x3, y2, tx1, 0, tx2, ty1);
+			glbox(x3, yMin, xMax, y2, tx2, 0, tx3, ty1);
+			glbox(xMin, y2, x2, y3, 0, ty1, tx1, ty2);
+			glbox(x2, y2, x3, y3, tx1, ty1, tx2, ty2);
+			glbox(x3, y2, xMax, y3, tx2, ty1, tx3, ty2);
+			glbox(xMin, y3, x2, yMax, 0, ty2, tx1, ty3);
+			glbox(x2, y3, x3, yMax, tx1, ty2, tx2, ty3);
+			glbox(x3, y3, xMax, yMax, tx2, ty2, tx3, ty3);
+			GL11.glEnd();
+		}
 	}
 
 	/*
@@ -222,6 +228,34 @@ public class NineBox {
 	 */
 	public int getHeight() {
 		return texture.getImageHeight();
+	}
+	
+	/**
+	 * @return the minimum width this {@link NineBox} can be drawn at.
+	 */
+	public int getMinimumWidth() {
+		return x1 + getWidth() - x2;
+	}
+	
+	/**
+	 * @return the minimum height this {@link NineBox} can be drawn at.
+	 */
+	public int getMinimumHeight() {
+		return y1 + getHeight() - y2;
+	}
+	
+	/**
+	 * @return the minimum width of content that can be correctly drawn around.
+	 */
+	public int getMinimumContentWidth() {
+		return getMinimumWidth() - (contentX1 + getWidth() - contentX2);
+	}
+	
+	/**
+	 * @return the minimum height of content that can be correctly drawn around.
+	 */
+	public int getMinimumContentHeight() {
+		return getMinimumHeight() - (contentY1 + getHeight() - contentY2);
 	}
 
 	/**

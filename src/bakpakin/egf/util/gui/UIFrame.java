@@ -12,4 +12,16 @@ public class UIFrame extends UIContainer {
 		
 	}
 
+	@Override
+	public float getWidth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float getHeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

@@ -14,4 +14,16 @@ public class UIRadioButton extends UIElement {
 		
 	}
 
+	@Override
+	public float getWidth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float getHeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

@@ -7,5 +7,17 @@ public class UIPanel extends UIContainer {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public float getWidth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float getHeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }
