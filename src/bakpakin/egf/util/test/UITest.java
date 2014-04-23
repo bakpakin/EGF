@@ -1,5 +1,7 @@
 package bakpakin.egf.util.test;
 
+import org.lwjgl.opengl.Display;
+
 import bakpakin.egf.framework.World;
 import bakpakin.egf.util.Runner;
 import bakpakin.egf.util.gui.UI;
@@ -37,6 +39,8 @@ public class UITest {
 		UIContainer panel = new UIPanel();
 		panel.add(btn);
 		panel.add(p1);
+		panel.setX(Display.getWidth()/2);
+		panel.setY(Display.getHeight()/2);
 		
 		UI ui = new UI(theme, panel);
 		ui.addToRenderSystem(renderSystem);

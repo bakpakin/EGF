@@ -9,6 +9,7 @@ import java.util.Map;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
 
 import bakpakin.egf.framework.Entity;
@@ -160,8 +161,11 @@ public class UI {
 	}
 
 	void render() {
-		if (root != null)
+		if (root != null) {
+			GL11.glTranslatef(root.getX(), root.getY(), 0f);
 			root.paint();
+			GL11.glTranslatef(-root.getX(), -root.getY(), 0f);
+		}
 	}
 	
 	public Camera getCamera() {

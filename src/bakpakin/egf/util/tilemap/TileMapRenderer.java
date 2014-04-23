@@ -140,16 +140,16 @@ public class TileMapRenderer implements Drawable {
 				x2 = x1 + w;
 				y1 = y2 - h;
 				
-				glTexCoord3f(tx1, ty2, 0f);
+				glTexCoord2f(tx1, ty2);
 				glVertex3f(x1, y1, 0f);
 				
-				glTexCoord3f(tx1, ty1, 0f);
+				glTexCoord2f(tx1, ty1);
 				glVertex3f(x1, y2, 0f);
 
-				glTexCoord2d(tx2, ty1);
+				glTexCoord2f(tx2, ty1);
 				glVertex3f(x2, y2, 0f);
 
-				glTexCoord2d(tx2, ty2);
+				glTexCoord2f(tx2, ty2);
 				glVertex3f(x2, y1, 0f);
 				
 			}

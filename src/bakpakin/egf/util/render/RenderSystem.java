@@ -30,6 +30,7 @@ import org.newdawn.slick.Color;
 
 import bakpakin.egf.framework.Entity;
 import bakpakin.egf.framework.Matcher;
+import bakpakin.egf.util.AssetManager;
 import bakpakin.egf.util.Runner;
 import bakpakin.egf.util.geom.Transform;
 
@@ -164,6 +165,7 @@ public class RenderSystem extends bakpakin.egf.framework.EntitySystem {
 		glDepthFunc(GL_LEQUAL);
 		glEnable(GL_ALPHA_TEST);
 		glAlphaFunc(GL_GREATER, 0f);
+		AssetManager.cleanUp();//clean up old assets that will no longer be useful.
 	}
 
 	private void initFbo() {
