@@ -1,6 +1,7 @@
 package bakpakin.egf.util.gui;
 
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
 
 public class UIRadioButton extends UIAbstractButton {
@@ -18,6 +19,7 @@ public class UIRadioButton extends UIAbstractButton {
 
 	@Override
 	public void paint() {
+		Color.white.bind();
 		Texture t = selected ? getTheme().getRadioButtonSelected() : getTheme().getRadioButtonUnselected();
 		texture = t;
 		t.bind();

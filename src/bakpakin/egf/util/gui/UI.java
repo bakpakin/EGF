@@ -28,29 +28,29 @@ import bakpakin.egf.util.render.RenderSystem;
  *
  */
 public class UI {
-	
+
 	/**
 	 * The {@link UITheme} used to render elements.
 	 */
 	private UITheme theme;
-	
+
 	/**
 	 * The outermost {@link UIElement}.
 	 */
 	private UIElement root;
-	
+
 	private boolean hud = true;
-	
+
 	private Map<String, Collection<UIActionListener>> actionListeners;
 	private LinkedList<UIActionEvent> actionEvents;
-	
+
 	private Map<String, Collection<UIStateListener>> stateListeners;
 	private LinkedList<UIStateChangedEvent> stateEvents;
-	
+
 	private Entity renderingEntity;
-	
+
 	private RenderSystem rs;
-	
+
 	/**
 	 * Creates a new {@link UI}. Simply creating a new UI will
 	 * not cause it to be rendered or updated in a world. In order
@@ -83,14 +83,14 @@ public class UI {
 		this.stateListeners = new HashMap<String, Collection<UIStateListener>>();
 		this.stateEvents = new LinkedList<UIStateChangedEvent>();
 	}
-	
+
 	public void addToRenderSystem(RenderSystem rs) {
 		this.rs = rs;
 		renderingEntity = rs.getWorld().createEntity(new RenderComponent(new UIDrawer(this)));
 		setHud(hud);
 		update();
 	}
-	
+
 	public void addActionListener(String eventTag, UIActionListener listener) {
 		Collection<UIActionListener> col = actionListeners.get(eventTag);
 		if (col == null) {
@@ -99,11 +99,11 @@ public class UI {
 		}
 		col.add(listener);
 	}
-	
+
 	public void addActionEvent(UIActionEvent e) {
 		actionEvents.add(e);
 	}
-	
+
 	public void addStateListener(String eventTag, UIStateListener listener) {
 		Collection<UIStateListener> col = stateListeners.get(eventTag);
 		if (col == null) {
@@ -112,11 +112,11 @@ public class UI {
 		}
 		col.add(listener);
 	}
-	
+
 	public void addStateEvent(UIStateChangedEvent e) {
 		stateEvents.add(e);
 	}
-	
+
 	private void handleEvents() {
 		while (!actionEvents.isEmpty()) {
 			UIActionEvent e = actionEvents.removeFirst();
@@ -153,7 +153,7 @@ public class UI {
 	public void setRoot(UIContainer root) {
 		this.root = root;
 	}
-	
+
 	void update() {
 		if (root != null)
 			root.update();
@@ -167,7 +167,7 @@ public class UI {
 			GL11.glTranslatef(-root.getX(), -root.getY(), 0f);
 		}
 	}
-	
+
 	public Camera getCamera() {
 		if (hud) {
 			return rs.getHudCamera();
@@ -175,7 +175,7 @@ public class UI {
 			return rs.getCamera();
 		}
 	}
-	
+
 	public Vector2f getMouse() {
 		return getCamera().worldPt(Mouse.getX(), Mouse.getY());
 	}
@@ -186,15 +186,16 @@ public class UI {
 
 	public void setHud(boolean hud) {
 		this.hud = hud;
-		this.renderingEntity.get(RenderComponent.class).setDrawHud(hud);
+		if (this.renderingEntity != null)
+			this.renderingEntity.get(RenderComponent.class).setDrawHud(hud);
 	}
-	
+
 	public boolean isActive() {
 		return renderingEntity.isActive();
 	}
-	
+
 	public void setActive(boolean active) {
 		renderingEntity.setActive(active);
 	}
-	
+
 }

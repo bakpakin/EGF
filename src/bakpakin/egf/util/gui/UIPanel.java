@@ -1,5 +1,7 @@
 package bakpakin.egf.util.gui;
 
+import org.newdawn.slick.Color;
+
 public class UIPanel extends UIContainer {
 
 	public UIPanel() {
@@ -12,6 +14,7 @@ public class UIPanel extends UIContainer {
 
 	@Override
 	public void paintSelf() {
+		Color.white.bind();
 		NineBox nb = getTheme().getContainer();
 		nb.draw(0, 0, getWidth(), getHeight());
 	}

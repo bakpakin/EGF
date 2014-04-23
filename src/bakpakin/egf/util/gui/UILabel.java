@@ -1,5 +1,6 @@
 package bakpakin.egf.util.gui;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 
 public class UILabel extends UIElement {
@@ -13,7 +14,8 @@ public class UILabel extends UIElement {
 	@Override
 	public void paint() {
 		TrueTypeFont font = getTheme().getBodyFont();
-		font.drawString(0, 0, text);
+		Color c = getTheme().getBodyFontColor();
+		font.drawString(0, 0, text, c);
 	}
 
 	@Override

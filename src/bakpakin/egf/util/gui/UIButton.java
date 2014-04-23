@@ -1,5 +1,6 @@
 package bakpakin.egf.util.gui;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 
 public class UIButton extends UIAbstractButton {
@@ -10,12 +11,14 @@ public class UIButton extends UIAbstractButton {
 	
 	public UIButton(String text) {
 		setText(text);
-		setAction(text);
+		setEventTag(text);
 	}
 	
 	@Override
 	public void paint() {
+		Color.white.bind();
 		UITheme t = getTheme();
+		Color c = t.getBodyFontColor();
 		TrueTypeFont font = t.getBodyFont();
 		NineBox nb = getNineBox();
 		int fw = max(font.getWidth(text), nb.getMinimumContentWidth());
@@ -23,7 +26,7 @@ public class UIButton extends UIAbstractButton {
 		int fx = nb.getContentX1();
 		int fy = nb.getContentY1();
 		nb.drawAroundContents(fx, fy, fx + fw, fy + fh);
-		font.drawString(fx, fy, text);
+		font.drawString(fx, fy, text, c);
 	}
 	
 	private int max(int i1, int i2) {
@@ -77,12 +80,12 @@ public class UIButton extends UIAbstractButton {
 		return state;
 	}
 
-	public String getAction() {
+	public String getEventTag() {
 		return action;
 	}
 
-	public void setAction(String action) {
-		this.action = action;
+	public void setEventTag(String eventTag) {
+		this.action = eventTag;
 	}
 
 }

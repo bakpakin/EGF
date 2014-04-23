@@ -8,8 +8,16 @@ public class UILinearLayout extends UILayout {
 
 	public static final int LAYOUT_VERTICAL = 0;
 	public static final int LAYOUT_HORIZONTAL = 1;
+	
+	public static final int ALIGN_TOP = 2;
+	public static final int ALIGN_CENTER = 3;
+	public static final int ALIGN_BOTTOM = 4;
+	public static final int ALIGN_LEFT = 2;
+	public static final int ALIGN_RIGHT = 4; 
 
 	private int orientation;
+	
+	private int alignment = ALIGN_CENTER;
 
 	private ArrayList<UIElement> elements;
 
@@ -26,24 +34,46 @@ public class UILinearLayout extends UILayout {
 		int y1 = root.getY() + root.getContentYOffset();
 		int xpos = x1 + xSeperation;
 		int ypos = y1 + ySeperation;
-		int max = 0;
+		//calculate size of container
 		for (UIElement e : elements) {
-			e.setX(xpos);
-			e.setY(ypos);
 			if (orientation == LAYOUT_VERTICAL) {
+				e.setY(ypos);
 				ypos += e.getHeight() + ySeperation;
-				max = max > e.getWidth() ? max : e.getWidth();
+				xpos = xpos > x1 + e.getWidth() ? xpos : x1 + e.getWidth();
 			} else {
+				e.setX(xpos);
 				xpos += e.getWidth() + xSeperation;
-				max = max > e.getHeight() ? max : e.getHeight();
+				ypos = ypos > y1 + e.getHeight() ? ypos : y1 + e.getHeight();
 			}
 		}
+		
+		//align elements
+		for (UIElement e : elements) {
+			if (orientation == LAYOUT_VERTICAL) {
+				e.setX(calcAlignment(x1, xpos, e.getWidth()));
+			} else {
+				e.setY(calcAlignment(y1, ypos, e.getHeight()));
+			}
+		}
+		
 		if (orientation == LAYOUT_VERTICAL) {
-			root.setContentWidth(2 * xSeperation + max);
+			root.setContentWidth(2 * xSeperation + xpos - x1);
 			root.setContentHeight(ypos - y1);
 		} else {
 			root.setContentWidth(xpos - x1);
-			root.setContentHeight(2 * ySeperation + max);
+			root.setContentHeight(2 * ySeperation + ypos - y1);
+		}
+	}
+
+	private int calcAlignment(int xMin, int xMax, int width) {
+		switch (alignment) {
+		case ALIGN_TOP:
+			return xMin;
+		case ALIGN_BOTTOM:
+			return xMax - width;
+		case ALIGN_CENTER:
+		default:
+			return (xMin + xMax - width) / 2;
 		}
 	}
 
@@ -84,6 +114,14 @@ public class UILinearLayout extends UILayout {
 	@Override
 	public void reset() {
 		elements.clear();
+	}
+
+	public int getAlignment() {
+		return alignment;
+	}
+
+	public void setAlignment(int alignment) {
+		this.alignment = alignment;
 	}
 
 }

@@ -1,6 +1,7 @@
 
 package bakpakin.egf.util.gui;
 
+import org.newdawn.slick.Color;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +47,9 @@ public class UITheme {
 	private Texture radioButtonSelected;
 	private TrueTypeFont bodyFont;
 	private TrueTypeFont titleFont;
+	
+	private Color bodyFontColor = Color.black;
+	private Color titleFontColor = Color.black;
 
 	private Map<String, Texture> icons;
 
@@ -139,6 +143,22 @@ public class UITheme {
 
 	public void setIcons(Map<String, Texture> icons) {
 		this.icons = icons;
+	}
+
+	public Color getTitleFontColor() {
+		return titleFontColor;
+	}
+
+	public void setTitleFontColor(Color titleFontColor) {
+		this.titleFontColor = titleFontColor;
+	}
+
+	public Color getBodyFontColor() {
+		return bodyFontColor;
+	}
+
+	public void setBodyFontColor(Color bodyFontColor) {
+		this.bodyFontColor = bodyFontColor;
 	}
 
 }
