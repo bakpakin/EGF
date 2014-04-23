@@ -87,6 +87,7 @@ public class UI {
 		this.rs = rs;
 		renderingEntity = rs.getWorld().createEntity(new RenderComponent(new UIDrawer(this)));
 		setHud(hud);
+		update();
 	}
 	
 	public void addActionListener(String eventTag, UIActionListener listener) {
@@ -182,6 +183,14 @@ public class UI {
 	public void setHud(boolean hud) {
 		this.hud = hud;
 		this.renderingEntity.get(RenderComponent.class).setDrawHud(hud);
+	}
+	
+	public boolean isActive() {
+		return renderingEntity.isActive();
+	}
+	
+	public void setActive(boolean active) {
+		renderingEntity.setActive(active);
 	}
 	
 }

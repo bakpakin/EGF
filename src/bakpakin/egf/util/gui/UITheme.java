@@ -7,7 +7,38 @@ import java.util.Map;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 
+import bakpakin.egf.util.AssetManager;
+
 public class UITheme {
+
+	private static UITheme defaultTheme;
+	
+	private static final String defaultLoc = "bakpakin/egf/util/gui/defaulttheme/";
+
+	public static UITheme getDefaultTheme() {
+		if (defaultTheme == null) {
+			defaultTheme = new UITheme();
+			defaultTheme.setBodyFont(AssetManager.getFont(defaultLoc + "Helvetica.ttf", 26f));
+			defaultTheme.setTitleFont(AssetManager.getFont(defaultLoc + "Helvetica.ttf", 32f));
+			Texture ct = AssetManager.getTexture(defaultLoc + "container.png");
+			Texture b = AssetManager.getTexture(defaultLoc + "button.png");
+			Texture bp = AssetManager.getTexture(defaultLoc + "buttonpressed.png");
+			Texture bh = AssetManager.getTexture(defaultLoc + "buttonhover.png");
+			Texture rb = AssetManager.getTexture(defaultLoc + "radiobuttonunselected.png");
+			Texture rbs = AssetManager.getTexture(defaultLoc + "radiobuttonselected.png");
+			NineBox button = new NineBox(b);
+			NineBox buttonHover = new NineBox(bh);
+			NineBox buttonPressed = new NineBox(bp);
+			NineBox c = new NineBox(ct);
+			defaultTheme.setButton(button);
+			defaultTheme.setButtonHover(buttonHover);
+			defaultTheme.setButtonPressed(buttonPressed);
+			defaultTheme.setRadioButtonSelected(rbs);
+			defaultTheme.setRadioButtonUnselected(rb);
+			defaultTheme.setContainer(c);
+		}
+		return defaultTheme;
+	}
 
 	private NineBox container;
 	private NineBox button;
@@ -19,9 +50,9 @@ public class UITheme {
 	private Texture radioButtonSelected;
 	private TrueTypeFont bodyFont;
 	private TrueTypeFont titleFont;
-	
+
 	private Map<String, Texture> icons;
-	
+
 	public UITheme() {
 		this.icons = new HashMap<String, Texture>();
 	}
@@ -113,5 +144,5 @@ public class UITheme {
 	public void setIcons(Map<String, Texture> icons) {
 		this.icons = icons;
 	}
-	
+
 }

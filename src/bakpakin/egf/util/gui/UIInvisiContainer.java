@@ -35,7 +35,7 @@ public class UIInvisiContainer extends UIContainer {
 
 	@Override
 	public void setContentHeight(int height) {
-		this.setWidth(height + (2 * yBorder));		
+		this.setHeight(height + (2 * yBorder));		
 	}
 
 	@Override
