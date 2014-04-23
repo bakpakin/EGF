@@ -355,7 +355,9 @@ public class RenderSystem extends bakpakin.egf.framework.EntitySystem {
 			if (framebufferID == 0) {//fbo not yet created
 				initFbo();
 			}
-		} throw new Exception("Shaders not supported.");
+		} else {
+			throw new Exception("Shaders not supported.");
+		}
 	}
 
 	public boolean isEscToExit() {
