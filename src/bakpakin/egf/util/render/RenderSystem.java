@@ -292,11 +292,12 @@ public class RenderSystem extends bakpakin.egf.framework.EntitySystem {
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		}
 		glLoadIdentity();
-		if (e.hasTag("Hud"))
-			hudCamera.apply();
-		else
-			camera.apply();
 		RenderComponent rc = e.get(RenderComponent.class);
+		if (rc.isDrawHud()) {
+			hudCamera.apply();
+		} else {
+			camera.apply();
+		}
 		Transform t = e.get(Transform.class);
 		if (t == null) {
 			t = new Transform();

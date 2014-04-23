@@ -80,9 +80,9 @@ public class ParticleTest {
 				);
 		
 		world.createEntity(
-				new RenderComponent(hud),
+				new RenderComponent(hud).drawHud(),
 				new StepBehavior(updateHud)
-				).addTag("Hud");
+				);
 		
 		Entity emitter = world.createEntity(
 				new Transform(),

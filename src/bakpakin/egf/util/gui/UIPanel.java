@@ -2,22 +2,25 @@ package bakpakin.egf.util.gui;
 
 public class UIPanel extends UIContainer {
 
+	public UIPanel(UILayout layout) {
+		super(layout);
+	}
+
 	@Override
 	public void paintSelf() {
-		// TODO Auto-generated method stub
+		NineBox nb = getTheme().getContainer();
+		nb.draw(getX(), getY(), getX() + getWidth(), getY() + getHeight());
+	}
+
+	@Override
+	void setContentWidth(int width) {
 		
 	}
 
 	@Override
-	public float getWidth() {
+	void setContentHeight(int height) {
 		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public float getHeight() {
-		// TODO Auto-generated method stub
-		return 0;
+		
 	}
 	
 }

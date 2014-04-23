@@ -1,15 +1,8 @@
 package bakpakin.egf.util.gui;
 
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.TrueTypeFont;
 
-import bakpakin.egf.util.geom.AxisAlignedBox;
-
-public class UIButton extends UIElement {
-	
-	public static enum State {
-		PRESSED, HOVER, RELEASED
-	}
+public class UIButton extends UIAbstractButton {
 	
 	private String text;
 	
@@ -18,11 +11,8 @@ public class UIButton extends UIElement {
 	public UIButton(String text) {
 		setText(text);
 		setAction(text);
-		state = State.RELEASED;
 	}
 	
-	private State state;
-
 	@Override
 	public void paint() {
 		UITheme t = getTheme();
@@ -39,23 +29,10 @@ public class UIButton extends UIElement {
 	private int max(int i1, int i2) {
 		return i1 > i2 ? i1 : i2;
 	}
-
+	
 	@Override
-	public void update() {
-		AxisAlignedBox b = getBoundingBox();
-		State previousState = state;
-		if (b.contains(getUi().getMouse())) {
-			if (Mouse.isButtonDown(0)) {
-				state = State.PRESSED;
-			} else {
-				state = State.HOVER;
-			}
-		} else {
-			state = State.RELEASED;
-		}
-		if (state == State.PRESSED && previousState != State.PRESSED) {
-			getUi().addActionEvent(new UIActionEvent(action));
-		}
+	public void buttonPressed() {
+		getUi().addActionEvent(new UIActionEvent(action));
 	}
 	
 	private NineBox getNineBox() {
@@ -73,19 +50,19 @@ public class UIButton extends UIElement {
 	}
 	
 	@Override
-	public float getWidth() {
+	public int getWidth() {
 		UITheme t = getTheme();
 		TrueTypeFont f = t.getBodyFont();
 		NineBox nb = getNineBox();
-		return f.getWidth(text) + nb.getContentX1() - nb.getContentX2() + nb.getWidth();
+		return nb.getWidth(f.getWidth(text));
 	}
 	
 	@Override
-	public float getHeight() {
+	public int getHeight() {
 		UITheme t = getTheme();
 		TrueTypeFont f = t.getBodyFont();
 		NineBox nb = getNineBox();
-		return f.getHeight() + nb.getContentY1() - nb.getContentY2() + nb.getHeight();	
+		return nb.getHeight(f.getHeight(text));	
 	}
 
 	public String getText() {

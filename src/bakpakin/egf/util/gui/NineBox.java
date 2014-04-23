@@ -222,12 +222,33 @@ public class NineBox {
 	public int getWidth() {
 		return texture.getImageWidth();
 	}
+	
+	/**
+	 * @param contentWidth
+	 * @return the width of this {@link NineBox} when surrounding content of this width;
+	 */
+	public int getWidth(int contentWidth) {
+		if (contentWidth < getMinimumContentWidth()){
+			return getMinimumWidth();
+		}
+		return contentWidth + contentX1 + getWidth() - contentX2;	}
 
 	/**
 	 * @return the number of pixels high this {@link NineBox} is
 	 */
 	public int getHeight() {
 		return texture.getImageHeight();
+	}
+	
+	/**
+	 * @param contentHeight
+	 * @return the height of this {@link NineBox} when surrounding content of this height;
+	 */
+	public int getHeight(int contentHeight) {
+		if (contentHeight < getMinimumContentHeight()){
+			return getMinimumHeight();
+		}
+		return contentHeight + contentY1 + getHeight() - contentY2;
 	}
 	
 	/**

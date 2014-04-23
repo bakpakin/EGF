@@ -20,6 +20,8 @@ public final class RenderComponent implements Component {
 	private int blendModeDest;
 	private int shader;
 	private Color color;
+	
+	private boolean drawHud;
 
 	public RenderComponent(Drawable drawable) {
 		this(drawable, 0f, Color.white);
@@ -99,6 +101,19 @@ public final class RenderComponent implements Component {
 
 	public void setShader(int shader) {
 		this.shader = shader;
+	}
+
+	public boolean isDrawHud() {
+		return drawHud;
+	}
+
+	public void setDrawHud(boolean drawHud) {
+		this.drawHud = drawHud;
+	}
+	
+	public RenderComponent drawHud() {
+		setDrawHud(true);
+		return this;
 	}
 
 }

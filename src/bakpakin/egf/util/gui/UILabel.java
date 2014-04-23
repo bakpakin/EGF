@@ -21,11 +21,11 @@ public class UILabel extends UIElement {
 		
 	}
 	
-	public float getWidth() {
+	public int getWidth() {
 		return getTheme().getBodyFont().getWidth(text);
 	}
 	
-	public float getHeight() {
+	public int getHeight() {
 		return getTheme().getBodyFont().getHeight(text);
 	}
 

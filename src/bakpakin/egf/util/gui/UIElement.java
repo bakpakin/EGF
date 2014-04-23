@@ -4,11 +4,9 @@ import bakpakin.egf.util.geom.AxisAlignedBox;
 
 public abstract class UIElement {
 
-	float x, y;
+	int x, y;
 		
-	float localX, localY;
-	
-	private boolean inheritTheme;
+	private boolean inheritTheme = true;
 	
 	UIContainer parent;
 	
@@ -26,9 +24,9 @@ public abstract class UIElement {
 		return parent;
 	}
 	
-	public abstract float getWidth();
+	public abstract int getWidth();
 	
-	public abstract float getHeight();
+	public abstract int getHeight();
 	
 	public UI getUi() {
 		return ui;
@@ -61,23 +59,29 @@ public abstract class UIElement {
 		return null;
 	}
 
-	public float getX() {
+	public int getX() {
 		return x;
 	}
 
-	public float getY() {
+	public int getY() {
 		return y;
-	}
-
-	public float getLocalX() {
-		return localX;
-	}
-
-	public float getLocalY() {
-		return localY;
 	}
 	
 	public AxisAlignedBox getBoundingBox() {
 		return new AxisAlignedBox(getX(), getY(), getX() + getWidth(), getY() + getHeight());
+	}
+
+	/**
+	 * @param x the x to set
+	 */
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	/**
+	 * @param y the y to set
+	 */
+	public void setY(int y) {
+		this.y = y;
 	}
 }

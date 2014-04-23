@@ -24,6 +24,9 @@ public class UI {
 	private Map<String, Collection<UIActionListener>> actionListeners;
 	private LinkedList<UIActionEvent> actionEvents;
 	
+	private Map<String, Collection<UIStateListener>> stateListeners;
+	private LinkedList<UIStateChangedEvent> stateEvents;
+	
 	public UI(UITheme theme, UIElement root, Camera camera) {
 		this.theme = theme;
 		this.root = root;
@@ -45,6 +48,8 @@ public class UI {
 		}
 		this.actionListeners = new HashMap<String, Collection<UIActionListener>>();
 		this.actionEvents = new LinkedList<UIActionEvent>();
+		this.stateListeners = new HashMap<String, Collection<UIStateListener>>();
+		this.stateEvents = new LinkedList<UIStateChangedEvent>();
 	}
 	
 	public void addActionListener(String eventTag, UIActionListener listener) {
@@ -60,13 +65,36 @@ public class UI {
 		actionEvents.add(e);
 	}
 	
+	public void addStateListener(String eventTag, UIStateListener listener) {
+		Collection<UIStateListener> col = stateListeners.get(eventTag);
+		if (col == null) {
+			col = new LinkedList<UIStateListener>();
+			stateListeners.put(eventTag, col);
+		}
+		col.add(listener);
+	}
+	
+	public void addStateEvent(UIStateChangedEvent e) {
+		stateEvents.add(e);
+	}
+	
 	private void handleEvents() {
 		while (!actionEvents.isEmpty()) {
 			UIActionEvent e = actionEvents.removeFirst();
 			Collection<UIActionListener> col = actionListeners.get(e.tag);
 			if (col != null) {
-				for (UIActionListener l : col)
+				for (UIActionListener l : col) {
 					l.action(e);
+				}
+			}
+		}
+		while (!stateEvents.isEmpty()) {
+			UIStateChangedEvent e = stateEvents.removeFirst();
+			Collection<UIStateListener> col = stateListeners.get(e.tag);
+			if (col != null) {
+				for (UIStateListener l : col) {
+					l.stateChanged(e);
+				}
 			}
 		}
 	}
