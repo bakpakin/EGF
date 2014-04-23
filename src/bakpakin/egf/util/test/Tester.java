@@ -5,7 +5,7 @@ import bakpakin.egf.util.Runner;
 public class Tester {
 
 	public static void main(String[] args) throws Exception {		
-		NineBoxTest.test();
+		UITest.test();
 		//TileMapTest.test();
 		//ShaderTest.test();
 		//GeometryTest.test();
