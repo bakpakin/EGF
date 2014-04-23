@@ -1,5 +1,7 @@
 package bakpakin.egf.util.test;
 
+import org.newdawn.slick.Color;
+
 import bakpakin.egf.framework.World;
 import bakpakin.egf.util.AssetManager;
 import bakpakin.egf.util.Runner;
@@ -8,6 +10,7 @@ import bakpakin.egf.util.gui.UIActionEvent;
 import bakpakin.egf.util.gui.UIActionListener;
 import bakpakin.egf.util.gui.UIButton;
 import bakpakin.egf.util.gui.UIContainer;
+import bakpakin.egf.util.gui.UIImage;
 import bakpakin.egf.util.gui.UIInvisiContainer;
 import bakpakin.egf.util.gui.UILabel;
 import bakpakin.egf.util.gui.UILinearLayout;
@@ -28,7 +31,7 @@ public class UITest {
 		world.addSystem(renderSystem);
 		world.addSystem(navigationSystem);
 		
-		UITheme theme = UITheme.getDefaultTheme();
+		final UITheme theme = UITheme.getDefaultTheme();
 		
 		final UIButton btn = new UIButton("I'm a Button!");
 		UIRadioButton rdbtn1 = new UIRadioButton("Hello 1!");
@@ -41,9 +44,11 @@ public class UITest {
 		radioButtonPanel.add(rdbtn3);
 		
 		UILabel label = new UILabel("I'm a Label!");
+		UIImage image = new UIImage(AssetManager.getTexture("bakpakin/egf/util/test/testplayer.png"));
 		UIContainer p3 = new UIInvisiContainer(new UILinearLayout(UILinearLayout.LAYOUT_HORIZONTAL)); 
 		p3.add(btn);
 		p3.add(label);
+		p3.add(image);
 		
 		UIContainer panel = new UIPanel();
 		panel.add(p3);
@@ -72,8 +77,10 @@ public class UITest {
 			public void stateChanged(UIStateChangedEvent e) {
 				if ((Boolean)e.newState) {
 					AssetManager.getSound("bakpakin/egf/util/test/beep1.wav").playAsSoundEffect(1f, 1f, false);
+					theme.setBodyFontColor(Color.blue);
 				} else {
 					AssetManager.getSound("bakpakin/egf/util/test/beep2.wav").playAsSoundEffect(1f, 1f, false);
+					theme.setBodyFontColor(Color.black);
 				}
 			}
 			

@@ -1,5 +1,6 @@
 package bakpakin.egf.util.gui;
 
+import org.newdawn.slick.Color;
 import java.util.Collection;
 
 import org.lwjgl.opengl.GL11;
@@ -25,6 +26,7 @@ public abstract class UIContainer extends UIElement {
 			GL11.glTranslatef(e.getX()-getX(), e.getY()-getY(), 0);
 			e.paint();			
 			GL11.glTranslatef(-e.getX()+getX(), -e.getY()+getY(), 0);
+			Color.white.bind();
 		}
 	}
 	
