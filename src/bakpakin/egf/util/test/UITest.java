@@ -5,6 +5,7 @@ import org.newdawn.slick.Color;
 import bakpakin.egf.framework.World;
 import bakpakin.egf.util.AssetManager;
 import bakpakin.egf.util.Runner;
+import bakpakin.egf.util.gui.NineBox;
 import bakpakin.egf.util.gui.UI;
 import bakpakin.egf.util.gui.UIActionEvent;
 import bakpakin.egf.util.gui.UIActionListener;
@@ -32,6 +33,7 @@ public class UITest {
 		world.addSystem(navigationSystem);
 		
 		final UITheme theme = UITheme.getDefaultTheme();
+		theme.setContainer(new NineBox(AssetManager.getTexture("bakpakin/egf/util/test/pinkbubble.png")));
 		
 		final UIButton btn = new UIButton("I'm a Button!");
 		UIRadioButton rdbtn1 = new UIRadioButton("Hello 1!");
@@ -58,6 +60,8 @@ public class UITest {
 		}
 		panel.add(p2);
 		panel.add(radioButtonPanel);
+		
+		panel.add(new UIButton("Here's some text."));
 		
 		UI ui = new UI(theme, panel);
 		ui.setHud(false);

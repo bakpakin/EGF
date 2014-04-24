@@ -1,10 +1,13 @@
 package bakpakin.egf.util.geom;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 import org.lwjgl.util.vector.Vector2f;
 
-public class Polygon extends AbstractShape implements Cloneable {
+import static java.lang.Math.*;
+
+public class Polygon extends AbstractShape implements Cloneable, Iterable<Vector2f> {
 
 	/**
 	 * 
@@ -123,9 +126,67 @@ public class Polygon extends AbstractShape implements Cloneable {
 	}
 
 	@Override
-	public Shape transformLocal(Transform t) {
+	public Polygon transformLocal(Transform t) {
+		final float[] newPoints = new float[points.length];
+		for (int i = 0; i < points.length; i += 2) {
+			float x1 = points[i];
+			float y1 = points[i+1];
+			Vector2f v2 = new Vector2f(x1, y1);
+			
+			translate(v2, -x, -y);
+			rotate(v2, -angle);
+			scale(v2, t.xScale, t.yScale);
+			rotate(v2, angle + t.angle);
+			translate(v2, x + t.x, y + t.y);
+			
+			//put x2 and y2 into new array
+			newPoints[i] = v2.x;
+			newPoints[i+1] = v2.y;
+		}
+		return new Polygon(newPoints, x + t.x, y + t.y, angle + t.angle, false);
+	}
+	
+	private void rotate(Vector2f v, float angle) {
+		final float rad = (float) toRadians(angle);
+		final float cos = (float)cos(rad);
+		final float sin = (float)sin(rad);
+		float px = v.x * cos - v.y * sin; 
+		float py = v.x * sin + v.y * cos;
+		v.x = px;
+		v.y = py;
+	}
+	
+	private void translate(Vector2f v, float dx, float dy) {
+		v.x += dx;
+		v.y += dy;
+	}
+	
+	private void scale(Vector2f v, float fx, float fy) {
+		v.x *= fx;
+		v.y *= fy;
+	}
+	
+	private class PointIterator implements Iterator<Vector2f> {
+		
+		private int index;
 
-		return null;
+		@Override
+		public boolean hasNext() {
+			return index < points.length;
+		}
+
+		@Override
+		public Vector2f next() {
+			Vector2f ret = new Vector2f(points[index], points[index+1]);
+			index += 2;
+			return ret;
+		}
+
+		@Override
+		public void remove() {
+			
+		}
+	
 	}
 
 	@Override
@@ -208,5 +269,10 @@ public class Polygon extends AbstractShape implements Cloneable {
 	 public float getRotation() {
 		 return angle;
 	 }
+
+	@Override
+	public Iterator<Vector2f> iterator() {
+		return new PointIterator();
+	}
 
 }

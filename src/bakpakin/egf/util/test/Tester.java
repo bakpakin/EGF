@@ -8,7 +8,7 @@ public class Tester {
 		UITest.test();
 		//TileMapTest.test();
 		//ShaderTest.test();
-		//GeometryTest.test();
+		GeometryTest.test();
 		//ParticleTest.test();
 		//RigTest.test();
 		
