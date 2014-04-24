@@ -14,34 +14,34 @@ public class StepBehavior implements Component {
 	 */
 	private static final long serialVersionUID = -766640423662843065L;
 
-	private VoidBehavior step;
+	private Routine step;
 	
-	private VoidBehavior start;
+	private Routine start;
 	
 	boolean started;
 	
-	public StepBehavior(VoidBehavior step) {
+	public StepBehavior(Routine step) {
 		this(step, null);
 	}
 	
-	public StepBehavior(VoidBehavior step, VoidBehavior start) {
+	public StepBehavior(Routine step, Routine start) {
 		this.setStep(step);
 		this.setStart(start);
 	}
 
-	public VoidBehavior getStep() {
+	public Routine getStep() {
 		return step;
 	}
 
-	public void setStep(VoidBehavior step) {
+	public void setStep(Routine step) {
 		this.step = step;
 	}
 
-	public VoidBehavior getStart() {
+	public Routine getStart() {
 		return start;
 	}
 
-	public void setStart(VoidBehavior start) {
+	public void setStart(Routine start) {
 		this.start = start;
 	}
 	

@@ -11,7 +11,7 @@ import bakpakin.egf.framework.World;
 import bakpakin.egf.util.Runner;
 import bakpakin.egf.util.StepBehavior;
 import bakpakin.egf.util.StepSystem;
-import bakpakin.egf.util.VoidBehavior;
+import bakpakin.egf.util.Routine;
 import bakpakin.egf.util.geom.Circle;
 import bakpakin.egf.util.geom.Transform;
 import bakpakin.egf.util.input.InputListener;
@@ -52,9 +52,9 @@ public class ParticleTest {
 		def.setOrientation(0, 360, 0, 0, 1000);
 		def.setBlending(true);
 		
-		VoidBehavior click = new VoidBehavior() {
+		Routine click = new Routine() {
 			@Override
-			public void behave() {
+			public void doRoutine() {
 				Vector2f worldPoint = renderSystem.getCamera().worldPt(Mouse.getX(), Mouse.getY());
 				for(int i = 0; i < 6; i++)
 					particleSystem.createParticle(worldPoint.x, worldPoint.y, def);
@@ -63,9 +63,9 @@ public class ParticleTest {
 		
 		final Text hud = new Text("");
 		
-		VoidBehavior updateHud = new VoidBehavior() {
+		Routine updateHud = new Routine() {
 			@Override
-			public void behave() {
+			public void doRoutine() {
 				hud.setText("Particle Count: " + particleSystem.getParticleCount());
 			}
 		};

@@ -9,7 +9,7 @@ import org.lwjgl.input.Mouse;
 
 import bakpakin.egf.framework.Entity;
 import bakpakin.egf.framework.Matcher;
-import bakpakin.egf.util.VoidBehavior;
+import bakpakin.egf.util.Routine;
 import static bakpakin.egf.util.input.InputListener.*;
 
 public class InputSystem extends bakpakin.egf.framework.ProcessingSystem {
@@ -100,18 +100,18 @@ public class InputSystem extends bakpakin.egf.framework.ProcessingSystem {
 	@Override
 	public void update(Entity e) {
 		InputListener il = e.get(InputListener.class);
-		VoidBehavior b = il.getBehavior();
+		Routine b = il.getBehavior();
 
 		for (Entry<Integer, Integer> entry : mouse.entrySet()) {
 			if (il.hasMouseTrigger(entry.getKey(), entry.getValue())) {
-				b.behave();
+				b.doRoutine();
 				return;
 			}
 		}
 
 		for (Entry<Integer, Integer> entry : keys.entrySet()) {
 			if (il.hasKeyTrigger(entry.getKey(), entry.getValue())) {
-				b.behave();
+				b.doRoutine();
 				return;
 			}
 		}

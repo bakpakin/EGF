@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.lwjgl.input.Keyboard;
 
 import bakpakin.egf.framework.Component;
-import bakpakin.egf.util.VoidBehavior;
+import bakpakin.egf.util.Routine;
 
 public class InputListener implements Component {
 	
@@ -17,21 +17,21 @@ public class InputListener implements Component {
 	public static final int PRESS = 2;
 	public static final int RELEASE = 3;
 	
-	public static InputListener keyListener(VoidBehavior behavior, int keyCode, int holdPressOrRelease) {
+	public static InputListener keyListener(Routine behavior, int keyCode, int holdPressOrRelease) {
 		InputListener ret = new InputListener();
 		ret.setBehavior(behavior);
 		ret.addKeyTrigger(keyCode, holdPressOrRelease);
 		return ret;
 	}
 	
-	public static InputListener mouseListener(VoidBehavior behavior, int button, int holdPressOrRelease) {
+	public static InputListener mouseListener(Routine behavior, int button, int holdPressOrRelease) {
 		InputListener ret = new InputListener();
 		ret.setBehavior(behavior);
 		ret.addMouseTrigger(button, holdPressOrRelease);
 		return ret;
 	}
 	
-	private VoidBehavior behavior;
+	private Routine behavior;
 	
 	private HashMap<Integer, Integer> mouseTriggers;
 	private HashMap<Integer, Integer> keyTriggers;
@@ -75,11 +75,11 @@ public class InputListener implements Component {
 		keyTriggers.put(keyCode, holdPressOrRelease);
 	}
 	
-	public VoidBehavior getBehavior() {
+	public Routine getBehavior() {
 		return behavior;
 	}
 
-	public void setBehavior(VoidBehavior behavior) {
+	public void setBehavior(Routine behavior) {
 		this.behavior = behavior;
 	}
 

@@ -1,7 +1,7 @@
 package bakpakin.egf.util.timer;
 
 import bakpakin.egf.framework.Component;
-import bakpakin.egf.util.VoidBehavior;
+import bakpakin.egf.util.Routine;
 
 public class TimerComponent implements Component {
 	
@@ -13,13 +13,13 @@ public class TimerComponent implements Component {
 	private float timeLeft;
 	private float timeRepeat;
 	private boolean isPaused;
-	private VoidBehavior behavior;
+	private Routine behavior;
 		
-	public TimerComponent(float time, VoidBehavior behavior) {
+	public TimerComponent(float time, Routine behavior) {
 		this(time, -1f, behavior);
 	}
 	
-	public TimerComponent(float delay, float repeatDelay, VoidBehavior behavior) {
+	public TimerComponent(float delay, float repeatDelay, Routine behavior) {
 		this.timeLeft = delay;
 		this.timeRepeat = repeatDelay;
 		this.behavior = behavior;
@@ -41,11 +41,11 @@ public class TimerComponent implements Component {
 		this.isPaused = isPaused;
 	}
 
-	public VoidBehavior getBehavior() {
+	public Routine getBehavior() {
 		return behavior;
 	}
 
-	public void setBehavior(VoidBehavior behavior) {
+	public void setBehavior(Routine behavior) {
 		this.behavior = behavior;
 	}
 

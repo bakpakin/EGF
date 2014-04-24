@@ -6,7 +6,7 @@ package bakpakin.egf.util.test;
 import bakpakin.egf.framework.World;
 import bakpakin.egf.util.AssetManager;
 import bakpakin.egf.util.Runner;
-import bakpakin.egf.util.VoidBehavior;
+import bakpakin.egf.util.Routine;
 import bakpakin.egf.util.input.InputListener;
 import bakpakin.egf.util.input.InputSystem;
 import bakpakin.egf.util.render.Background;
@@ -41,9 +41,9 @@ public class ShaderTest {
 				new RenderComponent(new Background("bakpakin/egf/util/test/testblue.png"), -10000)
 				);
 		
-		VoidBehavior click = new VoidBehavior() {
+		Routine click = new Routine() {
 			@Override
-			public void behave() {
+			public void doRoutine() {
 				try {
 					renderSystem.setShader(renderSystem.getShader() == 0 ? shader : 0);
 				} catch (Exception e) {

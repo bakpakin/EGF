@@ -3,7 +3,7 @@ package bakpakin.egf.util.timer;
 import bakpakin.egf.framework.Entity;
 import bakpakin.egf.framework.Matcher;
 import bakpakin.egf.framework.ProcessingSystem;
-import bakpakin.egf.util.VoidBehavior;
+import bakpakin.egf.util.Routine;
 
 public class TimerSystem extends ProcessingSystem {
 
@@ -27,9 +27,9 @@ public class TimerSystem extends ProcessingSystem {
 		if (!tc.isPaused()) {
 			tc.setTimeLeft(tc.getTimeLeft() - dt);
 			if (tc.getTimeLeft() <= 0f) {
-				VoidBehavior b = tc.getBehavior();
+				Routine b = tc.getBehavior();
 				if (b != null) {
-					b.behave();
+					b.doRoutine();
 					if (tc.getTimeRepeat() > 0f)
 						if (tc.getTimeLeft() < -tc.getTimeRepeat())
 							tc.setTimeLeft(0f);

@@ -23,12 +23,12 @@ public class StepSystem extends ProcessingSystem {
 	public void update(Entity e) {
 		StepBehavior sb = e.get(StepBehavior.class);
 		if (!sb.started) {
-			VoidBehavior vb = sb.getStart();
-			if (vb != null) vb.behave();
+			Routine vb = sb.getStart();
+			if (vb != null) vb.doRoutine();
 			sb.started = true;
 		}
-		VoidBehavior vb = sb.getStep();
-		if (vb != null) vb.behave();
+		Routine vb = sb.getStep();
+		if (vb != null) vb.doRoutine();
 	}
 
 	@Override
