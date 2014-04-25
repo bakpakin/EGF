@@ -72,7 +72,7 @@ public class RenderSystem extends bakpakin.egf.framework.EntitySystem {
 	private Camera hudCamera;
 	private ArrayList<Entity> drawList;
 
-	private Color backgroundColor = Color.black;
+	private Color backgroundColor = Color.gray;
 
 	private boolean linearSampling;
 

@@ -5,7 +5,6 @@ import org.newdawn.slick.Color;
 import bakpakin.egf.framework.World;
 import bakpakin.egf.util.AssetManager;
 import bakpakin.egf.util.Runner;
-import bakpakin.egf.util.gui.NineBox;
 import bakpakin.egf.util.gui.UI;
 import bakpakin.egf.util.gui.UIActionEvent;
 import bakpakin.egf.util.gui.UIActionListener;
@@ -20,33 +19,36 @@ import bakpakin.egf.util.gui.UIRadioButton;
 import bakpakin.egf.util.gui.UIStateChangedEvent;
 import bakpakin.egf.util.gui.UIStateListener;
 import bakpakin.egf.util.gui.UITheme;
+import bakpakin.egf.util.render.Background;
+import bakpakin.egf.util.render.RenderComponent;
 import bakpakin.egf.util.render.RenderSystem;
+import bakpakin.egf.util.render.Text;
 
 public class UITest {
 
 	public static void test() throws Exception {
 		final World world = new World();
 		final RenderSystem renderSystem = new RenderSystem();
-		final SimpleNavigationSystem navigationSystem = new SimpleNavigationSystem(renderSystem);
 
 		world.addSystem(renderSystem);
-		world.addSystem(navigationSystem);
+		world.addSystem(new SimpleNavigationSystem(renderSystem));
 		
 		final UITheme theme = UITheme.getDefaultTheme();
-		theme.setContainer(new NineBox(AssetManager.getTexture("bakpakin/egf/util/test/pinkbubble.png")));
 		
-		final UIButton btn = new UIButton("I'm a Button!");
+		final UIButton btn = new UIButton("Press Me!");
 		UIRadioButton rdbtn1 = new UIRadioButton("Hello 1!");
 		UIRadioButton rdbtn2 = new UIRadioButton("Hello 1!");
 		UIRadioButton rdbtn3 = new UIRadioButton("Hello 1!");
 		
 		UIContainer radioButtonPanel = new UIInvisiContainer(new UILinearLayout(UILinearLayout.LAYOUT_HORIZONTAL));
+		radioButtonPanel.add(new UILabel("These are Radio Buttons -->"));
 		radioButtonPanel.add(rdbtn1);
 		radioButtonPanel.add(rdbtn2);
 		radioButtonPanel.add(rdbtn3);
 		
 		UILabel label = new UILabel("I'm a Label!");
 		UIImage image = new UIImage(AssetManager.getTexture("bakpakin/egf/util/test/testplayer.png"));
+		image.scale(2);
 		UIContainer p3 = new UIInvisiContainer(new UILinearLayout(UILinearLayout.LAYOUT_HORIZONTAL)); 
 		p3.add(btn);
 		p3.add(label);
@@ -63,8 +65,25 @@ public class UITest {
 		
 		panel.add(new UIButton("Here's some text."));
 		
-		UI ui = new UI(theme, panel);
-		ui.setHud(false);
+		UIContainer bigPanel = new UIInvisiContainer(new UILinearLayout(UILinearLayout.LAYOUT_HORIZONTAL));
+		UIPanel littlePanel = new UIPanel();
+		bigPanel.add(panel);
+		bigPanel.add(littlePanel);
+		bigPanel.setDragable(true);
+		
+		littlePanel.add(new UILabel("Hi."));
+		littlePanel.add(new UILabel("New Line."));
+		littlePanel.add(new UILabel("More Text"));
+		littlePanel.add(new UILabel("Even More."));
+		
+		UILabel specialLabel = new UILabel("This is a cool, overriding font.");
+		UITheme theme2 = new UITheme(theme);
+		theme2.setBodyFontColor(Color.green);
+		theme2.setBodyFont(new Text("").getFont());
+		specialLabel.setOverrideTheme(theme2);
+		littlePanel.add(specialLabel);
+				
+		UI ui = new UI(theme, bigPanel);
 		
 		ui.addActionListener(btn.getEventTag(), new UIActionListener() {
 
@@ -84,13 +103,15 @@ public class UITest {
 					theme.setBodyFontColor(Color.blue);
 				} else {
 					AssetManager.getSound("bakpakin/egf/util/test/beep2.wav").playAsSoundEffect(1f, 1f, false);
-					theme.setBodyFontColor(Color.black);
+					theme.setBodyFontColor(Color.white);
 				}
 			}
 			
 		});
 		
 		ui.addToRenderSystem(renderSystem);
+		
+		world.createEntity(new RenderComponent(new Background("bakpakin/egf/util/test/testgrid.png"), -1000));
 		
 		Runner.mainLoop(world);
 	}

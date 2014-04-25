@@ -1,13 +1,15 @@
 package bakpakin.egf.util.gui;
 
+import org.lwjgl.util.vector.Vector2f;
+
 import bakpakin.egf.util.geom.AxisAlignedBox;
 
 public abstract class UIElement {
 
 	int x, y;
 		
-	private boolean inheritTheme = true;
-	
+	private UITheme overrideTheme;
+		
 	UIContainer parent;
 	
 	UI ui;
@@ -44,16 +46,10 @@ public abstract class UIElement {
 	public abstract void paint();
 	
 	public abstract void update();
-
-	public boolean isInheritTheme() {
-		return inheritTheme;
-	}
-
-	public void setInheritTheme(boolean inheritTheme) {
-		this.inheritTheme = inheritTheme;
-	}
 	
 	public UITheme getTheme() {
+		if (overrideTheme != null)
+			return overrideTheme;
 		if (ui != null)
 			return ui.getTheme();
 		return null;
@@ -70,6 +66,10 @@ public abstract class UIElement {
 	public AxisAlignedBox getBoundingBox() {
 		return new AxisAlignedBox(getX(), getY(), getX() + getWidth(), getY() + getHeight());
 	}
+	
+	public final Vector2f getMouse() {
+		return getUi().getMouse();
+	}
 
 	/**
 	 * @param x the x to set
@@ -83,5 +83,13 @@ public abstract class UIElement {
 	 */
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public UITheme getOverrideTheme() {
+		return overrideTheme;
+	}
+
+	public void setOverrideTheme(UITheme overrideTheme) {
+		this.overrideTheme = overrideTheme;
 	}
 }

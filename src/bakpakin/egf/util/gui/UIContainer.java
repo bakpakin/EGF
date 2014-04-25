@@ -1,13 +1,22 @@
 package bakpakin.egf.util.gui;
 
 import org.newdawn.slick.Color;
-import java.util.Collection;
 
+import java.util.Collection;
+import java.util.Collections;
+
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector2f;
 
 public abstract class UIContainer extends UIElement {
 		
 	private UILayout layout;
+	
+	private boolean wasMouseDown;
+	private boolean dragable;
+	private float mouseXOffset;
+	private float mouseYOffset;
 	
 	int width, height;
 	
@@ -31,15 +40,32 @@ public abstract class UIContainer extends UIElement {
 	}
 	
 	public Collection<UIElement> getChildren() {
+		if (layout == null)
+			return Collections.emptySet();
 		return layout.getElements();
 	}
 	
 	public void update() {
+		if (dragable)
+			handleDragging();
 		for (UIElement e : getChildren())
 			e.update();
 		layout.layout();
 	}
 	
+	private void handleDragging() {
+		if (Mouse.isButtonDown(0)) {
+			Vector2f m = getMouse();
+			if (!wasMouseDown) {
+				mouseXOffset = getX() - m.x;
+				mouseYOffset = getY() - m.y;
+			}
+			setX((int) (m.x + mouseXOffset));
+			setY((int) (m.y + mouseYOffset));
+		}
+		this.wasMouseDown = Mouse.isButtonDown(0);
+	}
+
 	public void add(UIElement e) {
 		layout.add(e);
 	}
@@ -48,8 +74,7 @@ public abstract class UIContainer extends UIElement {
 	public void setUi(UI ui) {
 		super.setUi(ui);
 		for (UIElement e : getChildren()) {
-			if (e.isInheritTheme())
-				e.setUi(ui);
+			e.setUi(ui);
 		}
 	}
 	
@@ -95,6 +120,14 @@ public abstract class UIContainer extends UIElement {
 		this.layout = layout;
 		if (layout.getRoot() != this)
 			layout.setRoot(this);
+	}
+
+	public boolean isDragable() {
+		return dragable;
+	}
+
+	public void setDragable(boolean dragable) {
+		this.dragable = dragable;
 	}
 
 }

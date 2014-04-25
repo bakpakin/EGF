@@ -20,7 +20,7 @@ public class TileMapTest {
 		world.addSystem(renderSystem);
 		world.addSystem(new MovementSystem());
 		world.addSystem(navigationSystem);
-		
+				
 		TileMap tm = TileMap.load("bakpakin/egf/util/test/tileTest.json", new JSONLoader());
 		ObjectLayer ol = (ObjectLayer) tm.getLayer("Object Layer 1");
 		ol.addObjectsAsEntities(world);

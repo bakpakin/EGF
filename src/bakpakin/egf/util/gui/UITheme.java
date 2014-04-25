@@ -28,6 +28,10 @@ public class UITheme {
 		NineBox buttonHover = new NineBox(bh);
 		NineBox buttonPressed = new NineBox(bp);
 		NineBox c = new NineBox(ct);
+		c.setContentX1(30);
+		c.setContentX2(98);
+		c.setContentY1(30);
+		c.setContentY2(98);
 		defaultTheme.setButton(button);
 		defaultTheme.setButtonHover(buttonHover);
 		defaultTheme.setButtonPressed(buttonPressed);
@@ -48,16 +52,25 @@ public class UITheme {
 	private TrueTypeFont bodyFont;
 	private TrueTypeFont titleFont;
 	
-	private Color bodyFontColor = Color.black;
-	private Color titleFontColor = Color.black;
+	private Color bodyFontColor = Color.white;
+	private Color titleFontColor = Color.lightGray;
+	
+	private UITheme parent;
 
 	private Map<String, Texture> icons;
 
 	public UITheme() {
 		this.icons = new HashMap<String, Texture>();
 	}
+	
+	public UITheme(UITheme parent) {
+		this();
+		setParent(parent);
+	}
 
 	public NineBox getContainer() {
+		if (parent != null && container == null)
+			return parent.getContainer();
 		return container;
 	}
 
@@ -66,6 +79,8 @@ public class UITheme {
 	}
 
 	public NineBox getButton() {
+		if (parent != null && button == null)
+			return parent.getButton();
 		return button;
 	}
 
@@ -74,6 +89,8 @@ public class UITheme {
 	}
 
 	public NineBox getButtonHover() {
+		if (parent != null && buttonHover == null)
+			return parent.getButtonHover();
 		return buttonHover;
 	}
 
@@ -82,6 +99,8 @@ public class UITheme {
 	}
 
 	public NineBox getButtonPressed() {
+		if (parent != null && buttonPressed == null)
+			return parent.getButtonPressed();
 		return buttonPressed;
 	}
 
@@ -90,6 +109,8 @@ public class UITheme {
 	}
 
 	public NineBox getSlider() {
+		if (parent != null && slider == null)
+			return parent.getSlider();
 		return slider;
 	}
 
@@ -98,6 +119,8 @@ public class UITheme {
 	}
 
 	public Texture getSliderHandle() {
+		if (parent != null && sliderHandle == null)
+			return parent.getSliderHandle();
 		return sliderHandle;
 	}
 
@@ -106,6 +129,8 @@ public class UITheme {
 	}
 
 	public Texture getRadioButtonUnselected() {
+		if (parent != null && radioButtonUnselected == null)
+			return parent.getRadioButtonUnselected();
 		return radioButtonUnselected;
 	}
 
@@ -114,6 +139,8 @@ public class UITheme {
 	}
 
 	public Texture getRadioButtonSelected() {
+		if (parent != null && radioButtonSelected == null)
+			return parent.getRadioButtonSelected();
 		return radioButtonSelected;
 	}
 
@@ -122,6 +149,8 @@ public class UITheme {
 	}
 
 	public TrueTypeFont getBodyFont() {
+		if (parent != null && bodyFont == null)
+			return parent.getBodyFont();
 		return bodyFont;
 	}
 
@@ -130,6 +159,8 @@ public class UITheme {
 	}
 
 	public TrueTypeFont getTitleFont() {
+		if (parent != null && titleFont == null)
+			return parent.getTitleFont();
 		return titleFont;
 	}
 
@@ -138,6 +169,8 @@ public class UITheme {
 	}
 
 	public Map<String, Texture> getIcons() {
+		if (parent != null && icons == null)
+			return parent.getIcons();
 		return icons;
 	}
 
@@ -146,6 +179,8 @@ public class UITheme {
 	}
 
 	public Color getTitleFontColor() {
+		if (parent != null && titleFontColor == null)
+			return parent.getTitleFontColor();
 		return titleFontColor;
 	}
 
@@ -154,11 +189,21 @@ public class UITheme {
 	}
 
 	public Color getBodyFontColor() {
+		if (parent != null && bodyFontColor == null)
+			return parent.getBodyFontColor();
 		return bodyFontColor;
 	}
 
 	public void setBodyFontColor(Color bodyFontColor) {
 		this.bodyFontColor = bodyFontColor;
+	}
+
+	public UITheme getParent() {
+		return parent;
+	}
+
+	public void setParent(UITheme parent) {
+		this.parent = parent;
 	}
 
 }

@@ -91,6 +91,12 @@ public class UI {
 		update();
 	}
 
+	public void removeFromRenderSystem() {
+		rs.getWorld().removeEntity(renderingEntity);
+		renderingEntity = null;
+		rs = null;
+	}
+
 	public void addActionListener(String eventTag, UIActionListener listener) {
 		Collection<UIActionListener> col = actionListeners.get(eventTag);
 		if (col == null) {
@@ -155,16 +161,20 @@ public class UI {
 	}
 
 	void update() {
-		if (root != null)
-			root.update();
-		handleEvents();
+		if (rs != null && renderingEntity != null) {
+			if (root != null)
+				root.update();
+			handleEvents();
+		}
 	}
 
 	void render() {
-		if (root != null) {
-			GL11.glTranslatef(root.getX(), root.getY(), 0f);
-			root.paint();
-			GL11.glTranslatef(-root.getX(), -root.getY(), 0f);
+		if (rs != null && renderingEntity != null) {
+			if (root != null) {
+				GL11.glTranslatef(root.getX(), root.getY(), 0f);
+				root.paint();
+				GL11.glTranslatef(-root.getX(), -root.getY(), 0f);
+			}
 		}
 	}
 

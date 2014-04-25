@@ -11,7 +11,7 @@ public class OrientedBox extends AbstractShape implements Cloneable {
 	
 	protected final float angle, x, y, width, height;
 	protected final float cos, sin;
-	protected int hash;
+	private int hash;
 	
 	/**
 	 * 

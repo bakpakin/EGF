@@ -9,17 +9,9 @@ import bakpakin.egf.util.render.RenderSystem;
 
 class UIDrawer implements Drawable {
 	
-	private UI ui;
+	private final UI ui;
 	
 	public UIDrawer(UI ui) {
-		setUi(ui);
-	}
-
-	public UI getUi() {
-		return ui;
-	}
-
-	public void setUi(UI ui) {
 		this.ui = ui;
 	}
 

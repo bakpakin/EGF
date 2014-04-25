@@ -7,10 +7,20 @@ import org.newdawn.slick.Color;
 import bakpakin.egf.util.render.Drawable;
 import bakpakin.egf.util.render.RenderSystem;
 
+/**
+ * A class good for debugging shapes. Draws an outline of
+ * a shape.
+ * @author Calvin
+ *
+ */
 public class ShapeDrawer implements Drawable {
 
 	private Shape shape;
 	
+	/**
+	 * Creates a new ShapeDrawer hat draws the given shape.
+	 * @param shape
+	 */
 	public ShapeDrawer(Shape shape) {
 		this.setShape(shape);
 	}
@@ -18,10 +28,11 @@ public class ShapeDrawer implements Drawable {
 	@Override
 	public void draw(RenderSystem renderSystem, float depth, Color color, Transform t) {
 		color.bind();
-		Shape s = shape.transformLocal(t);
+		t.apply();
+		Shape s = shape;
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		GL11.glDisable(GL11.GL_BLEND);
-		GL11.glBegin(GL11.GL_TRIANGLE_FAN);
+		GL11.glBegin(GL11.GL_LINE_LOOP);
 		if (s instanceof Polygon) {
 			for (Vector2f pt : (Polygon)s) {
 				GL11.glVertex3f(pt.x, pt.y, depth);
@@ -56,10 +67,13 @@ public class ShapeDrawer implements Drawable {
 			GL11.glVertex3f(x+xcos-ysin, y-ycos-xsin, depth);
 			GL11.glVertex3f(x-xcos-ysin, y-ycos+xsin, depth);
 			GL11.glVertex3f(x-xcos+ysin, y+ycos+xsin, depth);
+		} else if (s instanceof Ellipse) {
+			//TODO add ellipse path iteration
 		}
 		GL11.glEnd();
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		t.applyInverse();
 	}
 
 	public Shape getShape() {

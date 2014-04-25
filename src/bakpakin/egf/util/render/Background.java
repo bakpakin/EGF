@@ -33,7 +33,7 @@ public class Background extends Sprite {
 		Vector2f v2 = cam.worldPt(0f, Display.getHeight());
 		Vector2f v3 = cam.worldPt(Display.getWidth(), Display.getHeight());
 		Vector2f v4 = cam.worldPt(Display.getWidth(), 0f);
-		glPopMatrix();
+		glPushMatrix();
 		glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glOrtho(
@@ -64,7 +64,7 @@ public class Background extends Sprite {
 		}
 		glEnd();
 		glMatrixMode(GL_PROJECTION);
-		glPushMatrix();
+		glPopMatrix();
 		glMatrixMode(GL_MODELVIEW);
 	}
 
