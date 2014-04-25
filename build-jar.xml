@@ -10,7 +10,7 @@
 <project name="EGF" default="default" basedir=".">
 
 	<description>
-            This ant build file generates both a runnable jar and a distribution jar.
+            This ant build file generates a runnable jar.
     </description>
 
 	<!-- Set the 'main-class' property to the main class of your application.
