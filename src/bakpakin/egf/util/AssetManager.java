@@ -23,7 +23,7 @@ import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
-import bakpakin.egf.util.protocols.CustomURLScheme;
+import bakpakin.egf.protocols.CustomURLScheme;
 
 /**
  * This class is a static loader for game assets. Assets can be retrieved by
@@ -60,7 +60,7 @@ public class AssetManager {
 	public static void initProtocols() {
 		if (!initiated) {
 			try {
-				CustomURLScheme.add(bakpakin.egf.util.protocols.classpath.Handler.class);
+				CustomURLScheme.add(bakpakin.egf.protocols.classpath.Handler.class);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

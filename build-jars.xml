@@ -16,7 +16,7 @@
 	<!-- Set the 'main-class' property to the main class of your application.
 	This build file uses JarSplice, so setting your main class as the 'Main-Class'
 	In the manifest will NOT work. -->
-	<property name="main-class" value="bakpakin.egf.util.test.Tester" />
+	<property name="main-class" value="bakpakin.egf.test.Tester" />
 	
 	<!-- Set the VM args of the main class. -->
 	<property name="main-args" value="" />
