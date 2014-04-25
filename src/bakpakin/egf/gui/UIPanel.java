@@ -42,5 +42,17 @@ public class UIPanel extends UIContainer {
 		NineBox nb = getTheme().getContainer();
 		return nb.getContentY1();
 	}
+
+	@Override
+	public int getContentWidth() {
+		NineBox nb = getTheme().getContainer();
+		return width - (nb.getContentX1() + (nb.getWidth() - nb.getContentX2()));
+	}
+
+	@Override
+	public int getContentHeight() {
+		NineBox nb = getTheme().getContainer();
+		return height - (nb.getContentY1() + (nb.getHeight() - nb.getContentY2()));
+	}
 	
 }

@@ -59,4 +59,14 @@ public class UIInvisiContainer extends UIContainer {
 		this.yBorder = yBorder;
 	}
 
+	@Override
+	public int getContentWidth() {
+		return width - (2 * xBorder);
+	}
+
+	@Override
+	public int getContentHeight() {
+		return height - (2 * yBorder);
+	}
+
 }

@@ -48,6 +48,7 @@ public abstract class UIContainer extends UIElement {
 	public void update() {
 		if (dragable)
 			handleDragging();
+		layout.layout();
 		for (UIElement e : getChildren())
 			e.update();
 		layout.layout();
@@ -81,6 +82,10 @@ public abstract class UIContainer extends UIElement {
 	public abstract int getContentXOffset();
 	
 	public abstract int getContentYOffset();
+	
+	public abstract int getContentWidth();
+	
+	public abstract int getContentHeight();
 	
 	public abstract void setContentWidth(int width);
 	

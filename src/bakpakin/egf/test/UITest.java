@@ -16,6 +16,7 @@ import bakpakin.egf.gui.UILabel;
 import bakpakin.egf.gui.UILinearLayout;
 import bakpakin.egf.gui.UIPanel;
 import bakpakin.egf.gui.UIRadioButton;
+import bakpakin.egf.gui.UISingleElementLayout;
 import bakpakin.egf.gui.UIStateChangedEvent;
 import bakpakin.egf.gui.UIStateListener;
 import bakpakin.egf.gui.UITheme;
@@ -72,7 +73,6 @@ public class UITest {
 		UIPanel littlePanel = new UIPanel();
 		bigPanel.add(panel);
 		bigPanel.add(littlePanel);
-		bigPanel.setDragable(true);
 		
 		littlePanel.add(new UILabel("Hi."));
 		littlePanel.add(new UILabel("New Line."));
@@ -85,8 +85,12 @@ public class UITest {
 		theme2.setBodyFont(new Text("").getFont());
 		specialLabel.setOverrideTheme(theme2);
 		littlePanel.add(specialLabel);
+		
+		UIContainer container = new UIInvisiContainer(new UISingleElementLayout(bigPanel));
+		container.setWidth(EGF.getDisplayWidth());
+		container.setHeight(EGF.getDisplayHeight());
 				
-		UI ui = new UI(theme, bigPanel);
+		UI ui = new UI(theme, container);
 		
 		ui.addActionListener(btn.getEventTag(), new UIActionListener() {
 
