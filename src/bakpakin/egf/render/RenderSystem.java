@@ -70,8 +70,6 @@ public class RenderSystem extends bakpakin.egf.framework.EntitySystem {
 
 	private boolean linearSampling;
 
-	private int fps = 60;
-
 	private int shader;
 	
 	private boolean escToExit = true;
@@ -81,14 +79,6 @@ public class RenderSystem extends bakpakin.egf.framework.EntitySystem {
 	int depthRenderBufferID;
 	int fboWidth;
 	int fboHeight;
-
-	public int getFps() {
-		return fps;
-	}
-
-	public void setFps(int fps) {
-		this.fps = fps;
-	}
 
 	public RenderSystem() {
 		this.setBackgroundColor(this.getBackgroundColor());
@@ -197,8 +187,6 @@ public class RenderSystem extends bakpakin.egf.framework.EntitySystem {
 		GL20.glUseProgram(0);
 
 		Display.update();
-		Display.sync(fps);
-
 	}
 
 	private void updateNoFbo() {
@@ -210,7 +198,6 @@ public class RenderSystem extends bakpakin.egf.framework.EntitySystem {
 			}
 		}
 		Display.update();
-		Display.sync(fps);
 	}
 
 	@Override

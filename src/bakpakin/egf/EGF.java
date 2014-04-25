@@ -55,6 +55,8 @@ public class EGF {
 	 * 'nough said
 	 */
 	private static boolean loopDone;
+	
+	private static int fps = 60;
 
 	/**
 	 * Starts a main game loop with the given {@link World}. Does
@@ -73,6 +75,7 @@ public class EGF {
 			t2 = System.currentTimeMillis();
 			td = t2 - t1; 
 			EGF.scene.update(((double)td) / 1000.0);
+			Display.sync(fps);
 		}
 		cleanUp();
 	}
@@ -207,6 +210,14 @@ public class EGF {
 		glEnable(GL_ALPHA_TEST);
 		glAlphaFunc(GL_GREATER, 0f);
 		AssetManager.cleanUp();//clean up old assets that will no longer be useful.
+	}
+
+	public static int getFps() {
+		return fps;
+	}
+
+	public static void setFps(int fps) {
+		EGF.fps = fps;
 	}
 
 }
