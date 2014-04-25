@@ -3,7 +3,7 @@
      Apr 19, 2014 8:24:58 AM                                                        
 
      Entity Game Framework    
-     This ant build file generates both a runnable jar and a distribution jar.
+     This ant build file generates a runnable jar.
                    
      Calvin                                                                
      ====================================================================== -->
@@ -44,7 +44,7 @@
 	</path>
 
 
-	<target name="default" depends="standalone-jar" description="This build file generates both a test jar and a distribution jar." />
+	<target name="default" depends="jar" description="This build file generates a distribution jar." />
 
 
 	<target name="clean" description="cleans up the build directory.">
@@ -78,6 +78,11 @@
 			<zipgroupfileset dir="${lib}">
 				<include name="**/*.jar" />
 			</zipgroupfileset>
+			<manifest>
+				<attribute name="Launcher-Main-Class" value="${main-class}" />
+				<attribute name="Launcher-VM-Args" value="${main-args}" />
+				<attribute name="Main-Class" value="org.ninjacave.jarsplice.JarSpliceLauncher" />
+			</manifest>
 		</jar>
 		<delete file="${dist}${file.separator}${jar.name}.jar" />
 		<zip file="${dist}${file.separator}${jar.name}.jar">
@@ -88,18 +93,5 @@
 		</zip>
 		<delete file="${dist}${file.separator}${jar.name}-tmp.jar" />
 	</target>
-
-
-	<target name="standalone-jar" depends="jar">
-		<copy file="${dist}${file.separator}${jar.name}.jar" tofile="${dist}${file.separator}${jar.name}-standalone.jar" />
-		<jar destfile="${dist}${file.separator}${jar.name}-standalone.jar" update="true">
-			<manifest>
-				<attribute name="Launcher-Main-Class" value="${main-class}" />
-				<attribute name="Launcher-VM-Args" value="${main-args}" />
-				<attribute name="Main-Class" value="org.ninjacave.jarsplice.JarSpliceLauncher" />
-			</manifest>
-		</jar>
-	</target>
-
 
 </project>
