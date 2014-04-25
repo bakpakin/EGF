@@ -196,7 +196,6 @@ public class EGF {
 			Display.create();
 			Mouse.create();
 			Keyboard.create();
-			AL.create();
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
