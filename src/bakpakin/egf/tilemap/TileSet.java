@@ -24,6 +24,11 @@ public class TileSet extends TileMapComponent {
 	private Texture texture;
 	
 	/**
+	 * 
+	 */
+	private boolean smooth;
+	
+	/**
 	 * The number of tiles wide this TileSet is
 	 */
 	private final int width;
@@ -384,6 +389,14 @@ public class TileSet extends TileMapComponent {
 
 	public void setTileProperties(Map<String, Map<String, String>> tileProperties) {
 		this.tileProperties = tileProperties;
+	}
+
+	public boolean isSmooth() {
+		return smooth;
+	}
+
+	public void setSmooth(boolean smooth) {
+		this.smooth = smooth;
 	}
 
 }
