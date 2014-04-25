@@ -22,6 +22,10 @@ public final class RenderComponent implements Component {
 	private Color color;
 	
 	private boolean drawHud;
+	
+	public RenderComponent(Drawable... drawables) {
+		this(new MultiDraw(drawables));
+	}
 
 	public RenderComponent(Drawable drawable) {
 		this(drawable, 0f, Color.white);

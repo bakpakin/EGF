@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL11.*;
 import java.net.URL;
 
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.Color;
 
@@ -45,7 +46,7 @@ public class Background extends Sprite {
         		1000000
         		);	
 		glMatrixMode(GL_MODELVIEW);
-		
+		texture.setTextureFilter(smooth ? GL11.GL_LINEAR : GL11.GL_NEAREST);
 		texture.bind();
 		color.bind();
 		glBegin(GL_QUADS);

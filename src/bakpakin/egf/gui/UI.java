@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
@@ -64,20 +62,6 @@ public class UI {
 		this.theme = theme;
 		this.root = root;
 		root.setUi(this);
-		if (!Mouse.isCreated()) {
-			try {
-				Mouse.create();
-			} catch (LWJGLException e) {
-				e.printStackTrace();
-			}
-		}
-		if (!Keyboard.isCreated()) {
-			try {
-				Keyboard.create();
-			} catch (LWJGLException e) {
-				e.printStackTrace();
-			}
-		}
 		this.actionListeners = new HashMap<String, Collection<UIActionListener>>();
 		this.actionEvents = new LinkedList<UIActionEvent>();
 		this.stateListeners = new HashMap<String, Collection<UIStateListener>>();

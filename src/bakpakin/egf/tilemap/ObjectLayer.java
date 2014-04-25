@@ -9,6 +9,7 @@ import bakpakin.egf.framework.Entity;
 import bakpakin.egf.framework.World;
 import bakpakin.egf.geom.Transform;
 import bakpakin.egf.physics.DeltaTransform;
+import bakpakin.egf.render.Drawable;
 import bakpakin.egf.render.RenderComponent;
 import bakpakin.egf.tilemap.TileMapBean.LayerBean;
 import bakpakin.egf.tilemap.TileMapBean.ObjectBean;
@@ -75,7 +76,7 @@ public class ObjectLayer extends Layer {
 				e.setProperty(entry.getKey(), entry.getValue());
 			}
 			if (b.isVisible()) {
-				RenderComponent rc = new RenderComponent(null);
+				RenderComponent rc = new RenderComponent(new Drawable[0]);
 				Object _depth = b.getProperties().get("depth");
 				if (_depth != null) {
 					rc.setDepth((Float)_depth);

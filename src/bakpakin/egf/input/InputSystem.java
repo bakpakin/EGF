@@ -3,7 +3,6 @@ package bakpakin.egf.input;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -26,14 +25,6 @@ public class InputSystem extends bakpakin.egf.framework.ProcessingSystem {
 
 	public InputSystem() {
 		super();
-		try {
-			Mouse.create();
-			Keyboard.create();
-			Mouse.poll();
-			Keyboard.poll();
-		} catch (LWJGLException e) {
-			e.printStackTrace();
-		}
 		keys = new HashMap<Integer, Integer>();
 		mouse = new HashMap<Integer, Integer>();
 		oldKeys = new HashMap<Integer, Integer>();

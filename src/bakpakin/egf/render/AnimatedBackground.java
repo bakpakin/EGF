@@ -6,7 +6,7 @@ import org.newdawn.slick.opengl.Texture;
 import bakpakin.egf.geom.Transform;
 import bakpakin.egf.util.AssetManager;
 
-public class AnimatedBackground extends Background{
+public class AnimatedBackground extends Background {
 	
 	/**
 	 * 

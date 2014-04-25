@@ -4,6 +4,7 @@ import org.newdawn.slick.Color;
 
 import bakpakin.egf.EGF;
 import bakpakin.egf.framework.World;
+import bakpakin.egf.geom.Transform;
 import bakpakin.egf.gui.UI;
 import bakpakin.egf.gui.UIActionEvent;
 import bakpakin.egf.gui.UIActionListener;
@@ -113,7 +114,7 @@ public class UITest {
 		
 		ui.addToRenderSystem(renderSystem);
 		
-		world.createEntity(new RenderComponent(new Background("bakpakin/egf/test/testgrid.png"), -1000));
+		world.createEntity(new Transform().scale(2), new RenderComponent(new Background("bakpakin/egf/test/testgrid.png"), -1000));
 		
 		EGF.mainLoop(world);
 		

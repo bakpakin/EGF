@@ -67,9 +67,7 @@ public class RenderSystem extends bakpakin.egf.framework.EntitySystem {
 	private ArrayList<Entity> drawList;
 
 	private Color backgroundColor = Color.gray;
-
-	private boolean linearSampling;
-
+	
 	private int shader;
 	
 	private boolean escToExit = true;
@@ -208,13 +206,6 @@ public class RenderSystem extends bakpakin.egf.framework.EntitySystem {
 	}
 
 	public void draw(Entity e) {
-		if (linearSampling) {
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		} else {
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		}
 		glLoadIdentity();
 		RenderComponent rc = e.get(RenderComponent.class);
 		if (rc.isDrawHud()) {
@@ -243,14 +234,6 @@ public class RenderSystem extends bakpakin.egf.framework.EntitySystem {
 
 	public void setCamera(Camera camera) {
 		this.camera = camera;
-	}
-
-	public boolean isLinearSampling() {
-		return linearSampling;
-	}
-
-	public void setLinearSampling(boolean linearSampling) {
-		this.linearSampling = linearSampling;
 	}
 
 	public Color getBackgroundColor() {

@@ -3,21 +3,29 @@ package bakpakin.egf.render;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.opengl.Texture;
 
 import bakpakin.egf.geom.Transform;
+import bakpakin.egf.util.AssetManager;
 
-public class SimpleAnimation implements Drawable {
+public class SimpleAnimation extends Sprite {
 	
-	private ArrayList<Sprite> sprites;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3092763448586195519L;
+	private ArrayList<Texture> textures;
 	private double timer;
 	private double speed;	
 
 	public SimpleAnimation(double speed, String... imageUrls) {
+		super(imageUrls[0]);
 		this.speed = speed;
-		sprites = new ArrayList<Sprite>();
-		for (String url : imageUrls) {
-			sprites.add(new Sprite(url));
+		textures = new ArrayList<Texture>();
+		for (String iu : imageUrls) {
+			textures.add(AssetManager.getTexture(iu));
 		}
+
 	}
 	
 	public SimpleAnimation(String... imageUrls) {
@@ -58,15 +66,16 @@ public class SimpleAnimation implements Drawable {
 		this.speed = speed;
 	}
 
-	public ArrayList<Sprite> getSprites() {
-		return sprites;
+	public ArrayList<Texture> getTexture() {
+		return textures;
 	}
 
 	@Override
 	public void draw(RenderSystem renderSystem, float depth, Color color, Transform t) {
 		float dt = (float)renderSystem.getWorld().getDelta();
 		timer += dt*speed;
-		sprites.get((int)timer % sprites.size()).draw(renderSystem, depth, color, t);
+		texture = textures.get((int)timer % textures.size());
+		super.draw(renderSystem, depth, color, t);
 	}
 
 }

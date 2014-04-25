@@ -1,7 +1,5 @@
 package bakpakin.egf.tilemap;
 
-import static org.lwjgl.opengl.GL11.GL_LINEAR;
-import static org.lwjgl.opengl.GL11.GL_NEAREST;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glEnd;
@@ -28,7 +26,6 @@ public class TileDrawer implements Drawable {
 		t.apply();
 		color.bind();
 		tile.tileSet.getTexture().bind();
-		tile.tileSet.getTexture().setTextureFilter(rs.isLinearSampling() ? GL_LINEAR : GL_NEAREST);
 		float w = tile.tileSet.getTileWidth();
 		float h = tile.tileSet.getTileHeight();
 		float texXFactor = tile.tileSet.getTexture().getWidth() / tile.tileSet.getWidth();

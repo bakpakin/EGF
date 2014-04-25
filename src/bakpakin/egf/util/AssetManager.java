@@ -43,7 +43,7 @@ public class AssetManager {
 	//Regex that splits on the extension of a file.
 	private static final String EXTENSION_REGEX = "\\.(?=[^\\.]+$)";
 
-	//If the URL protocol have been initiated that allow loading from the classpath.
+	//If the URL protocol that allows loading from the classpath has been initiated.
 	private static boolean initiated;
 
 	private AssetManager() {

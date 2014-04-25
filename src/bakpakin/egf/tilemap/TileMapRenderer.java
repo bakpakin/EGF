@@ -117,7 +117,6 @@ public class TileMapRenderer implements Drawable {
 				if (lastBoundTexture != tile.tileSet.getTexture()) {
 					glEnd();
 					tile.tileSet.getTexture().bind();
-					tile.tileSet.getTexture().setTextureFilter(rs.isLinearSampling() ? GL_LINEAR : GL_NEAREST);
 					glBegin(GL_QUADS);
 					w = tile.tileSet.getTileWidth();
 					h = tile.tileSet.getTileHeight();

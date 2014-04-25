@@ -25,7 +25,6 @@ public class ShaderTest {
 
 		final World world = new World();
 		final RenderSystem renderSystem = new RenderSystem();
-		renderSystem.setLinearSampling(true);
 		final SimpleNavigationSystem navigationSystem = new SimpleNavigationSystem(renderSystem);
 		final InputSystem inputSystem = new InputSystem();
 		

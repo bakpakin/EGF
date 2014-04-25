@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL11.*;
 import java.io.Serializable;
 import java.net.URL;
 
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
 
@@ -17,20 +18,13 @@ public class Sprite implements Drawable, Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -5969804839987012310L;
-	protected transient Texture texture;
+	transient Texture texture;
 
-	protected Texture getTexture() {
-		return texture;
-	}
+	int width;
+	int height;
 
-	protected void setTexture(Texture tex) {
-		texture = tex;
-	}
-
-	protected int width;
-	protected int height;
-
-	protected double ox, oy;
+	double ox, oy;
+	boolean smooth;
 
 	/**
 	 * Creates a new sprite. The sprite is loaded from the
@@ -139,6 +133,7 @@ public class Sprite implements Drawable, Serializable{
 	 * Draw the sprite
 	 */
 	public void draw(RenderSystem renderSystem, float depth, Color color, Transform t) {
+		texture.setTextureFilter(smooth ? GL11.GL_LINEAR : GL11.GL_NEAREST);
 		texture.bind();
 		color.bind();
 		t.apply();
@@ -160,6 +155,21 @@ public class Sprite implements Drawable, Serializable{
 		glEnd();
 		glTranslated(ox, oy, 0);
 		t.applyInverse();
+	}
+	
+	/**
+	 * @return if this sprite interpolates color between pixels when the image is scaled.
+	 */
+	public boolean isSmooth() {
+		return smooth;
+	}
+	
+	/**
+	 * Sets whether or not this Sprite smoothes colors between pixels when scaled.
+	 * @param smooth
+	 */
+	public void setSmooth(boolean smooth) {
+		this.smooth = smooth;
 	}
 
 }

@@ -35,6 +35,8 @@ public class NineBox {
 	 * The texture coordinates for drawings
 	 */
 	private float tx1, tx2, tx3, ty1, ty2, ty3;
+	
+	private boolean smooth;
 
 	private boolean dirty = true;
 
@@ -180,6 +182,7 @@ public class NineBox {
 		} else {
 			if (dirty)
 				recalc();
+			texture.setTextureFilter(smooth ? GL11.GL_LINEAR : GL11.GL_NEAREST);
 			texture.bind();
 			final float x2 = xMin + x1;
 			final float y2 = yMin + y1;
@@ -371,6 +374,14 @@ public class NineBox {
 		if (contentY2 > getHeight() || contentY1 > contentY2)
 			throw new IllegalArgumentException("y2 must be less than or equal to getHeight() and greater than or equal to y1.");
 		this.contentY2 = contentY2;
+	}
+
+	public boolean isSmooth() {
+		return smooth;
+	}
+
+	public void setSmooth(boolean smooth) {
+		this.smooth = smooth;
 	}
 
 }

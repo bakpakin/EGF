@@ -8,6 +8,8 @@ public class UIImage extends UIElement {
 	
 	private Texture image;
 	
+	private boolean smooth;
+	
 	private float xScale = 1f, yScale = 1f;
 		
 	public UIImage(Texture image) {
@@ -27,6 +29,7 @@ public class UIImage extends UIElement {
 	@Override
 	public void paint() {
 		Color.white.bind();
+		image.setTextureFilter(smooth ? GL11.GL_LINEAR : GL11.GL_NEAREST);
 		image.bind();
 		GL11.glBegin(GL11.GL_QUADS);
 		GL11.glTexCoord2f(0f, 0f);
@@ -85,6 +88,14 @@ public class UIImage extends UIElement {
 	public void scale(float xFactor, float yFactor) {
 		xScale *= xFactor;
 		yScale *= yFactor;
+	}
+
+	public boolean isSmooth() {
+		return smooth;
+	}
+
+	public void setSmooth(boolean smooth) {
+		this.smooth = smooth;
 	}
 
 }

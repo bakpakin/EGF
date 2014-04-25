@@ -16,6 +16,7 @@ import static org.lwjgl.opengl.GL11.glVertex3d;
 import java.net.URL;
 
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 
 import bakpakin.egf.geom.Transform;
@@ -50,7 +51,7 @@ public class SimpleBackground extends Background {
         		1000000
         		);	
 		glMatrixMode(GL_MODELVIEW);
-		
+		texture.setTextureFilter(smooth ? GL11.GL_LINEAR : GL11.GL_NEAREST);
 		texture.bind();
 		color.bind();
 		glBegin(GL_QUADS);
