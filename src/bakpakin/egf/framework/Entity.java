@@ -6,6 +6,25 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The Entity class represents a game object in a {@link World}. The
+ * Entity class is final and cannot be overriden because it is a
+ * bag of unique components that define how the entity behaves. These
+ * components are then processed by systems, which ideally carry out
+ * most of the logic. Components are intended to be mostly data. Entities
+ * also may contain tags and properties. A tag is a String that identifies
+ * the Entity from other entities without having to create a unique
+ * component. For example, an Entity might have a "Player" tag, or an
+ * "Enemy" tag. Complementing tags are properties. Properties are like
+ * tags that map to a value. An Entity with a "Player" tag might also
+ * have "Health" property that maps to an Integer containing the health value.
+ * In order for an Entity to do anything, it must first be added to a world.
+ * @author Calvin
+ * 
+ * @see Component
+ * @see EntitySystem
+ * @see World
+ */
 public final class Entity implements Serializable {
 	
 	/**

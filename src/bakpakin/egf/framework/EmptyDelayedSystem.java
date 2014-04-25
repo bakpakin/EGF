@@ -1,5 +1,11 @@
 package bakpakin.egf.framework;
 
+/**
+ * A {@link DelayedSystem} that does not process entities, An EmptyDelayedSystem
+ * only executes logic periodically.
+ * @author Calvin
+ *
+ */
 public abstract class EmptyDelayedSystem extends DelayedSystem {
 
 	/**

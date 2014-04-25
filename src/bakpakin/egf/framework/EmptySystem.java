@@ -1,5 +1,11 @@
 package bakpakin.egf.framework;
 
+/**
+ * An EmptySystem does process components. Its only function is to
+ * execute logic every frame.
+ * @author Calvin
+ *
+ */
 public abstract class EmptySystem extends EntitySystem {
 
 	/**

@@ -1,5 +1,10 @@
 package bakpakin.egf.framework;
 
+/**
+ * An {@link EntitySystem} that implements {@link Delayed}.
+ * @author Calvin
+ *
+ */
 public abstract class DelayedSystem extends EntitySystem implements Delayed {
 
 	/**
@@ -10,10 +15,17 @@ public abstract class DelayedSystem extends EntitySystem implements Delayed {
 	private float delay = 1f;
 	private float timer;
 	
+	/**
+	 * 
+	 */
 	public DelayedSystem() {
 		super();
 	}
 	
+	/**
+	 * 
+	 * @param priority
+	 */
 	public DelayedSystem(int priority) {
 		super(priority);
 	}

@@ -78,7 +78,7 @@ public class UITest {
 		littlePanel.add(new UILabel("More Text"));
 		littlePanel.add(new UILabel("Even More."));
 		
-		UILabel specialLabel = new UILabel("This is a cool, overriding font.");
+		UILabel specialLabel = new UILabel("This is a cool font.");
 		UITheme theme2 = new UITheme(theme);
 		theme2.setBodyFontColor(Color.green);
 		theme2.setBodyFont(new Text("").getFont());

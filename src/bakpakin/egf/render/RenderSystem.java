@@ -100,6 +100,7 @@ public class RenderSystem extends bakpakin.egf.framework.EntitySystem {
 		resizeFbo();
 	}
 
+	//This code from lwjgl.org/wiki
 	private void resizeFbo() {			
 
 		fboWidth = Display.getWidth();

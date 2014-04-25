@@ -1,5 +1,10 @@
 package bakpakin.egf.framework;
 
+/**
+ * A {@Link ProcessingSystem} that implements {@link Delayed}.
+ * @author Calvin
+ *
+ */
 public abstract class DelayedProcessingSystem extends ProcessingSystem implements Delayed {
 
 	/**
@@ -10,10 +15,17 @@ public abstract class DelayedProcessingSystem extends ProcessingSystem implement
 	private float delay = 1f;
 	private float timer;
 	
+	/**
+	 * 
+	 */
 	public DelayedProcessingSystem() {
 		super();
 	}
 
+	/**
+	 * 
+	 * @param priority
+	 */
 	public DelayedProcessingSystem(int priority) {
 		super(priority);
 	}
