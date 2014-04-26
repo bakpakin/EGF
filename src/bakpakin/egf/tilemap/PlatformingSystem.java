@@ -46,6 +46,8 @@ public class PlatformingSystem extends bakpakin.egf.framework.ProcessingSystem {
 		if (count <= 0) {
 			return false;
 		}
+		t = t.clone();
+		t.setAngle(0);
 		AxisAlignedBox hb = bc.getHitbox(t);
 
 		float[] pos0 = {hb.getOriginX(), hb.getOriginY()};

@@ -8,32 +8,32 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class EntitySystem implements Serializable {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6070152385323539563L;
 
 	private int priority;
-	
+
 	private static int nextId;
-	
+
 	private int id;
-	
+
 	private boolean active = true;
-	
+
 	World world;
-		
+
 	Matcher matcher;
-		
+
 	protected Map<Integer, Entity> entities;
 	protected List<Integer> toRemove;
 	protected List<Entity> toAdd;
-	
+
 	public EntitySystem() {
 		this(0);
 	}
-	
+
 	public EntitySystem(int priority) {
 		this.id = nextId++;
 		this.priority = priority;
@@ -42,19 +42,19 @@ public abstract class EntitySystem implements Serializable {
 		toRemove = new LinkedList<Integer>();
 		entities = new HashMap<Integer, Entity>();
 	}
-	
+
 	protected void tryAddEntity(Entity e) {
 		toAdd.add(e);
 	}
-	
+
 	protected void removeEntity(Entity e) {
 		toRemove.add(e.getId());
 	}
-	
+
 	protected void removeId(int id) {
 		toRemove.add(id);
 	}
-	
+
 	public Collection<Entity> getEntities() {
 		return entities.values();
 	} 
@@ -77,7 +77,7 @@ public abstract class EntitySystem implements Serializable {
 	}
 
 	protected abstract Matcher initMatcher();
-	
+
 	protected void updateAndManageEntities() {
 		boolean notify = (toAdd.size() > 0 || toRemove.size() > 0);
 		for (Integer i : toRemove) {
@@ -93,19 +93,19 @@ public abstract class EntitySystem implements Serializable {
 			changeNotify();
 		tryUpdate();
 	}
-	
+
 	public void tryUpdate() {
 		update();
 	}
 
 	public abstract void update();
-	
+
 	public World getWorld() {
 		return world;
 	}
 
 	public void changeNotify() {
-		
+
 	}
 
 	public int getPriority() {
@@ -114,7 +114,8 @@ public abstract class EntitySystem implements Serializable {
 
 	public void setPriority(int priority) {
 		this.priority = priority;
-		world.sortSystems();
+		if (world != null)
+			world.sortSystems();
 	}
 
 	@Override
@@ -128,7 +129,7 @@ public abstract class EntitySystem implements Serializable {
 	}
 
 	public void removeNotify() {
-		
+
 	}
 
 	public boolean isActive() {

@@ -27,7 +27,7 @@ public class TileLayer extends Layer {
 	 * be split up into as few chunks as necessary for speed. However, larger chunks means
 	 * potentially more wasted memory.
 	 */
-	public static final int DEFAULT_CHUNK_SIZE = 500;
+	public static final int DEFAULT_CHUNK_SIZE = 50;
 	
 	/**
 	 * A map of {@link TileChunks}

@@ -13,9 +13,6 @@ public class SwimmerControlSystem extends ProcessingSystem {
 	
 	private Camera camera;
 	
-	private float defaultCameraWidth;
-	private float defaultCameraHeight;
-	
 	private float xMax = 2000;
 	private float yMax = 4000;
 	private float xMin;
@@ -28,8 +25,6 @@ public class SwimmerControlSystem extends ProcessingSystem {
 	
 	public SwimmerControlSystem(Camera camera) {
 		this.setCamera(camera);
-		defaultCameraWidth = camera.getTransform().getXScale();
-		defaultCameraHeight = camera.getTransform().getYScale();
 	}
 
 	@Override
@@ -57,15 +52,13 @@ public class SwimmerControlSystem extends ProcessingSystem {
 		}
 		float ang = t.getAngle();
 		float dir = dt.getDirection();
-		float diff = (ang + 180 - dir) % 360 - 180;
+		float diff = ((((ang - dir) % 360) + 540) % 360) - 180;  
 		if (dt.getSpeed() > 0)
 			t.rotate(-diff * delta * 10f);
 		float maxSpeed = (Integer) e.getProperty("MaxSpeed");
 		if (dt.getSpeed() > maxSpeed)
 			dt.setSpeed(maxSpeed);
 		camera.setTransform(Transform.interpolateNoScale(camera.getTransform(), new Transform(t.getX(), t.getY()), (float)Math.pow(.2, 1 - delta)));
-		camera.getTransform().setXScale(defaultCameraWidth * (1 + (dt.getSpeed()*0.001f)));
-		camera.getTransform().setYScale(defaultCameraHeight * (1 + (dt.getSpeed()*0.001f)));
 		if (t.getX() > xMax)
 			{t.setX(xMax);}
 		if (t.getX() < xMin)

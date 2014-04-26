@@ -4,9 +4,12 @@ import org.newdawn.slick.Color;
 
 import bakpakin.egf.framework.Entity;
 import bakpakin.egf.geom.Transform;
+import bakpakin.egf.physics.BoxCollider;
 import bakpakin.egf.physics.DeltaTransform;
 import bakpakin.egf.physics.Friction;
+import bakpakin.egf.render.Drawable;
 import bakpakin.egf.render.RenderComponent;
+import bakpakin.egf.render.RenderSystem;
 import bakpakin.egf.render.Sprite;
 
 public class EntityFactory {
@@ -22,7 +25,8 @@ public class EntityFactory {
 				new Transform(x, y),
 				new DeltaTransform(),
 				new Friction(100),
-				new RenderComponent(new Sprite("res/swimmer.png").center())
+				new RenderComponent(new Sprite("res/swimmer.png").center()),
+				new BoxCollider(20, 20)
 				);
 		swimmer.addTag(PLAYER_TAG);
 		swimmer.setProperty("Accel", 500);
@@ -78,6 +82,19 @@ public class EntityFactory {
 				new RenderComponent(new Sprite(clouds[zeroToThree]).center(), -50));
 		
 		return cloud;
+	}
+	
+	public static Entity makeHealthBar(final Entity player) {
+		Entity bar = new Entity(
+				new Transform(5, 5),
+				new RenderComponent(new Drawable() {
+					@Override
+					public void draw(RenderSystem renderSystem, float depth,
+							Color color, Transform t) {
+						
+					}
+				}));
+		return bar;
 	}
 
 }
