@@ -15,8 +15,8 @@ public class TimerComponent implements Component {
 	private boolean isPaused;
 	private Routine behavior;
 		
-	public TimerComponent(float time, Routine behavior) {
-		this(time, -1f, behavior);
+	public TimerComponent(float time, Routine routine) {
+		this(time, -1f, routine);
 	}
 	
 	public TimerComponent(float delay, float repeatDelay, Routine behavior) {

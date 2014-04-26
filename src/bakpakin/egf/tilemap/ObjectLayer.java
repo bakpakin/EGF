@@ -1,9 +1,10 @@
 package bakpakin.egf.tilemap;
 
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import bakpakin.egf.framework.Entity;
 import bakpakin.egf.framework.World;
@@ -27,7 +28,7 @@ public class ObjectLayer extends Layer {
 	/**
 	 * 
 	 */
-	private Map<String, ObjectBean> mapObjects;
+	private Set<ObjectBean> objects;
 
 	/**
 	 * Creates a new <code>ObjectLayer</code> at the specified depth.
@@ -36,7 +37,7 @@ public class ObjectLayer extends Layer {
 	 */
 	public ObjectLayer(float depth, TileMap map) {
 		super(depth, map);
-		this.mapObjects = new HashMap<String, ObjectBean>();
+		this.objects = new HashSet<ObjectBean>();
 	}
 	
 	/**
@@ -44,7 +45,7 @@ public class ObjectLayer extends Layer {
 	 * @param obj
 	 */
 	public void addMapObject(ObjectBean obj) {
-		mapObjects.put(obj.getName(), obj);
+		objects.add(obj);
 	}
 	
 	/**
@@ -52,8 +53,8 @@ public class ObjectLayer extends Layer {
 	 * @param name
 	 * @return
 	 */
-	public ObjectBean removeMapObject(String name) {
-		return mapObjects.remove(name);
+	public boolean removeMapObject(String name) {
+		return objects.remove(name);
 	}
 	
 	/**
@@ -63,7 +64,7 @@ public class ObjectLayer extends Layer {
 	 */
 	public List<Entity> addObjectsAsEntities(World world) {
 		List<Entity> ret = new LinkedList<Entity>();
-		for (ObjectBean b : mapObjects.values()) {
+		for (ObjectBean b : objects) {
 			Entity e = new Entity();
 			Transform t = new Transform();
 			t.setX(b.getX() + x);

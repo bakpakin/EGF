@@ -6,6 +6,7 @@ import bakpakin.egf.framework.World;
 import bakpakin.egf.input.InputSystem;
 import bakpakin.egf.physics.MovementSystem;
 import bakpakin.egf.render.RenderSystem;
+import bakpakin.egf.timer.TimerSystem;
 import bakpakin.egf.util.BehaviorSystem;
 
 public class Scene extends World {
@@ -19,6 +20,7 @@ public class Scene extends World {
 	private MovementSystem movementSystem;
 	private InputSystem inputSystem;
 	private BehaviorSystem behaviorSystem;
+	private TimerSystem timerSystem;
 
 	public Scene() {
 		super();
@@ -26,11 +28,13 @@ public class Scene extends World {
 		this.movementSystem = new MovementSystem();
 		this.renderSystem = new RenderSystem();
 		this.behaviorSystem = new BehaviorSystem();
+		this.timerSystem = new TimerSystem();
 		this.addSystem(renderSystem);
 		this.addSystem(inputSystem);
 		this.addSystem(movementSystem, 5);
+		this.addSystem(timerSystem);
 		renderSystem.getCamera().getTransform().scale(.8f);
-		renderSystem.setBackgroundColor(Color.cyan);
+		renderSystem.setBackgroundColor(Color.black);
 	}
 
 	public RenderSystem getRenderSystem() {

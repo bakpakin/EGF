@@ -35,11 +35,18 @@ public class ParticleDef implements Serializable {
 	
 	public float sizeMin = 1f, sizeMax = 1f, deltaSize, delta2Size, wiggleSize;
 	
+	public float gravity, gravityDir;
+	
 	public int blendModeSrc = GL11.GL_SRC_ALPHA;
 	public int blendModeDest = GL11.GL_ONE_MINUS_SRC_ALPHA;
 	
 	public ParticleDef() {
 		id = nextId++;
+	}
+	
+	public void setGravity(float gravity, float direction) {
+		this.gravity = gravity;
+		this.gravityDir = direction;
 	}
 	
 	public void setSpeed(float min, float max, float delta, float delta2, float wiggle) {
