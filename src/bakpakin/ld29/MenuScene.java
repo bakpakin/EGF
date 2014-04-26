@@ -1,8 +1,6 @@
 package bakpakin.ld29;
 
-import bakpakin.egf.geom.Transform;
-import bakpakin.egf.render.RenderComponent;
-import bakpakin.egf.render.Sprite;
+import static bakpakin.ld29.EntityFactory.*;
 
 public class MenuScene extends Scene {
 
@@ -13,7 +11,10 @@ public class MenuScene extends Scene {
 
 	public MenuScene() {
 		super();
-		this.createEntity(new Transform(), new RenderComponent(new Sprite("res/boat.png").center()));
+		this.addSystem(new SwimmerControlSystem(this.getRenderSystem().getCamera()));
+		this.add(boat(0, 0));
+		this.add(sun(-200, -140));
+		this.add(swimmer(0, 200));
 	}
 
 }
