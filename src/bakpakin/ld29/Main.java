@@ -8,7 +8,7 @@ public class Main {
 		EGF.setFps(60);
 		EGF.init();
 		
-		EGF.mainLoop(new MenuScene());
+		EGF.mainLoop(new OceanScene());
 		
 		EGF.cleanUp();
 	}

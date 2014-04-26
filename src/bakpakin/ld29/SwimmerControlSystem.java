@@ -6,6 +6,7 @@ import bakpakin.egf.framework.Matcher;
 import bakpakin.egf.framework.ProcessingSystem;
 import bakpakin.egf.geom.Transform;
 import bakpakin.egf.physics.DeltaTransform;
+import bakpakin.egf.physics.Friction;
 import bakpakin.egf.render.Camera;
 
 public class SwimmerControlSystem extends ProcessingSystem {
@@ -14,6 +15,11 @@ public class SwimmerControlSystem extends ProcessingSystem {
 	
 	private float defaultCameraWidth;
 	private float defaultCameraHeight;
+	
+	private float xMax = 2000;
+	private float yMax = 4000;
+	private float xMin;
+	private float yMin;
 
 	/**
 	 * 
@@ -32,26 +38,42 @@ public class SwimmerControlSystem extends ProcessingSystem {
 		Transform t = e.get(Transform.class);
 		float delta = getWorld().getDeltaf();
 		float accel = (Integer) e.getProperty("Accel");
-		if (isKeyDown(KEY_LEFT)) {
-			dt.translate(-accel * delta, 0);
-		}
-		if (isKeyDown(KEY_RIGHT)) {
-			dt.translate(accel * delta, 0);
-		}
-		if (isKeyDown(KEY_UP)) {
-			dt.translate(0, -accel * delta);
-		}
-		if (isKeyDown(KEY_DOWN)) {
-			dt.translate(0, accel * delta);
+		if (t.getY() >= yMin) {
+			e.get(Friction.class).setFriction(100);
+			if (isKeyDown(KEY_LEFT)) {
+				dt.translate(-accel * delta, 0);
+			}
+			if (isKeyDown(KEY_RIGHT)) {
+				dt.translate(accel * delta, 0);
+			}
+			if (isKeyDown(KEY_UP)) {
+				dt.translate(0, -accel * delta);
+			}
+			if (isKeyDown(KEY_DOWN)) {
+				dt.translate(0, accel * delta);
+			}
+		} else {
+			e.get(Friction.class).setFriction(0);
 		}
 		float ang = t.getAngle();
 		float dir = dt.getDirection();
 		float diff = (ang + 180 - dir) % 360 - 180;
 		if (dt.getSpeed() > 0)
 			t.rotate(-diff * delta * 10f);
+		float maxSpeed = (Integer) e.getProperty("MaxSpeed");
+		if (dt.getSpeed() > maxSpeed)
+			dt.setSpeed(maxSpeed);
 		camera.setTransform(Transform.interpolateNoScale(camera.getTransform(), new Transform(t.getX(), t.getY()), (float)Math.pow(.2, 1 - delta)));
 		camera.getTransform().setXScale(defaultCameraWidth * (1 + (dt.getSpeed()*0.001f)));
 		camera.getTransform().setYScale(defaultCameraHeight * (1 + (dt.getSpeed()*0.001f)));
+		if (t.getX() > xMax)
+			{t.setX(xMax);}
+		if (t.getX() < xMin)
+			{t.setX(xMin);}
+		if (t.getY() > yMax)
+			{t.setY(yMax);}
+		if (t.getY() < yMin)//don't stop the player, just add gravity so they fall back in the water
+			{dt.translate(0, 20 * (float)Math.pow(.5, 1 - delta));}
 	}
 
 	@Override
@@ -65,6 +87,38 @@ public class SwimmerControlSystem extends ProcessingSystem {
 
 	public void setCamera(Camera camera) {
 		this.camera = camera;
+	}
+
+	public float getxMax() {
+		return xMax;
+	}
+
+	public void setxMax(float xMax) {
+		this.xMax = xMax;
+	}
+
+	public float getyMax() {
+		return yMax;
+	}
+
+	public void setyMax(float yMax) {
+		this.yMax = yMax;
+	}
+
+	public float getxMin() {
+		return xMin;
+	}
+
+	public void setxMin(float xMin) {
+		this.xMin = xMin;
+	}
+
+	public float getyMin() {
+		return yMin;
+	}
+
+	public void setyMin(float yMin) {
+		this.yMin = yMin;
 	}
 
 }

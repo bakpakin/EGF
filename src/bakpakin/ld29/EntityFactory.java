@@ -26,7 +26,7 @@ public class EntityFactory {
 				);
 		swimmer.addTag(PLAYER_TAG);
 		swimmer.setProperty("Accel", 500);
-		swimmer.setProperty("MaxSpeed", 2000);
+		swimmer.setProperty("MaxSpeed", 400);
 		swimmer.setProperty("Air", 100);
 		swimmer.setProperty("Health", 100);
 		return swimmer;
@@ -62,6 +62,22 @@ public class EntityFactory {
 		return new Entity(
 				new Transform(x, y), 
 				new RenderComponent(new Sprite("res/boat.png").center()));
+	}
+	
+	public static String[] clouds = {
+		"res/cloud1.png",
+		"res/cloud2.png",
+		"res/cloud3.png",
+		"res/cloud4.png"
+	};
+	
+	public static Entity cloud(float x, float y, float hspeed, int zeroToThree) {
+		Entity cloud = new Entity(
+				new Transform(x, y),
+				new DeltaTransform(hspeed, 0),
+				new RenderComponent(new Sprite(clouds[zeroToThree]).center(), -50));
+		
+		return cloud;
 	}
 
 }

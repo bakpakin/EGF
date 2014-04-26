@@ -18,13 +18,14 @@ public class Sprite implements Drawable, Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -5969804839987012310L;
-	transient Texture texture;
+	protected transient Texture texture;
 
-	int width;
-	int height;
+	protected int width;
+	protected int height;
 
-	double ox, oy;
-	boolean smooth;
+	protected double ox;
+	protected double oy;
+	protected boolean smooth;
 
 	/**
 	 * Creates a new sprite. The sprite is loaded from the
