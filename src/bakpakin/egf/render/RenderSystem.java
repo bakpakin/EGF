@@ -88,6 +88,7 @@ public class RenderSystem extends bakpakin.egf.framework.EntitySystem {
 				EGF.getDisplayHeight(),
 				0
 				));
+		drawList = new ArrayList<Entity>(getEntities());
 	}
 
 	private void initFbo() {
