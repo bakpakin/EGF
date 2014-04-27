@@ -5,7 +5,6 @@ import bakpakin.egf.framework.Matcher;
 import bakpakin.egf.framework.ProcessingSystem;
 import bakpakin.egf.geom.Transform;
 import bakpakin.egf.physics.DeltaTransform;
-import bakpakin.egf.physics.Friction;
 
 public class TargetSystem extends ProcessingSystem {
 

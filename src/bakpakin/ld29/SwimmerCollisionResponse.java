@@ -21,10 +21,11 @@ public class SwimmerCollisionResponse implements CollisionResponse {
 		if (e2.hasTag(EntityFactory.ENEMY_TAG)) {
 			DeltaTransform dt1 = e1.get(DeltaTransform.class);
 			DeltaTransform dt2 = e2.get(DeltaTransform.class);
-			dt1.translate((dt2.getX() - dt1.getX())*2, (dt2.getY() - dt1.getY())*2);
+			dt1.translate((dt2.getX() - dt1.getX())*3, (dt2.getY() - dt1.getY())*3);
 			e1.setProperty("Health", (Integer)e1.getProperty("Health") - 1);
 			if ((Integer)e1.getProperty("Health") <= 0) {
-				EGF.endGame();
+				OceanScene os = ((OceanScene)EGF.getScene());
+				os.youDied();
 			}
 			Transform t = e1.get(Transform.class);
 			float x = t.getX();
@@ -33,6 +34,11 @@ public class SwimmerCollisionResponse implements CollisionResponse {
 			for (int i = 0; i < max; i++)
 				ps.createParticle(x, y, EntityFactory.BLOOD);
 			AssetManager.getSound("res/hurt.wav").playAsSoundEffect(1f, 1f, false);
+		} else if (e2.hasTag(EntityFactory.COLLECTIBLE_TAG)) {
+			EGF.getScene().removeEntity(e2);
+			OceanScene oc= ((OceanScene)EGF.getScene());
+			oc.getCoinText().setText("Coins: " + ++oc.coins);			
+			AssetManager.getSound("res/coin.wav").playAsSoundEffect(1f, 1f, false);
 		}
 	}
 

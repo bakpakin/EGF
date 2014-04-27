@@ -116,7 +116,7 @@ public class UITest {
 			
 		});
 		
-		ui.addToRenderSystem(renderSystem);
+		ui.addToRenderSystem(renderSystem, 1000);
 		
 		world.createEntity(new Transform().scale(2), new RenderComponent(new Background("bakpakin/egf/test/testgrid.png"), -1000));
 		

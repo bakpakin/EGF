@@ -33,7 +33,7 @@ public class FishBehavior implements Behavior {
 		moveTarget(entity);
 	}
 	
-	private void moveTarget(Entity entity) {
+	protected void moveTarget(Entity entity) {
 		Transform t = entity.get(Transform.class);
 		Target trgt = entity.get(Target.class);
 		if (trgt == null) return;

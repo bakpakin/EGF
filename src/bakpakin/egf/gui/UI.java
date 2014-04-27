@@ -68,11 +68,10 @@ public class UI {
 		this.stateEvents = new LinkedList<UIStateChangedEvent>();
 	}
 
-	public void addToRenderSystem(RenderSystem rs) {
+	public void addToRenderSystem(RenderSystem rs, float depth) {
 		this.rs = rs;
-		renderingEntity = rs.getWorld().createEntity(new RenderComponent(new UIDrawer(this)));
+		renderingEntity = rs.getWorld().createEntity(new RenderComponent(new UIDrawer(this), depth));
 		setHud(hud);
-		update();
 	}
 
 	public void removeFromRenderSystem() {

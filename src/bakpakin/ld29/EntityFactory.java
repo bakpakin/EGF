@@ -15,6 +15,7 @@ import bakpakin.egf.render.Drawable;
 import bakpakin.egf.render.RenderComponent;
 import bakpakin.egf.render.RenderSystem;
 import bakpakin.egf.render.Sprite;
+import bakpakin.egf.render.Text;
 import bakpakin.egf.timer.TimerComponent;
 import bakpakin.egf.util.Routine;
 
@@ -49,6 +50,7 @@ public class EntityFactory {
 		swimmer.setProperty("MaxSpeed", 400);
 		swimmer.setProperty("Air", 10);
 		swimmer.setProperty("Health", 10);
+		swimmer.setProperty("TimePerAirBubble", 2);
 		swimmer.setProperty(CircleCollisionSystem.COLLISION_BEHAVIOR, new SwimmerCollisionResponse(ps));
 		return swimmer;
 	}
@@ -162,6 +164,14 @@ public class EntityFactory {
 					}
 				}, 1000).drawHud());
 		return bar;
+	}
+	
+	public static Entity coinCounter() {
+		Entity cc = new Entity(
+				new Transform(5, 95),
+				new RenderComponent(
+						new Text("Coins: 0", "res/gilligansisland.ttf", 32), 10000).drawHud());
+		return cc;
 	}
 
 }

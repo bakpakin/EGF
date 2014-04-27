@@ -4,19 +4,25 @@ import static bakpakin.ld29.EntityFactory.*;
 
 import java.io.IOException;
 
+import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 
+import bakpakin.egf.EGF;
 import bakpakin.egf.framework.Entity;
+import bakpakin.egf.geom.Transform;
+import bakpakin.egf.input.InputListener;
 import bakpakin.egf.particles.ParticleSystem;
 import bakpakin.egf.particles.ParticleSystemDrawer;
 import bakpakin.egf.physics.CircleCollisionSystem;
 import bakpakin.egf.render.ParallaxSystem;
 import bakpakin.egf.render.RenderComponent;
+import bakpakin.egf.render.Text;
 import bakpakin.egf.tilemap.JSONLoader;
 import bakpakin.egf.tilemap.ObjectLayer;
 import bakpakin.egf.tilemap.PlatformingSystem;
 import bakpakin.egf.tilemap.TileMap;
 import bakpakin.egf.tilemap.TileMapRenderer;
+import bakpakin.egf.util.Routine;
 
 public class OceanScene extends Scene {
 
@@ -32,9 +38,19 @@ public class OceanScene extends Scene {
 	private CircleCollisionSystem circleCollisionSystem;
 	private TargetSystem targetSystem;
 	private MusicSystem musicSystem;
+	private AirSystem airSystem;
+	private AirWarningSystem airWarningSystem;
+	private Text coinText;
+	
+	public int coins;
+	
+	private PauseUI pauseUi;
+	private DeathUI deathUi;
 	
 	private TileMap tileMap;
 	private Entity tileMapRenderer;
+
+	private boolean paused;
 
 	public OceanScene(String tileMapUrl) {
 		super();
@@ -57,8 +73,6 @@ public class OceanScene extends Scene {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		((ObjectLayer)tileMap.getLayer("Object Layer 1")).addObjectsAsEntities(this, new OceanComponentAdder());
-		tileMapRenderer = this.createEntity(new RenderComponent(new TileMapRenderer(this.tileMap), 1));
 		platformingSystem = new PlatformingSystem(this.tileMap, "tiles");
 		this.addSystem(this.platformingSystem, 1000);
 		this.addSystem(new ParallaxSystem(this.getRenderSystem().getCamera()));
@@ -70,6 +84,13 @@ public class OceanScene extends Scene {
 		this.add(swimmer = swimmer(w/2, 200, particleSystem));
 		this.add(healthBar(swimmer));
 		this.add(airBar(swimmer));
+		
+		airSystem = new AirSystem(swimmer);
+		this.addSystem(airSystem);
+		
+		((ObjectLayer)tileMap.getLayer("Object Layer 1")).addObjectsAsEntities(this, new OceanComponentAdder(swimmer));
+		tileMapRenderer = this.createEntity(new RenderComponent(new TileMapRenderer(this.tileMap), 1));
+		
 		this.createEntity(new RenderComponent(new WaterDrawer(), 25, new Color(1, 1, 1, .5f)));
 		swimmerControlSystem.setxMax(w);
 		swimmerControlSystem.setyMax(h);
@@ -78,6 +99,30 @@ public class OceanScene extends Scene {
 		this.createEntity(
 				new RenderComponent(new Backdrop(), -2000)
 				);
+		
+		pauseUi = PauseUI.makeUI();
+		pauseUi.addToRenderSystem(this.getRenderSystem(), 10000);
+		pauseUi.setActive(false);
+		
+		deathUi = DeathUI.makeUI();
+		deathUi.addToRenderSystem(this.getRenderSystem(), 10000);
+		deathUi.setActive(false);
+		
+		Entity coins = coinCounter();
+		this.add(coins);
+		this.setCoinText((Text) coins.get(RenderComponent.class).getDrawable());
+		
+		this.addSystem(airWarningSystem = new AirWarningSystem(this, swimmer));
+		
+		this.getRenderSystem().getCamera().getTransform().setX(swimmer.get(Transform.class).getX());
+		this.getRenderSystem().getCamera().getTransform().setY(swimmer.get(Transform.class).getY());
+		
+		this.createEntity(InputListener.keyListener(new Routine() {
+			@Override
+			public void doRoutine() {
+				((OceanScene)EGF.getScene()).pause(true);
+			}
+		}, Keyboard.KEY_P, InputListener.PRESS));
 	}
 
 	public SwimmerControlSystem getSwimmerControlSystem() {
@@ -150,6 +195,51 @@ public class OceanScene extends Scene {
 
 	public void setMusicSystem(MusicSystem musicSystem) {
 		this.musicSystem = musicSystem;
+	}
+
+	public AirSystem getAirSystem() {
+		return airSystem;
+	}
+
+	public void setAirSystem(AirSystem airSystem) {
+		this.airSystem = airSystem;
+	}
+	
+	public void youDied() {
+		setActive(false);
+		deathUi.setActive(true);
+	}
+	
+	private void setActive(boolean active) {
+		airSystem.setActive(active);
+		musicSystem.setActive(active);
+		targetSystem.setActive(active);
+		circleCollisionSystem.setActive(active);
+		particleSystem.setActive(active);
+		platformingSystem.setActive(active);
+		cloudGenerator.setActive(active);
+		this.getBehaviorSystem().setActive(active);
+		this.getMovementSystem().setActive(active);
+		swimmerControlSystem.setActive(active);
+		airWarningSystem.setActive(active);
+		paused = !active;
+	}
+
+	public void pause(boolean pause) {
+		setActive(!pause);
+		pauseUi.setActive(pause);
+	}
+	
+	public boolean isPaused() {
+		return paused;
+	}
+
+	public Text getCoinText() {
+		return coinText;
+	}
+
+	public void setCoinText(Text coinText) {
+		this.coinText = coinText;
 	}
 
 }
