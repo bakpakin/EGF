@@ -29,7 +29,7 @@ public class MovementSystem extends ProcessingSystem {
 	public void update(Entity e) {
 		Transform t = e.get(Transform.class);
 		DeltaTransform dt = e.get(DeltaTransform.class);
-		t.addInterpolate(dt, getWorld().getDeltaf());
+		t.add(dt, getWorld().getDeltaf());
 		Friction f = e.get(Friction.class);
 		if (f != null) {
 			f.apply(dt, getWorld().getDelta());

@@ -25,7 +25,7 @@ public class TileMapTest {
 				
 		TileMap tm = TileMap.load("bakpakin/egf/test/tileTest.json", new JSONLoader());
 		ObjectLayer ol = (ObjectLayer) tm.getLayer("Object Layer 1");
-		ol.addObjectsAsEntities(world);
+		ol.addObjectsAsEntities(world, null);
 		
 		world.createEntity(new RenderComponent(new TileMapRenderer(tm)));
 		

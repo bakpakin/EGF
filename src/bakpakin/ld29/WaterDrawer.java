@@ -12,9 +12,11 @@ import bakpakin.egf.util.AssetManager;
 public class WaterDrawer implements Drawable {
 
 	private NineBox waterBox;
+	private NineBox skyBox;
 
 	public WaterDrawer() {
 		this.waterBox = new NineBox(AssetManager.getTexture("res/water.png"));
+		this.skyBox = new NineBox(AssetManager.getTexture("res/sky.png"));
 	}
 
 	@Override
@@ -24,6 +26,9 @@ public class WaterDrawer implements Drawable {
 		GL11.glTranslatef(0, 0, depth);
 		color.bind();
 		waterBox.draw(-100000, 0, 100000, 100000);
+		GL11.glTranslatef(0, 0, -1000);
+		skyBox.draw(-100000, -100000, 100000, 0);
+		GL11.glTranslatef(0, 0, 1000);
 		GL11.glTranslatef(0, 0, -depth);
 	}
 

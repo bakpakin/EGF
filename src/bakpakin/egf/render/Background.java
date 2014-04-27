@@ -29,7 +29,7 @@ public class Background extends Sprite {
 	@Override
 	public void draw(RenderSystem renderSystem, float depth, Color color, Transform t) {
 		Camera cam = renderSystem.getCamera().clone();
-		cam.getTransform().addInterpolate(t, -1);
+		cam.getTransform().add(t, -1);
 		Vector2f v1 = cam.worldPt(0f, 0f);
 		Vector2f v2 = cam.worldPt(0f, Display.getHeight());
 		Vector2f v3 = cam.worldPt(Display.getWidth(), Display.getHeight());

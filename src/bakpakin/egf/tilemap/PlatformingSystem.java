@@ -13,6 +13,8 @@ public class PlatformingSystem extends bakpakin.egf.framework.ProcessingSystem {
 	 * 
 	 */
 	private static final long serialVersionUID = 2648226284655078126L;
+	
+	public static final String COLLISION_PROPERTY = "PlatformCollision";
 
 	private TileMap tileMap;
 
@@ -35,16 +37,22 @@ public class PlatformingSystem extends bakpakin.egf.framework.ProcessingSystem {
 		Transform t = e.get(Transform.class);
 		BoxCollider bc = e.get(BoxCollider.class);
 		DeltaTransform dt = e.get(DeltaTransform.class);
-		collideWorld(t, bc, dt, g, 3);
+		Tile tile;
+		if ((tile = collideWorld(t, bc, dt, g, 3)) != null) {
+			Object o = e.getProperty(COLLISION_PROPERTY);
+			if (o != null) {
+				((TileCollisionResponse)o).collide(e, tile);
+			}
+		}
 	}
 
 	//Lol unreadable
-	private boolean collideWorld(Transform t, BoxCollider bc, DeltaTransform deltaTransform, Grounded g, int count) {
+	private Tile collideWorld(Transform t, BoxCollider bc, DeltaTransform deltaTransform, Grounded g, int count) {
 
 		float dx = deltaTransform.getX() * (float)getWorld().getDelta();
 		float dy = deltaTransform.getY() * (float)getWorld().getDelta();
 		if (count <= 0) {
-			return false;
+			return null;
 		}
 		t = t.clone();
 		t.setAngle(0);
@@ -78,6 +86,8 @@ public class PlatformingSystem extends bakpakin.egf.framework.ProcessingSystem {
 		float toc = 2.0f;
 		int axis = 0; //0 for horizontal, 1 for vertical, 2 for corner
 		int hc = 0, vc = 0;
+		
+		Tile tileCollided = null;
 
 		for (int xx = minx; xx <= maxx; xx += 1) {
 			for (int yy = miny; yy <= maxy; yy += 1) {
@@ -104,6 +114,7 @@ public class PlatformingSystem extends bakpakin.egf.framework.ProcessingSystem {
 							}
 							toc = tmptoc;
 							collided = true;
+							tileCollided = tile;
 						}
 					}
 
@@ -112,7 +123,7 @@ public class PlatformingSystem extends bakpakin.egf.framework.ProcessingSystem {
 		}
 
 		if (!collided) {
-			return false;
+			return null;
 		}
 
 		switch (axis) {
@@ -144,7 +155,7 @@ public class PlatformingSystem extends bakpakin.egf.framework.ProcessingSystem {
 		}
 
 		collideWorld(t, bc, deltaTransform, g, count - 1);
-		return true;
+		return tileCollided;
 	}
 
 	/**

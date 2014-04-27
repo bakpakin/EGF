@@ -18,15 +18,16 @@ import bakpakin.egf.timer.TimerComponent;
 import bakpakin.egf.util.Routine;
 
 public class EntityFactory {
-	
+
 	public static final String PLAYER_TAG = "Swimmer";
 	public static final String ENEMY_TAG = "Enemy";
-	
+	public static final String COLLECTIBLE_TAG = "Collectible";
+
 	public static ParticleDef BUBBLE;
 
 	private EntityFactory() {
 	}
-	
+
 	public static Entity swimmer(float x, float y, final ParticleSystem ps) {
 		makeBubble();
 		Entity swimmer = new Entity(
@@ -40,17 +41,18 @@ public class EntityFactory {
 		swimmer.add(new TimerComponent(.3f, .3f, new Bubbler(swimmer, ps)));
 		swimmer.addTag(PLAYER_TAG);
 		swimmer.setProperty("Accel", 500);
+		//swimmer.setProperty(PlatformingSystem.COLLISION_PROPERTY, new Bumper());
 		swimmer.setProperty("MaxSpeed", 400);
 		swimmer.setProperty("Air", 10);
 		swimmer.setProperty("Health", 10);
 		return swimmer;
 	}
-	
-	private static class Bubbler implements Routine {
+
+	public static class Bubbler implements Routine {
 
 		private ParticleSystem ps;
 		private Entity player;
-		
+
 		public Bubbler(Entity player, ParticleSystem ps) {
 			this.player = player;
 			this.ps = ps;
@@ -62,13 +64,14 @@ public class EntityFactory {
 			float x = t.getX();
 			float y = t.getY();
 			int max = (int)(Math.random() * 5);
-			for (int i = 0; i < max; i++)
-			ps.createParticle(x, y, BUBBLE);
+			if (t.getY() >= 0)
+				for (int i = 0; i < max; i++)
+					ps.createParticle(x, y, BUBBLE);
 		}
-		
-		
+
+
 	}
-	
+
 	private static void makeBubble() {
 		BUBBLE = new ParticleDef();
 		BUBBLE.setSprite(new Sprite("res/bubble.png").center());
@@ -79,54 +82,34 @@ public class EntityFactory {
 		BUBBLE.setSize(.5f, 2, -1, 0, 0);
 	}
 
-	public static Entity fish(float x, float y, Color color) {
-		Entity fish = new Entity(
-				new Transform(x, y),
-				new DeltaTransform(),
-				new RenderComponent(new Sprite("res/fish.png").center(), color)
-				);
-		fish.addTag(ENEMY_TAG);
-		return fish;
-	}
-	
-	public static Entity jellyFish(float x, float y, Color color) {
-		Entity fish = new Entity(
-				new Transform(x, y),
-				new DeltaTransform(),
-				new RenderComponent(new Sprite("res/jellyfish.png").center(), color)
-				);
-		fish.addTag(ENEMY_TAG);
-		return fish;
-	}
-	
 	public static Entity sun(float x, float y) {
 		return new Entity(
 				new Transform(x, y),
 				new RenderComponent(new Sprite("res/sun.png").center(), -3000));
 	}
-	
+
 	public static Entity boat(float x, float y) {
 		return new Entity(
 				new Transform(x, y), 
 				new RenderComponent(new Sprite("res/boat.png").center()));
 	}
-	
+
 	public static String[] clouds = {
 		"res/cloud1.png",
 		"res/cloud2.png",
 		"res/cloud3.png",
 		"res/cloud4.png"
 	};
-	
+
 	public static Entity cloud(float x, float y, float hspeed, int zeroToThree) {
 		Entity cloud = new Entity(
 				new Transform(x, y),
 				new DeltaTransform(hspeed, 0),
 				new RenderComponent(new Sprite(clouds[zeroToThree]).center(), -50));
-		
+
 		return cloud;
 	}
-	
+
 	public static Entity healthBar(final Entity player) {
 		final Sprite redBubble = new Sprite("res/redbubble.png");
 		Entity bar = new Entity(
@@ -145,7 +128,7 @@ public class EntityFactory {
 				}, 1000).drawHud());
 		return bar;
 	}
-	
+
 	public static Entity airBar(final Entity player) {
 		final Sprite blueBubble = new Sprite("res/bluebubble.png");
 		Entity bar = new Entity(

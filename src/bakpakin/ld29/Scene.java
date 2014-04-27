@@ -33,6 +33,7 @@ public class Scene extends World {
 		this.addSystem(inputSystem);
 		this.addSystem(movementSystem, 5);
 		this.addSystem(timerSystem);
+		this.addSystem(behaviorSystem);
 		renderSystem.getCamera().getTransform().scale(.8f);
 		renderSystem.setBackgroundColor(Color.black);
 	}

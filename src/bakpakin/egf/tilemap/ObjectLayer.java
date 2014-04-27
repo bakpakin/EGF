@@ -24,7 +24,7 @@ import bakpakin.egf.tilemap.TileMapBean.ObjectBean;
  *
  */
 public class ObjectLayer extends Layer {
-	
+
 	/**
 	 * 
 	 */
@@ -39,7 +39,7 @@ public class ObjectLayer extends Layer {
 		super(depth, map);
 		this.objects = new HashSet<ObjectBean>();
 	}
-	
+
 	/**
 	 * 
 	 * @param obj
@@ -47,7 +47,7 @@ public class ObjectLayer extends Layer {
 	public void addMapObject(ObjectBean obj) {
 		objects.add(obj);
 	}
-	
+
 	/**
 	 * 
 	 * @param name
@@ -56,13 +56,13 @@ public class ObjectLayer extends Layer {
 	public boolean removeMapObject(String name) {
 		return objects.remove(name);
 	}
-	
+
 	/**
 	 * Adds objects in the layer as entities to the engine.
 	 * @param world
 	 * @return
 	 */
-	public List<Entity> addObjectsAsEntities(World world) {
+	public List<Entity> addObjectsAsEntities(World world, ComponentAdder ca) {
 		List<Entity> ret = new LinkedList<Entity>();
 		for (ObjectBean b : objects) {
 			Entity e = new Entity();
@@ -78,25 +78,24 @@ public class ObjectLayer extends Layer {
 			}
 			if (b.isVisible()) {
 				RenderComponent rc = new RenderComponent(new Drawable[0]);
+				e.add(rc);
 				Object _depth = b.getProperties().get("depth");
 				if (_depth != null) {
 					rc.setDepth((Float)_depth);
 				}
 				if (b.getGid() == 0) {
-					
+					if (ca != null)
+						ca.addComponents(e, b);
 				} else {
 					TileDrawer td = new TileDrawer(this.getMap().getTile(b.getGid()));
 					rc.setDrawable(td);
 				}
-				e.add(rc);
 			}
 			world.add(e);
 			ret.add(e);
 		}
 		return ret;
 	}
-	
-	
 
 	@Override
 	public String toString() {
@@ -127,7 +126,7 @@ public class ObjectLayer extends Layer {
 		lb.setType("objectgroup");
 		return lb;
 	}
-	
-	
-	
+
+
+
 }

@@ -1,85 +1,65 @@
 package bakpakin.ld29;
 
-import static org.lwjgl.input.Keyboard.*;
 import bakpakin.egf.framework.Entity;
 import bakpakin.egf.framework.Matcher;
 import bakpakin.egf.framework.ProcessingSystem;
 import bakpakin.egf.geom.Transform;
 import bakpakin.egf.physics.DeltaTransform;
 import bakpakin.egf.physics.Friction;
-import bakpakin.egf.render.Camera;
 
-public class SwimmerControlSystem extends ProcessingSystem {
-	
-	private Camera camera;
-	
+public class TargetSystem extends ProcessingSystem {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private float xMax;
 	private float yMax;
 	private float xMin;
 	private float yMin;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1709545108854124424L;
-	
-	public SwimmerControlSystem(Camera camera) {
-		this.setCamera(camera);
+	public TargetSystem() {
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void update(Entity e) {
 		DeltaTransform dt = e.get(DeltaTransform.class);
 		Transform t = e.get(Transform.class);
-		float delta = getWorld().getDeltaf();
+		Target trgt = e.get(Target.class);
 		float accel = (Integer) e.getProperty("Accel");
-		if (t.getY() >= yMin) {
-			e.get(Friction.class).setFriction(100);
-			if (isKeyDown(KEY_LEFT)) {
-				dt.translate(-accel * delta, 0);
-			}
-			if (isKeyDown(KEY_RIGHT)) {
-				dt.translate(accel * delta, 0);
-			}
-			if (isKeyDown(KEY_UP)) {
-				dt.translate(0, -accel * delta);
-			}
-			if (isKeyDown(KEY_DOWN)) {
-				dt.translate(0, accel * delta);
-			}
-		} else {
-			e.get(Friction.class).setFriction(0);
-		}
+		float delta = getWorld().getDeltaf();
+		float dist = (float)Math.sqrt(Math.pow(trgt.x - t.getX(), 2) + Math.pow(trgt.y - t.getY(), 2));
+		float factor = 1/dist * accel;
+		dt.add(new Transform(factor*(trgt.x - t.getX()), factor*(trgt.y - t.getY())), delta);
 		float ang = t.getAngle();
 		float dir = dt.getDirection();
-		float diff = ((((ang - dir) % 360) + 540) % 360) - 180;  
+		float diff = angDiff(dir, ang);
 		if (dt.getSpeed() > 0)
 			t.rotate(-diff * delta * 10f);
 		float maxSpeed = (Integer) e.getProperty("MaxSpeed");
 		if (dt.getSpeed() > maxSpeed)
 			dt.setSpeed(maxSpeed);
-		camera.setTransform(Transform.interpolateNoScale(camera.getTransform(), new Transform(t.getX(), t.getY()), (float)Math.pow(.2, 1 - delta)));
 		if (t.getX() > xMax)
-			{t.setX(xMax); dt.setX(0);}
+		{t.setX(xMax); dt.setX(0);}
 		if (t.getX() < xMin)
-			{t.setX(xMin); dt.setX(0);}
+		{t.setX(xMin); dt.setX(0);}
 		if (t.getY() > yMax)
-			{t.setY(yMax); dt.setY(0);}
+		{t.setY(yMax); dt.setY(0);}
 		if (t.getY() < yMin)//don't stop the player, just add gravity so they fall back in the water
-			{dt.translate(0, 20 * (float)Math.pow(.5, 1 - delta));}
+		{dt.translate(0, 20 * (float)Math.pow(.5, 1 - delta));}
+	}
+
+	private float angDiff(float a1, float a2) {
+		return ((((a2 - a1) % 360) + 540) % 360) - 180;  
 	}
 
 	@Override
 	protected Matcher initMatcher() {
-		return new Matcher().requireTag(EntityFactory.PLAYER_TAG);
-	}
-
-	public Camera getCamera() {
-		return camera;
-	}
-
-	public void setCamera(Camera camera) {
-		this.camera = camera;
+		return new Matcher(Target.class)
+		.require(Transform.class)
+		.require(DeltaTransform.class);
 	}
 
 	public float getxMax() {

@@ -43,7 +43,10 @@ public class DeltaTransform extends Transform {
 	}
 	
 	public float getDirection() {
-		return (float)(180 / Math.PI * Math.atan2(y, x));
+		double atan = Math.atan2(y, x);
+		if (Double.isNaN(atan))
+			return 0;
+		return (float)(180 / Math.PI * atan);
 	}
 	
 	public float getSpeed() {
@@ -51,9 +54,13 @@ public class DeltaTransform extends Transform {
 	}
 	
 	public void setSpeed(float speed) {
-		final double factor = (double)speed / getSpeed();
-		x *= factor;
-		y *= factor;
+		if (getSpeed() > 0) {
+			final double factor = (double) speed / getSpeed();
+			x *= factor;
+			y *= factor;
+		} else {
+			y = speed;
+		}
 	}
 	
 	public void setDirection(float direction) {

@@ -240,7 +240,7 @@ public class Transform implements Component, Cloneable {
 	 * @param factor
 	 * @return
 	 */
-	public Transform addInterpolate(Transform other, float factor) {
+	public Transform add(Transform other, float factor) {
 		x += other.x*factor;
 		y += other.y*factor;
 		xScale *= Math.pow(other.xScale, factor);
@@ -253,7 +253,7 @@ public class Transform implements Component, Cloneable {
 	 * @return the Transform that undoes this transform when added.
 	 */
 	public Transform getOpposite() {
-		return new Transform().addInterpolate(this, -1);
+		return new Transform().add(this, -1);
 	}
 	
 	/**

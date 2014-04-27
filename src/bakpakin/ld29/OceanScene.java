@@ -7,11 +7,9 @@ import java.io.IOException;
 import org.newdawn.slick.Color;
 
 import bakpakin.egf.framework.Entity;
-import bakpakin.egf.geom.Transform;
 import bakpakin.egf.particles.ParticleSystem;
 import bakpakin.egf.particles.ParticleSystemDrawer;
-import bakpakin.egf.render.Background;
-import bakpakin.egf.render.ParallaxComponent;
+import bakpakin.egf.physics.CircleCollisionSystem;
 import bakpakin.egf.render.ParallaxSystem;
 import bakpakin.egf.render.RenderComponent;
 import bakpakin.egf.tilemap.JSONLoader;
@@ -31,6 +29,8 @@ public class OceanScene extends Scene {
 	private CloudGenerator cloudGenerator;
 	private PlatformingSystem platformingSystem;
 	private ParticleSystem particleSystem;
+	private CircleCollisionSystem circleCollisionSystem;
+	private TargetSystem targetSystem;
 	
 	private TileMap tileMap;
 	private Entity tileMapRenderer;
@@ -41,19 +41,23 @@ public class OceanScene extends Scene {
 		cloudGenerator = new CloudGenerator(this.getRenderSystem().getCamera());
 		swimmerControlSystem = new SwimmerControlSystem(this.getRenderSystem().getCamera());
 		particleSystem = new ParticleSystem();
+		circleCollisionSystem = new CircleCollisionSystem();
+		targetSystem = new TargetSystem();
 		this.addSystem(particleSystem);
 		this.addSystem(cloudGenerator);
 		this.addSystem(swimmerControlSystem);
+		this.addSystem(circleCollisionSystem, -10);
+		this.addSystem(targetSystem);
 		this.createEntity(new RenderComponent(new ParticleSystemDrawer(particleSystem)));
 		try {
 			this.tileMap = TileMap.load(tileMapUrl, new JSONLoader());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		((ObjectLayer)tileMap.getLayer("Object Layer 1")).addObjectsAsEntities(this);
+		((ObjectLayer)tileMap.getLayer("Object Layer 1")).addObjectsAsEntities(this, new OceanComponentAdder());
 		tileMapRenderer = this.createEntity(new RenderComponent(new TileMapRenderer(this.tileMap), -10));
 		platformingSystem = new PlatformingSystem(this.tileMap, "tiles");
-		this.addSystem(this.platformingSystem, 10);
+		this.addSystem(this.platformingSystem, 1000);
 		this.addSystem(new ParallaxSystem(this.getRenderSystem().getCamera()));
 		float w = this.tileMap.getTileWidth() * this.tileMap.getLayer("tiles").getWidth() + 30;
 		float h = this.tileMap.getTileHeight() * this.tileMap.getLayer("tiles").getHeight() + 40;
@@ -67,10 +71,11 @@ public class OceanScene extends Scene {
 		swimmerControlSystem.setxMin(-30);
 		swimmerControlSystem.setxMax(w);
 		swimmerControlSystem.setyMax(h);
+		targetSystem.setxMin(-30);
+		targetSystem.setxMax(w);
+		targetSystem.setyMax(h);
 		this.createEntity(
-				new Transform(),
-				new RenderComponent(new Background("res/bkg.png"), -2000),
-				new ParallaxComponent(.3f)
+				new RenderComponent(new Backdrop(), -2000)
 				);
 	}
 
@@ -120,6 +125,22 @@ public class OceanScene extends Scene {
 
 	public void setParticleSystem(ParticleSystem particleSystem) {
 		this.particleSystem = particleSystem;
+	}
+
+	public CircleCollisionSystem getCircleCollisionSystem() {
+		return circleCollisionSystem;
+	}
+
+	public void setCircleCollisionSystem(CircleCollisionSystem circleCollisionSystem) {
+		this.circleCollisionSystem = circleCollisionSystem;
+	}
+
+	public TargetSystem getTargetSystem() {
+		return targetSystem;
+	}
+
+	public void setTargetSystem(TargetSystem targetSystem) {
+		this.targetSystem = targetSystem;
 	}
 
 }
