@@ -21,6 +21,7 @@ import bakpakin.egf.util.Routine;
 
 public class EntityFactory {
 
+	public static final String CHEST_TAG = "Chest";
 	public static final String PLAYER_TAG = "Swimmer";
 	public static final String ENEMY_TAG = "Enemy";
 	public static final String COLLECTIBLE_TAG = "Collectible";

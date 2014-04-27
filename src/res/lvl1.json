@@ -3345,6 +3345,19 @@
                  "width":44,
                  "x":5838,
                  "y":3768
+                }, 
+                {
+                 "height":155,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"chest",
+                 "visible":true,
+                 "width":188,
+                 "x":297,
+                 "y":9109
                 }],
          "opacity":1,
          "type":"objectgroup",

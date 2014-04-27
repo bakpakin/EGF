@@ -26,6 +26,7 @@ public class AirWarningSystem extends EmptySystem {
 		this.player = player;
 		text = new Text("Warning: Low on Oxygen", "res/gilligansisland.ttf", 40);
 		drawer = new RenderComponent(text, 10000, Color.red).drawHud();
+		drawer.getColor().a = 0;
 		os.createEntity(drawer, new Transform(5, 140));
 		danger = AssetManager.getSound("res/danger.wav");
 	}

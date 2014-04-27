@@ -42,6 +42,8 @@ public class OceanScene extends Scene {
 	private AirWarningSystem airWarningSystem;
 	private Text coinText;
 	
+	private Text directionsText;
+	
 	public int coins;
 	
 	private PauseUI pauseUi;
@@ -111,6 +113,11 @@ public class OceanScene extends Scene {
 		Entity coins = coinCounter();
 		this.add(coins);
 		this.setCoinText((Text) coins.get(RenderComponent.class).getDrawable());
+		
+		directionsText = new Text("Find the Sunken Treasure.", "res/gilligansisland.ttf", 32);
+		this.createEntity(
+				new Transform(5, 185),
+				new RenderComponent(directionsText, 10000).drawHud());
 		
 		this.addSystem(airWarningSystem = new AirWarningSystem(this, swimmer));
 		
@@ -223,6 +230,10 @@ public class OceanScene extends Scene {
 		swimmerControlSystem.setActive(active);
 		airWarningSystem.setActive(active);
 		paused = !active;
+	}
+	
+	public void findTreasure() {
+		directionsText.setText("Take the Treasure back to the Boat.");
 	}
 
 	public void pause(boolean pause) {

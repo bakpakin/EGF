@@ -6,6 +6,7 @@ import bakpakin.egf.framework.Entity;
 import bakpakin.egf.geom.Transform;
 import bakpakin.egf.physics.BoxCollider;
 import bakpakin.egf.physics.CircleCollider;
+import bakpakin.egf.physics.DeltaTransform;
 import bakpakin.egf.physics.Friction;
 import bakpakin.egf.render.RenderComponent;
 import bakpakin.egf.render.Sprite;
@@ -24,6 +25,7 @@ public class OceanComponentAdder implements ComponentAdder {
 	@Override
 	public void addComponents(Entity e, ObjectBean b) {
 		RenderComponent rc = e.get(RenderComponent.class);
+		rc.setDepth(3);
 		if (b.getType().equals("fish")) {
 			rc.setDrawable(new Sprite("res/fish.png").center());
 			rc.setColor(randColor());
@@ -48,7 +50,11 @@ public class OceanComponentAdder implements ComponentAdder {
 			e.setProperty("Range", 200);
 			e.addTag(EntityFactory.ENEMY_TAG);
 		} else if (b.getType().equals("chest")) {
-			
+			rc.setDrawable(new Sprite("res/chest.png").center());
+			e.get(DeltaTransform.class).setY(20);
+			e.add(new BoxCollider(50, 50));
+			e.add(new CircleCollider(75, 0));
+			e.addTag(EntityFactory.CHEST_TAG);
 		} else if (b.getType().equals("coin")) {
 			rc.setDrawable(new Sprite("res/coin.png").center());
 			e.addTag(EntityFactory.COLLECTIBLE_TAG);
