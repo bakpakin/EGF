@@ -31,6 +31,7 @@ public class OceanScene extends Scene {
 	private ParticleSystem particleSystem;
 	private CircleCollisionSystem circleCollisionSystem;
 	private TargetSystem targetSystem;
+	private MusicSystem musicSystem;
 	
 	private TileMap tileMap;
 	private Entity tileMapRenderer;
@@ -43,11 +44,13 @@ public class OceanScene extends Scene {
 		particleSystem = new ParticleSystem();
 		circleCollisionSystem = new CircleCollisionSystem();
 		targetSystem = new TargetSystem();
+		musicSystem = new MusicSystem();
 		this.addSystem(particleSystem);
 		this.addSystem(cloudGenerator);
 		this.addSystem(swimmerControlSystem);
 		this.addSystem(circleCollisionSystem, -10);
 		this.addSystem(targetSystem);
+		this.addSystem(musicSystem);
 		this.createEntity(new RenderComponent(new ParticleSystemDrawer(particleSystem)));
 		try {
 			this.tileMap = TileMap.load(tileMapUrl, new JSONLoader());
@@ -141,6 +144,14 @@ public class OceanScene extends Scene {
 
 	public void setTargetSystem(TargetSystem targetSystem) {
 		this.targetSystem = targetSystem;
+	}
+
+	public MusicSystem getMusicSystem() {
+		return musicSystem;
+	}
+
+	public void setMusicSystem(MusicSystem musicSystem) {
+		this.musicSystem = musicSystem;
 	}
 
 }
