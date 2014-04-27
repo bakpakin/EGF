@@ -8,6 +8,7 @@ import bakpakin.egf.particles.ParticleDef;
 import bakpakin.egf.particles.ParticleSystem;
 import bakpakin.egf.physics.BoxCollider;
 import bakpakin.egf.physics.CircleCollider;
+import bakpakin.egf.physics.CircleCollisionSystem;
 import bakpakin.egf.physics.DeltaTransform;
 import bakpakin.egf.physics.Friction;
 import bakpakin.egf.render.Drawable;
@@ -24,12 +25,15 @@ public class EntityFactory {
 	public static final String COLLECTIBLE_TAG = "Collectible";
 
 	public static ParticleDef BUBBLE;
+	
+	public static ParticleDef BLOOD;
 
 	private EntityFactory() {
 	}
 
 	public static Entity swimmer(float x, float y, final ParticleSystem ps) {
 		makeBubble();
+		makeBlood();
 		Entity swimmer = new Entity(
 				new Transform(x, y),
 				new DeltaTransform(),
@@ -45,7 +49,19 @@ public class EntityFactory {
 		swimmer.setProperty("MaxSpeed", 400);
 		swimmer.setProperty("Air", 10);
 		swimmer.setProperty("Health", 10);
+		swimmer.setProperty(CircleCollisionSystem.COLLISION_BEHAVIOR, new SwimmerCollisionResponse(ps));
 		return swimmer;
+	}
+
+	private static void makeBlood() {
+		BLOOD = new ParticleDef();
+		BLOOD.setSprite(new Sprite("res/blood.png").center());
+		BLOOD.setAlpha(1, 1, -.5f, 0, 0);
+		BLOOD.setDirection(0, 360, 0, 0, 0);
+		BLOOD.setOrientation(0, 360, 0, 0, 0);
+		BLOOD.setLife(8, 8);
+		BLOOD.setSpeed(50, 130, 1, 0, 3);
+		BLOOD.setSize(.5f, 1.5f, -.2f, 0, 0);
 	}
 
 	public static class Bubbler implements Routine {
