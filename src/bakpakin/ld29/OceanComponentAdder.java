@@ -41,7 +41,7 @@ public class OceanComponentAdder implements ComponentAdder {
 		} else if (b.getType().equals("chest")) {
 			
 		} else if (b.getType().equals("coin")) {
-			
+			e.addTag(EntityFactory.COLLECTIBLE_TAG);
 		} else if (b.getType().equals("turret")) {
 			e.addTag(EntityFactory.ENEMY_TAG);
 		}

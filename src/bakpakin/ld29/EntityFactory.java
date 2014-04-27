@@ -38,7 +38,7 @@ public class EntityFactory {
 				new Transform(x, y),
 				new DeltaTransform(),
 				new Friction(100),
-				new RenderComponent(new Sprite("res/swimmer.png").center()),
+				new RenderComponent(new Sprite("res/swimmer.png").center(), 15),
 				new BoxCollider(20, 20),
 				new CircleCollider(20)
 				);

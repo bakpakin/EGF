@@ -58,23 +58,21 @@ public class OceanScene extends Scene {
 			e.printStackTrace();
 		}
 		((ObjectLayer)tileMap.getLayer("Object Layer 1")).addObjectsAsEntities(this, new OceanComponentAdder());
-		tileMapRenderer = this.createEntity(new RenderComponent(new TileMapRenderer(this.tileMap), -10));
+		tileMapRenderer = this.createEntity(new RenderComponent(new TileMapRenderer(this.tileMap), 1));
 		platformingSystem = new PlatformingSystem(this.tileMap, "tiles");
 		this.addSystem(this.platformingSystem, 1000);
 		this.addSystem(new ParallaxSystem(this.getRenderSystem().getCamera()));
-		float w = this.tileMap.getTileWidth() * this.tileMap.getLayer("tiles").getWidth() + 30;
-		float h = this.tileMap.getTileHeight() * this.tileMap.getLayer("tiles").getHeight() + 40;
+		float w = this.tileMap.getTileWidth() * this.tileMap.getLayer("tiles").getWidth();
+		float h = this.tileMap.getTileHeight() * this.tileMap.getLayer("tiles").getHeight();
 		this.add(boat(w/2 - 250, -43));
 		this.add(sun(w/2 + 100, -240));
 		Entity swimmer;
 		this.add(swimmer = swimmer(w/2, 200, particleSystem));
 		this.add(healthBar(swimmer));
 		this.add(airBar(swimmer));
-		this.createEntity(new RenderComponent(new WaterDrawer(), new Color(1, 1, 1, .5f)));
-		swimmerControlSystem.setxMin(-30);
+		this.createEntity(new RenderComponent(new WaterDrawer(), 25, new Color(1, 1, 1, .5f)));
 		swimmerControlSystem.setxMax(w);
 		swimmerControlSystem.setyMax(h);
-		targetSystem.setxMin(-30);
 		targetSystem.setxMax(w);
 		targetSystem.setyMax(h);
 		this.createEntity(

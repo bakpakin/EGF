@@ -71,7 +71,7 @@ public class Backdrop implements Drawable {
 	}
 	
 	private void doGlColor(Vector2f vertex) {
-		float y = vertex.y * 0.008f;
+		float y = vertex.y * 0.02f;
 		double blue = Math.pow(.98, y);
 		GL11.glColor3d(blue / 4, blue / 1.5, blue);
 	}

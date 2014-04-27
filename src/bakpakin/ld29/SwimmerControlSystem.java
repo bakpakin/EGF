@@ -59,6 +59,14 @@ public class SwimmerControlSystem extends ProcessingSystem {
 		if (dt.getSpeed() > maxSpeed)
 			dt.setSpeed(maxSpeed);
 		camera.setTransform(Transform.interpolateNoScale(camera.getTransform(), new Transform(t.getX(), t.getY()), (float)Math.pow(.2, 1 - delta)));
+		Transform ct = camera.getTransform();
+		if (ct.getX() < xMin + ct.getXScale()/2)
+			ct.setX(xMin + ct.getXScale()/2);
+		if (ct.getX() > xMax - ct.getXScale()/2)
+			ct.setX(xMax - ct.getXScale()/2);
+		if (ct.getY() > yMax - ct.getYScale()/2)
+			ct.setY(yMax - ct.getYScale()/2);
+		
 		if (t.getX() > xMax)
 			{t.setX(xMax); dt.setX(0);}
 		if (t.getX() < xMin)
