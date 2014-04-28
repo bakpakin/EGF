@@ -10,6 +10,7 @@ public class MenuUI extends UI {
 		UITheme theme = new MyTheme();
 		UIPanel panel = new UIPanel();
 		panel.add(new UIButton("Start"));
+		panel.add(new UIButton("How to Play"));
 		panel.add(new UIButton("Quit"));		
 		UIInvisiContainer cont1 = new UIInvisiContainer();
 		cont1.add(new UIImage(AssetManager.getTexture("res/title.png")));
@@ -19,6 +20,7 @@ public class MenuUI extends UI {
 		cont.setHeight(EGF.getDisplayHeight());
 		MenuUI ui = new MenuUI(theme, cont);
 		ui.addActionListener("Start", new StartListener());
+		ui.addActionListener("How to Play", new InstructionsListener());
 		ui.addActionListener("Quit", new QuitListener());
 		return ui;
 	}
@@ -46,5 +48,16 @@ public class MenuUI extends UI {
 		}
 		
 	}
+	
+	private static class InstructionsListener implements UIActionListener {
+
+		@Override
+		public void action(UIActionEvent e) {
+			AssetManager.getSound("res/blip.wav").playAsSoundEffect(1f, 1f, false);
+			EGF.setScene(new InstructionsScene());
+		}
+		
+	}
+
 
 }
