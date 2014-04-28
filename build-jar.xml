@@ -30,15 +30,10 @@
 	<path id="lib-path">
 		<pathelement location="${build}" />
 		<pathelement location="lib${file.separator}ibxm.jar" />
-		<pathelement location="lib${file.separator}jinput.jar" />
-		<pathelement location="lib${file.separator}jnlp.jar" />
-		<pathelement location="lib${file.separator}jogg-0.0.7.jar" />
 		<pathelement location="lib${file.separator}jorbis-0.0.15.jar" />
-		<pathelement location="lib${file.separator}lwjgl_util_applet.jar" />
 		<pathelement location="lib${file.separator}lwjgl_util.jar" />
 		<pathelement location="lib${file.separator}lwjgl.jar" />
 		<pathelement location="lib${file.separator}slick.jar" />
-		<pathelement location="lib${file.separator}tinylinepp.jar" />
 		<pathelement location="lib${file.separator}gson-2.2.4.jar" />
 	</path>
 
@@ -66,7 +61,7 @@
 
 
 	<target name="compile" depends="init">
-		<javac srcdir="${src}" destdir="${build}" includeantruntime="false" source="1.6" target="1.6">
+		<javac srcdir="${src}" destdir="${build}" includeantruntime="false" >
 			<classpath refid="lib-path" />
 		</javac>
 	</target>
