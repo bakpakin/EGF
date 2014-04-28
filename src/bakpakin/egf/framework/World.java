@@ -1,6 +1,7 @@
 package bakpakin.egf.framework;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -65,6 +66,10 @@ public class World implements Serializable {
 			if (system.isActive())
 				system.updateAndManageEntities();
 		}
+	}
+	
+	public Collection<EntitySystem> getSystems() {
+		return Collections.unmodifiableList(systems);
 	}
 	
 	/**

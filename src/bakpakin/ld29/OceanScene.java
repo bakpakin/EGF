@@ -9,6 +9,7 @@ import org.newdawn.slick.Color;
 
 import bakpakin.egf.EGF;
 import bakpakin.egf.framework.Entity;
+import bakpakin.egf.framework.EntitySystem;
 import bakpakin.egf.geom.Transform;
 import bakpakin.egf.input.InputListener;
 import bakpakin.egf.particles.ParticleSystem;
@@ -90,7 +91,7 @@ public class OceanScene extends Scene {
 		this.add(swimmer = swimmer(w/2, 200, particleSystem));
 		this.add(healthBar(swimmer));
 		this.add(airBar(swimmer));
-		this.addSystem(airWarningSystem = new AirWarningSystem(this, swimmer));
+		this.addSystem(setAirWarningSystem(new AirWarningSystem(this, swimmer)));
 		this.addSystem(new BoatCollisionSystem(this, swimmer, boat));
 		
 		airSystem = new AirSystem(swimmer);
@@ -229,17 +230,11 @@ public class OceanScene extends Scene {
 	}
 	
 	private void setActive(boolean active) {
-		airSystem.setActive(active);
-		musicSystem.setActive(active);
-		targetSystem.setActive(active);
-		circleCollisionSystem.setActive(active);
-		particleSystem.setActive(active);
-		platformingSystem.setActive(active);
-		cloudGenerator.setActive(active);
-		this.getBehaviorSystem().setActive(active);
-		this.getMovementSystem().setActive(active);
-		swimmerControlSystem.setActive(active);
-		airWarningSystem.setActive(active);
+		for (EntitySystem sys : this.getSystems())
+			sys.setActive(active);
+		this.getRenderSystem().setActive(true);
+		this.getInputSystem().setActive(true);
+
 		paused = !active;
 	}
 	
@@ -281,6 +276,15 @@ public class OceanScene extends Scene {
 
 	public Entity getSwimmer() {
 		return swimmer;
+	}
+
+	public AirWarningSystem getAirWarningSystem() {
+		return airWarningSystem;
+	}
+
+	public AirWarningSystem setAirWarningSystem(AirWarningSystem airWarningSystem) {
+		this.airWarningSystem = airWarningSystem;
+		return airWarningSystem;
 	}
 
 }
