@@ -39,7 +39,6 @@
 		<pathelement location="lib${file.separator}lwjgl.jar" />
 		<pathelement location="lib${file.separator}slick.jar" />
 		<pathelement location="lib${file.separator}tinylinepp.jar" />
-		<pathelement location="lib${file.separator}commons-io-2.4.jar" />
 		<pathelement location="lib${file.separator}gson-2.2.4.jar" />
 	</path>
 
@@ -67,7 +66,7 @@
 
 
 	<target name="compile" depends="init">
-		<javac srcdir="${src}" destdir="${build}" includeantruntime="false">
+		<javac srcdir="${src}" destdir="${build}" includeantruntime="false" source="1.6" target="1.6">
 			<classpath refid="lib-path" />
 		</javac>
 	</target>
