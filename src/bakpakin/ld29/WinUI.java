@@ -7,7 +7,6 @@ import bakpakin.egf.util.AssetManager;
 public class WinUI extends UI {
 	
 	public static WinUI makeUI() {
-		System.out.println("Made win ui.");
 		UITheme theme = new MyTheme();
 		UIPanel panel = new UIPanel();
 		panel.add(new UILabel("Congatratulations! You salvaged the treasure!"));
