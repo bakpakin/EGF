@@ -43,6 +43,7 @@ public class SwimmerCollisionResponse implements CollisionResponse {
 			EGF.getScene().removeEntity(e2);
 			OceanScene oc= ((OceanScene)EGF.getScene());
 			oc.findTreasure();
+			e1.addTag("FoundTreasure");
 			AssetManager.getSound("res/findTreasure.wav").playAsSoundEffect(1f, 1f, false);
 		}
 	}

@@ -35,16 +35,16 @@ public class SwimmerControlSystem extends ProcessingSystem {
 		float accel = (Integer) e.getProperty("Accel");
 		if (t.getY() >= yMin) {
 			e.get(Friction.class).setFriction(100);
-			if (isKeyDown(KEY_LEFT)) {
+			if (isKeyDown(KEY_LEFT) || isKeyDown(KEY_A)) {
 				dt.translate(-accel * delta, 0);
 			}
-			if (isKeyDown(KEY_RIGHT)) {
+			if (isKeyDown(KEY_RIGHT) || isKeyDown(KEY_D)) {
 				dt.translate(accel * delta, 0);
 			}
-			if (isKeyDown(KEY_UP)) {
+			if (isKeyDown(KEY_UP) || isKeyDown(KEY_W)) {
 				dt.translate(0, -accel * delta);
 			}
-			if (isKeyDown(KEY_DOWN)) {
+			if (isKeyDown(KEY_DOWN) || isKeyDown(KEY_S)) {
 				dt.translate(0, accel * delta);
 			}
 		} else {

@@ -11,12 +11,14 @@ public class DeathUI extends UI {
 		UIPanel panel = new UIPanel();
 		panel.add(new UILabel("You Died. Tragic."));
 		panel.add(new UIButton("Play Again?"));
+		panel.add(new UIButton("Menu"));
 		panel.add(new UIButton("Quit"));
 		UIInvisiContainer cont = new UIInvisiContainer(new UISingleElementLayout(panel));
 		cont.setWidth(EGF.getDisplayWidth());
 		cont.setHeight(EGF.getDisplayHeight());
 		DeathUI ui = new DeathUI(theme, cont);
 		ui.addActionListener("Play Again?", new ResumeListener());
+		ui.addActionListener("Menu", new MenuListener());
 		ui.addActionListener("Quit", new QuitListener());
 		return ui;
 	}
@@ -34,7 +36,7 @@ public class DeathUI extends UI {
 		}
 		
 	}
-	
+		
 	private static class QuitListener implements UIActionListener {
 
 		@Override

@@ -46,6 +46,7 @@ public class EntityFactory {
 				);
 		swimmer.add(new TimerComponent(.3f, .3f, new Bubbler(swimmer, ps)));
 		swimmer.addTag(PLAYER_TAG);
+		//swimmer.addTag("FoundTreasure");
 		swimmer.setProperty("Accel", 500);
 		//swimmer.setProperty(PlatformingSystem.COLLISION_PROPERTY, new Bumper());
 		swimmer.setProperty("MaxSpeed", 400);
@@ -104,12 +105,13 @@ public class EntityFactory {
 	public static Entity sun(float x, float y) {
 		return new Entity(
 				new Transform(x, y),
-				new RenderComponent(new Sprite("res/sun.png").center(), -3000));
+				new RenderComponent(new Sprite("res/sun.png").center(), -500));
 	}
 
 	public static Entity boat(float x, float y) {
 		return new Entity(
 				new Transform(x, y), 
+				new BoxCollider(300, 150),
 				new RenderComponent(new Sprite("res/boat.png").center()));
 	}
 

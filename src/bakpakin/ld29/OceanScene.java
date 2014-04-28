@@ -42,12 +42,16 @@ public class OceanScene extends Scene {
 	private AirWarningSystem airWarningSystem;
 	private Text coinText;
 	
+	private Entity swimmer;
+	
 	private Text directionsText;
 	
 	public int coins;
 	
 	private PauseUI pauseUi;
 	private DeathUI deathUi;
+	private WinUI winUi;
+	private StoreUI storeUi;
 	
 	private TileMap tileMap;
 	private Entity tileMapRenderer;
@@ -80,12 +84,14 @@ public class OceanScene extends Scene {
 		this.addSystem(new ParallaxSystem(this.getRenderSystem().getCamera()));
 		float w = this.tileMap.getTileWidth() * this.tileMap.getLayer("tiles").getWidth();
 		float h = this.tileMap.getTileHeight() * this.tileMap.getLayer("tiles").getHeight();
-		this.add(boat(w/2 - 250, -43));
+		Entity boat;
+		this.add(boat = boat(w/2 - 250, -43));
 		this.add(sun(w/2 + 100, -240));
-		Entity swimmer;
 		this.add(swimmer = swimmer(w/2, 200, particleSystem));
 		this.add(healthBar(swimmer));
 		this.add(airBar(swimmer));
+		this.addSystem(airWarningSystem = new AirWarningSystem(this, swimmer));
+		this.addSystem(new BoatCollisionSystem(this, swimmer, boat));
 		
 		airSystem = new AirSystem(swimmer);
 		this.addSystem(airSystem);
@@ -94,13 +100,12 @@ public class OceanScene extends Scene {
 		tileMapRenderer = this.createEntity(new RenderComponent(new TileMapRenderer(this.tileMap), 1));
 		
 		this.createEntity(new RenderComponent(new WaterDrawer(), 25, new Color(1, 1, 1, .5f)));
+		this.createEntity(new RenderComponent(new Backdrop(), -2000));
+		
 		swimmerControlSystem.setxMax(w);
 		swimmerControlSystem.setyMax(h);
 		targetSystem.setxMax(w);
 		targetSystem.setyMax(h);
-		this.createEntity(
-				new RenderComponent(new Backdrop(), -2000)
-				);
 		
 		pauseUi = PauseUI.makeUI();
 		pauseUi.addToRenderSystem(this.getRenderSystem(), 10000);
@@ -110,6 +115,14 @@ public class OceanScene extends Scene {
 		deathUi.addToRenderSystem(this.getRenderSystem(), 10000);
 		deathUi.setActive(false);
 		
+		winUi = WinUI.makeUI();
+		winUi.addToRenderSystem(this.getRenderSystem(), 10000);
+		winUi.setActive(false);
+		
+		storeUi = StoreUI.makeUI();
+		storeUi.addToRenderSystem(this.getRenderSystem(), 10000);
+		storeUi.setActive(false);
+		
 		Entity coins = coinCounter();
 		this.add(coins);
 		this.setCoinText((Text) coins.get(RenderComponent.class).getDrawable());
@@ -118,8 +131,6 @@ public class OceanScene extends Scene {
 		this.createEntity(
 				new Transform(5, 185),
 				new RenderComponent(directionsText, 10000).drawHud());
-		
-		this.addSystem(airWarningSystem = new AirWarningSystem(this, swimmer));
 		
 		this.getRenderSystem().getCamera().getTransform().setX(swimmer.get(Transform.class).getX());
 		this.getRenderSystem().getCamera().getTransform().setY(swimmer.get(Transform.class).getY());
@@ -235,6 +246,11 @@ public class OceanScene extends Scene {
 	public void findTreasure() {
 		directionsText.setText("Take the Treasure back to the Boat.");
 	}
+	
+	public void win() {
+		setActive(false);
+		winUi.setActive(true);
+	}
 
 	public void pause(boolean pause) {
 		setActive(!pause);
@@ -251,6 +267,20 @@ public class OceanScene extends Scene {
 
 	public void setCoinText(Text coinText) {
 		this.coinText = coinText;
+	}
+
+	public void showStore() {
+		setActive(false);
+		storeUi.setActive(true);		
+	}
+
+	public void hideStore() {
+		setActive(true);
+		storeUi.setActive(false);		
+	}
+
+	public Entity getSwimmer() {
+		return swimmer;
 	}
 
 }

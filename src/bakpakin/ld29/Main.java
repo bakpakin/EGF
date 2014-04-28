@@ -8,7 +8,7 @@ public class Main {
 		//EGF.setFullscreen(false);
 		//EGF.setDisplaySize(1000, 700);
 		EGF.init();
-		EGF.mainLoop(new OceanScene("res/lvl1.json"));
+		EGF.mainLoop(new MenuScene());
 		
 		EGF.cleanUp();
 	}

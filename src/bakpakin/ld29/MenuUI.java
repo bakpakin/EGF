@@ -4,35 +4,35 @@ import bakpakin.egf.EGF;
 import bakpakin.egf.gui.*;
 import bakpakin.egf.util.AssetManager;
 
-public class PauseUI extends UI {
+public class MenuUI extends UI {
 	
-	public static PauseUI makeUI() {
+	public static MenuUI makeUI() {
 		UITheme theme = new MyTheme();
 		UIPanel panel = new UIPanel();
-		panel.add(new UILabel("Paused"));
-		panel.add(new UIButton("Resume"));
-		panel.add(new UIButton("Menu"));
-		panel.add(new UIButton("Quit"));
-		UIInvisiContainer cont = new UIInvisiContainer(new UISingleElementLayout(panel));
+		panel.add(new UIButton("Start"));
+		panel.add(new UIButton("Quit"));		
+		UIInvisiContainer cont1 = new UIInvisiContainer();
+		cont1.add(new UIImage(AssetManager.getTexture("res/title.png")));
+		cont1.add(panel);
+		UIInvisiContainer cont = new UIInvisiContainer(new UISingleElementLayout(cont1));
 		cont.setWidth(EGF.getDisplayWidth());
 		cont.setHeight(EGF.getDisplayHeight());
-		PauseUI ui = new PauseUI(theme, cont);
-		ui.addActionListener("Resume", new ResumeListener());
-		ui.addActionListener("Menu", new MenuListener());
+		MenuUI ui = new MenuUI(theme, cont);
+		ui.addActionListener("Start", new StartListener());
 		ui.addActionListener("Quit", new QuitListener());
 		return ui;
 	}
 
-	private PauseUI(UITheme theme, UIElement root) {
+	private MenuUI(UITheme theme, UIElement root) {
 		super(theme, root);
 	}
 	
-	private static class ResumeListener implements UIActionListener {
+	private static class StartListener implements UIActionListener {
 
 		@Override
 		public void action(UIActionEvent e) {
 			AssetManager.getSound("res/blip.wav").playAsSoundEffect(1f, 1f, false);
-			((OceanScene)EGF.getScene()).pause(false);
+			EGF.setScene(new OceanScene("res/lvl1.json"));
 		}
 		
 	}
