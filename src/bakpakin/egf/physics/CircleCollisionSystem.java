@@ -6,6 +6,7 @@ import bakpakin.egf.framework.Entity;
 import bakpakin.egf.framework.EntitySystem;
 import bakpakin.egf.framework.Matcher;
 import bakpakin.egf.geom.Transform;
+import bakpakin.ld29.EntityFactory;
 
 public class CircleCollisionSystem extends EntitySystem {
 
@@ -37,11 +38,12 @@ public class CircleCollisionSystem extends EntitySystem {
 		Collection<Entity> entities = this.getEntities();
 		for (int i = 0; i < repeats; i++) {
 			for (Entity e1 : entities) {
+				if (!e1.hasTag(EntityFactory.PLAYER_TAG)) continue;
 				if (!e1.isActive()) continue;
 				for (Entity e2 : entities) {
 					if (!e2.isActive()) continue;
 					if (e1 == e2) continue;
-					if (e1.getId() > e2.getId()) continue; //compare each pair of entities only once.
+					//if (e1.getId() > e2.getId()) continue; //compare each pair of entities only once.
 					if (resolve(e1, e2)) {
 						CollisionResponse b1 = ((CollisionResponse)e1.getProperty(COLLISION_BEHAVIOR));
 						CollisionResponse b2 = ((CollisionResponse)e2.getProperty(COLLISION_BEHAVIOR));
