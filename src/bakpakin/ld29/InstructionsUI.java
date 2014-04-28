@@ -45,6 +45,11 @@ public class InstructionsUI extends UI {
 		public void action(UIActionEvent e) {
 			AssetManager.getSound("res/blip.wav").playAsSoundEffect(1f, 1f, false);
 			EGF.setScene(new MenuScene());
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 	}
