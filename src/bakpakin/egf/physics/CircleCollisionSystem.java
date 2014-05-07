@@ -43,7 +43,7 @@ public class CircleCollisionSystem extends EntitySystem {
 				for (Entity e2 : entities) {
 					if (!e2.isActive()) continue;
 					if (e1 == e2) continue;
-					//if (e1.getId() > e2.getId()) continue; //compare each pair of entities only once.
+					if (e1.getId() > e2.getId()) continue; //compare each pair of entities only once.
 					if (resolve(e1, e2)) {
 						CollisionResponse b1 = ((CollisionResponse)e1.getProperty(COLLISION_BEHAVIOR));
 						CollisionResponse b2 = ((CollisionResponse)e2.getProperty(COLLISION_BEHAVIOR));

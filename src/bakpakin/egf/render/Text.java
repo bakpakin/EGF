@@ -1,5 +1,6 @@
 package bakpakin.egf.render;
 
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 
@@ -41,7 +42,9 @@ public class Text implements Drawable {
 	@Override
 	public void draw(RenderSystem renderSystem, float depth, Color color, Transform t) {
 		t.apply();
+		GL11.glTranslatef(0f, 0f, depth);
 		font.drawString(xoffset, yoffset, text, color);
+		GL11.glTranslatef(0f, 0f, -depth);
 		t.applyInverse();
 	}
 
